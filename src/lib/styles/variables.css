@@ -1,0 +1,6 @@
+.light {
+  --border: lightgray;
+  --shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  --primary: rgb(0, 115, 255);
+  --radius: 5px;
+}
