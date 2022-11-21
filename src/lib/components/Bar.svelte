@@ -28,10 +28,12 @@
 
 <style>
   .bar {
+    background-color: #fff;
     position: fixed;
     bottom: 0; left: 0; right: 0;
     display: flex;
     border-top: 1px solid var(--border);
+    box-shadow: var(--shadow);
   }
   a {
     display: grid;

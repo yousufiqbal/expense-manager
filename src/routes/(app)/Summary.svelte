@@ -38,6 +38,6 @@
     color: var(--primary);
   }
   .expense .amount {
-    color: rgb(255, 58, 58);
+    color: var(--red);
   }
 </style>
