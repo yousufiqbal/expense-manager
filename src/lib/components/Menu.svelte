@@ -7,7 +7,7 @@
 <div class="menu">
 
   {#each items as item}
-  <a href="/">
+  <a href={item.href}>
     <i class="first">
       <Icon icon={item.icon} />
     </i>

@@ -27,6 +27,7 @@
     padding: 10px 0;
     background-color: rgb(240, 240, 240);
     border-radius: var(--radius);
+    /* transition: all 0.2s; */
   }
   .active {
     color: white;
