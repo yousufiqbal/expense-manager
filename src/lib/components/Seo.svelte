@@ -3,6 +3,6 @@
 </script>
 
 <svelte:head>
-  <title>{$title}</title>
+  <title>{$title} - Expense Manager</title>
   <meta name="description" content="{$title}">
 </svelte:head>

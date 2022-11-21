@@ -1,7 +1,10 @@
 <script>
   import DateNavigator from "$lib/components/DateNavigator.svelte";
   import TransactionGroups from "$lib/components/TransactionGroups.svelte";
+  import { title } from "$lib/others/stores";
   import Summary from "./Summary.svelte";
+
+  $title = 'Home'
 </script>
 
 <DateNavigator />
