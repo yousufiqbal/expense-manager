@@ -1,8 +1,7 @@
 <script>
-    import Bar from "$lib/components/Bar.svelte";
-
-
-
+  import Bar from "$lib/components/Bar.svelte";
 </script>
 
 <Bar />
+
+<slot></slot>

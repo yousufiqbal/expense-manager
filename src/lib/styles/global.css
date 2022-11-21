@@ -6,3 +6,7 @@ body {
 i {
   display: flex;
 }
+
+::placeholder {
+  color: gray;
+}
