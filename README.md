@@ -12,10 +12,11 @@ Expense Manager app can be used to manage day-to-day expenses.
 6. All activity is logged
 7. Backup & restore anytime
 8. Platform agnostic. Use on any device PC, laptop, mobiles, etc.
+9. Free for everyone (or maybe?)
 
 ## Why?
 
-A build this piece of code just to showcase some coding knowledge.
+I build this piece of code just to showcase some coding knowledge.
 
 ## Tech Stack
 
