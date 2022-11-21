@@ -55,7 +55,7 @@
     display: flex;
     gap: 30px;
     border-bottom: 1px solid var(--border);
-    background-color: var(--primary);
+    background-color: var(--secondary);
     color: white;
     border-radius: var(--radius);
     align-items: center;

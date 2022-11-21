@@ -1,29 +1,23 @@
 <script>
-    import { page } from '$app/stores';
+  import { page } from '$app/stores';
   import Icon from '@iconify/svelte'
+
+  const items = [
+    { name: 'Home', href: '/', icon: 'ri:home-3-line', filledIcon: 'ri:home-3-fill' },
+    { name: 'Stats', href: '/stats', icon: 'ri:line-chart-line', filledIcon: 'ri:line-chart-fill' },
+    { name: 'Search', href: '/search', icon: 'ri:search-2-line', filledIcon: 'ri:search-2-fill' },
+    { name: 'Accounts', href: '/accounts', icon: 'ri:folders-line', filledIcon: 'ri:folders-fill' },
+    { name: 'Settings', href: '/settings', icon: 'ri:settings-4-line', filledIcon: 'ri:settings-4-fill' },
+  ]
 </script>
 
 <div class="bar">
-  <a class:active={$page.url.pathname == '/'} href="/">
-    <i><Icon icon="ri:home-3-line" /></i>
-    <span>Home</span>
+  {#each items as item}
+  <a class:active={$page.url.pathname == item.href} href="{item.href}">
+    <i><Icon icon={($page.url.pathname != item.href) ? item.icon : item.filledIcon} /></i>
+    <span>{item.name}</span>
   </a>
-  <a class:active={$page.url.pathname == '/stats'} href="/stats">
-    <i><Icon icon="ri:line-chart-line" /></i>
-    <span>Stats</span>
-  </a>
-  <a class:active={$page.url.pathname == '/search'} href="/search">
-    <i><Icon icon="ri:search-line" /></i>
-    <span>Search</span>
-  </a>
-  <a class:active={$page.url.pathname == '/accounts'} href="/accounts">
-    <i><Icon icon="ri:folders-line" /></i>
-    <span>Accounts</span>
-  </a>
-  <a class:active={$page.url.pathname == '/settings'} href="/settings">
-    <i><Icon icon="ri:settings-4-line" /></i>
-    <span>Settings</span>
-  </a>
+  {/each}
 </div>
 
 <style>

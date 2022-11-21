@@ -24,7 +24,7 @@
   button {
     border-radius: var(--radius);
     font-size: 20px;
-    padding: 10px;
+    padding: 12px;
     display: flex;
     background-color: var(--primary);
     color: white;
