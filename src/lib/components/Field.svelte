@@ -38,7 +38,7 @@
     font-size: 14px;
   }
   input {
-    padding: 13px 10px 10px;
+    padding: 13px 10px 10px 15px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
   }
