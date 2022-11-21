@@ -31,9 +31,9 @@
   <i><Icon {icon} /></i>
   {/if}
 
-  {#key title}
+  <!-- {#key title} -->
   <h1 in:fly={{x: -20, duration: 150}}>{title}</h1>
-  {/key}
+  <!-- {/key} -->
 
 </div>
 
