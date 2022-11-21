@@ -16,7 +16,7 @@
 <Search />
 
 {#if filters}
-<Form>
+<Form --mb="30px">
   <Field label="Account" />
   <Field label="Category" />
   <Field label="Amount Min" />

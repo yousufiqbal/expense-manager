@@ -41,7 +41,7 @@
   .title {
     display: flex;
     gap: 15px;
-    margin-bottom: var(--mb, 20px);
+    margin-bottom: var(--mb, 30px);
   }
   h1 {
     font-size: 24px;
