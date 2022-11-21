@@ -1,6 +1,7 @@
 <script>
   import { page } from "$app/stores";
     import Button from "$lib/components/Button.svelte";
+    import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
@@ -30,8 +31,8 @@
   <Field label="Description" --cols={2} textarea />
 </Form>
 
-<div style="display: flex; gap: 15px">
+<Buttons>
   <Button name="Save {maps[current]}" type={colors[current]} icon="ri:save-line" />
   <Button name="Discard" type="transparent" icon="ri:close-line" href="/" />
-</div>
+</Buttons>
 <!-- Image(s) -->
