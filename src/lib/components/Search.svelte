@@ -12,12 +12,12 @@
 <style>
   .search {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     /* border: 1px dashed red; */
   }
   input {
     flex: 1;
-    border: 1px solid var(--secondary);
+    border: 1px solid var(--border);
     padding: var(--field);
     border-radius: var(--radius);
   }

@@ -10,11 +10,13 @@
 
 <style>
   .date-navigator {
+    flex: 1;
     display: flex;
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid var(--border);
     padding: 5px;
+    margin-bottom: var(--mb, 30px);
   }
   span {
     flex: 1;
