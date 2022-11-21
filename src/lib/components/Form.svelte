@@ -7,6 +7,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    margin-bottom: var(--mb, 40px);
+    margin-bottom: var(--mb, 30px);
   }
 </style>

@@ -15,13 +15,14 @@
 
 <style>
   .summary {
+    padding: 10px 0;
     display: flex;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     margin-bottom: var(--mb, 30px);
   }
   .part {
-    padding: 10px 0;
+    /* padding:  0; */
     flex: 1;
     display: grid;
     justify-items: center;

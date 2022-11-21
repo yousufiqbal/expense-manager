@@ -14,6 +14,7 @@
     display: flex;
     gap: 8px;
     /* border: 1px dashed red; */
+    margin-bottom: var(--mb, 30px);
   }
   input {
     flex: 1;

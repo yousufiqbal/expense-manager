@@ -17,10 +17,14 @@
 <Form>
   <Field label="Date" type="date" />
   <Field label="Time" type="time" />
-  <!-- Account / From (Transfer) -->
-  <Field label="Account" />
-  <!-- Category / To (Transfer)  -->
-  <Field label="Category" />
+  {#if current != 'transfer'}
+    <Field label="Account" />
+    <Field label="Category" />
+  {/if}
+  {#if current == 'transfer'}
+    <Field label="From" />
+    <Field label="To" />
+  {/if}
   <Field label="Amount" --cols={2} inputmode="numeric" />
   <Field label="Title" --cols={2} />
   <Field label="Description" --cols={2} textarea />

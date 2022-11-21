@@ -44,6 +44,12 @@
     background-color: white;
     border: 1px solid var(--border);
   }
+  /* .ghost {
+    flex-flow: row-reverse;
+    padding: 0;
+    box-shadow: none;
+    color: var(--primary);
+  } */
   i {
     font-size: 20px;
   }
