@@ -3,15 +3,15 @@
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
   import Search from "$lib/components/Search.svelte";
-  import Title from "$lib/components/Title.svelte";
+  // import Title from "$lib/components/Title.svelte";
   import { title } from "$lib/others/stores";
   import Icon from "@iconify/svelte";
 
   $title = 'Search'
-  let filters = false
+  let filters = true
 </script>
 
-<Title title="Search" icon="ri:search-line" />
+<!-- <Title title="Search" icon="ri:search-line" /> -->
 
 <Search />
 

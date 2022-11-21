@@ -3,18 +3,18 @@
   import Icon from '@iconify/svelte'
 
   const items = [
-    { name: 'Home', href: '/', icon: 'ri:home-3-line', filledIcon: 'ri:home-3-fill' },
-    { name: 'Stats', href: '/stats?tab=expense', icon: 'ri:line-chart-line', filledIcon: 'ri:line-chart-fill' },
-    { name: 'Search', href: '/search', icon: 'ri:search-2-line', filledIcon: 'ri:search-2-fill' },
-    { name: 'Accounts', href: '/accounts', icon: 'ri:folders-line', filledIcon: 'ri:folders-fill' },
-    { name: 'Settings', href: '/settings', icon: 'ri:settings-4-line', filledIcon: 'ri:settings-4-fill' },
+    { name: 'Home', href: '/', icon: 'ri:home-3-line' },
+    { name: 'Stats', href: '/stats?tab=expense', icon: 'ri:line-chart-line' },
+    { name: 'Search', href: '/search', icon: 'ri:search-2-line' },
+    { name: 'Accounts', href: '/accounts', icon: 'ri:folders-line'},
+    { name: 'Settings', href: '/settings', icon: 'ri:settings-4-line' },
   ]
 </script>
 
 <div class="bar">
   {#each items as item}
   <a class:active={$page.url.pathname == item.href} href="{item.href}">
-    <i><Icon icon={($page.url.pathname != item.href) ? item.icon : item.filledIcon} /></i>
+    <i><Icon icon={item.icon} /></i>
     <span>{item.name}</span>
   </a>
   {/each}
