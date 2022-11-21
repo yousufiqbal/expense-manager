@@ -1,16 +1,28 @@
 <script>
+  import { goto } from '$app/navigation';
   import { title as t } from '$lib/others/stores'
   import Icon from '@iconify/svelte';
+  import { fly } from 'svelte/transition';
 
   export let title, icon
   export let back = false
+  export let href = null
+
+  const goBack = () => {
+    if (href) {
+      goto(href)
+    } else {
+      history.back()
+    }
+  }
+
   $t = title
 </script>
 
 <div class="title">
 
   {#if back && !icon}
-  <button on:click={()=>history.back()}>
+  <button on:click={goBack}>
     <Icon icon="ri:arrow-left-line" />
   </button>
   {/if}
@@ -19,7 +31,9 @@
   <i><Icon {icon} /></i>
   {/if}
 
-  <h1>{title}</h1>
+  {#key title}
+  <h1 in:fly={{x: -20, duration: 150}}>{title}</h1>
+  {/key}
 
 </div>
 
@@ -43,6 +57,6 @@
     align-items: center;
     /* padding: 3px; */
     font-size: 28px;
-    color: var(--primary);
+    /* color: var(--primary); */
   }
 </style>

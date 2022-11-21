@@ -24,10 +24,11 @@
 <style>
   .checkboxes {
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     grid-column: span 4;
     /* border: 1px dashed blue; */
-    /* margin-bottom: var(--mb, 40px); */
+    margin-bottom: var(--mb, 20px);
   }
   .title {
     /* border: 1px dashed green; */

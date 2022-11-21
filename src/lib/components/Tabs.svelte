@@ -18,6 +18,7 @@
     padding: 5px;
     gap: 6px;
     border-radius: var(--radius);
+    margin-bottom: var(--mb, 30px);
   }
   a {
     display: flex;

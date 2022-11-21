@@ -4,7 +4,7 @@
 
   const items = [
     { name: 'Home', href: '/', icon: 'ri:home-3-line', filledIcon: 'ri:home-3-fill' },
-    { name: 'Stats', href: '/stats', icon: 'ri:line-chart-line', filledIcon: 'ri:line-chart-fill' },
+    { name: 'Stats', href: '/stats?tab=expense', icon: 'ri:line-chart-line', filledIcon: 'ri:line-chart-fill' },
     { name: 'Search', href: '/search', icon: 'ri:search-2-line', filledIcon: 'ri:search-2-fill' },
     { name: 'Accounts', href: '/accounts', icon: 'ri:folders-line', filledIcon: 'ri:folders-fill' },
     { name: 'Settings', href: '/settings', icon: 'ri:settings-4-line', filledIcon: 'ri:settings-4-fill' },
