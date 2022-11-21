@@ -28,6 +28,9 @@
     border-right: 1px solid var(--border);
     /* border: 1px dashed red; */
   }
+  .part:last-child {
+    border-right: none;
+  }
   .title {
     font-size: 14px;
   }
