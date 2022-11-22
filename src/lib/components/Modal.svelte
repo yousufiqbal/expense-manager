@@ -1,9 +1,14 @@
 <script>
+  // import { outclickHandler } from "$lib/others/utils";
   import Icon from "@iconify/svelte";
-    import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import { fly } from "svelte/transition";
 
   const dispatch = createEventDispatcher()
+
+  const dispatchClose = () => {
+    dispatch('close')
+  }
 
   export let title
   export let type = 'primary'
@@ -11,17 +16,22 @@
 
 {#if title}
 <div class="wrapper">
+
   <div transition:fly={{y: 30, duration: 150}} class="modal">
+    
     <div class="head {type}">
       <h2>{title}</h2>
-      <button on:click={()=>dispatch('close')}  class="close">
+      <button on:click={dispatchClose}  class="close">
         <Icon icon="ri:close-line" />
       </button>
     </div>
+
     <div class="body">
       <slot></slot>
     </div>
+
   </div>
+
 </div>
 {/if}
 

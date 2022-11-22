@@ -1,12 +1,20 @@
 <script>
+    import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher()
+
+  const dispatchSelect = () => {
+
+  }
+
   export let options = []
 </script>
 
 <div class="grid-options">
   {#each options as option}
-  <div class="option">
+  <button on:click={dispatchSelect} class="option">
     {option}
-  </div>
+  </button>
   {/each}
 </div>
 
