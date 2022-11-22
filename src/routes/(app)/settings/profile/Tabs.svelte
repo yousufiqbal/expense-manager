@@ -3,8 +3,8 @@
 </script>
 
 <div class="tabs">
-  <a class:active={$page.url.searchParams.get('tab') == 'details'} class="details" href="?tab=details">Details</a>
-  <a class:active={$page.url.searchParams.get('tab') == 'activities'} class="activities" href="?tab=activities">Activities</a>
+  <a class:active={$page.url.pathname == '/settings/profile'} class="details" href="/settings/profile">Details</a>
+  <a class:active={$page.url.pathname == '/settings/profile/activities'} class="activities" href="/settings/profile/activities">Activities</a>
 </div>
 
 <style>
