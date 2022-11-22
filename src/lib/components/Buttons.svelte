@@ -6,5 +6,6 @@
   .buttons {
     display: flex;
     gap: 15px;
+    margin-bottom: var(--mb, 30px);
   }
 </style>

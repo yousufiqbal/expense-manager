@@ -31,6 +31,7 @@
   .transaction {
     padding: 15px;
     display: flex;
+    align-items: center;
     gap: 15px;
     /* border-radius: var(--radius); */
     border-bottom: 1px solid var(--border);
@@ -49,5 +50,8 @@
   .meta {
     font-size: 14px;
     color: gray;
+  }
+  .amount {
+    color: var(--red);
   }
 </style>

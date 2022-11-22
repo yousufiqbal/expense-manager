@@ -1,8 +1,7 @@
 <script>
-
-    import Icon from "@iconify/svelte";
-
+  import Icon from "@iconify/svelte";
 </script>
+
 <div class="transaction-groups">
 
   <!-- {#each groups as group} -->
@@ -11,12 +10,12 @@
 
     <div class="head">
       <div class="dated">
-        <i><Icon icon="ri:calendar-line" /></i>
+        <!-- <i><Icon icon="ri:calendar-line" /></i> -->
         <span>Nov 22, 2022</span>
       </div>
-      <div class="day">Monday</div>
-      <!-- <div class="total-income">Rs. 0</div> -->
-      <!-- <div class="total-expense">Rs. 1000</div> -->
+      <!-- <div class="day">Monday</div> -->
+      <div class="total-income">Rs. 0</div>
+      <div class="total-expense">Rs. 1000</div>
     </div>
 
     <!-- {#each group.transactions as transaction} -->
@@ -51,15 +50,14 @@
   }
   .head {
     margin: 5px;
-    padding: 15px;
+    margin-bottom: 0;
+    padding: 12px 15px;
     display: flex;
     gap: 30px;
-    border-bottom: 1px solid var(--border);
-    background-color: var(--secondary);
-    color: white;
+    /* border-bottom: 1px solid var(--border); */
+    background-color: var(--light);
     border-radius: var(--radius);
     align-items: center;
-    /* border: 1px dashed orange; */
   }
   .dated {
     display: flex;
@@ -67,26 +65,27 @@
     align-items: center;
     flex: 1;
   }
-  .day {
+  /* .day {
     font-size: 14px;
-  }
+  } */
   .transaction {
     padding: 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid var(--border);
   }
-  /* .transactions > :last-child {
-    border-bottom: none;
-  } */
   .meta {
     font-size: 14px;
     color: gray;
   }
-  /* .total-income {
+  .total-income {
     color: var(--primary);
   }
   .total-expense {
     color: var(--red);
-  } */
+  }
+  .amount {
+    color: var(--red);
+  }
 </style>
