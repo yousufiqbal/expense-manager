@@ -4,10 +4,10 @@
 
   const crumbs = [
     { name: 'Settings', href: '/settings' },
-    { name: 'Currency', href: '/settings/currency' },
+    { name: 'Account Groups', href: '/settings/account-groups' },
   ]
 </script>
 
 <Breadcrumbs {crumbs} icon="ri:settings-4-line" />
 
-<Title title="Currency" back href="/settings" />
+<Title title="Account Groups" back href="/settings" />
