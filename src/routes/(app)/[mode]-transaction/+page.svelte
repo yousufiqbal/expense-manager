@@ -35,4 +35,5 @@
   <Button name="Save {maps[current]}" type={colors[current]} icon="ri:save-line" />
   <Button name="Discard" type="transparent" icon="ri:close-line" href="/" />
 </Buttons>
+
 <!-- Image(s) -->

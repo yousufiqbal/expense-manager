@@ -1,17 +1,18 @@
 <script>
-  import Button from "$lib/components/Button.svelte";
-  import Buttons from "$lib/components/Buttons.svelte";
+  import Equal from "$lib/components/Equal.svelte";
+  import Option from "$lib/components/Option.svelte";
+  import Options from "$lib/components/Options.svelte";
   import Summary from "$lib/components/Summary.svelte";
   import Title from "$lib/components/Title.svelte";
-    import AccountGroups from "./AccountGroups.svelte";
-    import Accounts from "./Accounts.svelte";
+  import Accounts from "./Accounts.svelte";
 </script>
 
-<Title title="Accounts" icon="ri:folders-line" />
-
-<Buttons>
-  <Button name="New Account" href="/accounts/add-account" icon="ri:add-line" />
-</Buttons>
+<Equal>
+  <Title title="Accounts" icon="ri:folders-line" --mb="0" />
+  <Options>
+    <Option icon="ri:add-line" name="Add Account" />
+  </Options>
+</Equal>
 
 <Summary />
 

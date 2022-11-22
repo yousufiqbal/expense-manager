@@ -1,11 +1,12 @@
-<div class="flex">
+<div class="equal">
   <slot></slot>
 </div>
 
 <style>
-  .flex {
+  .equal {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: var(--mb, 25px);
   }
 </style>
