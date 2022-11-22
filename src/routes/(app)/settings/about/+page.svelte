@@ -14,31 +14,28 @@
 
 <Content>
 
-  <h1>Expense Manager</h1>
+  <!-- <h1 id="expense-manager">Expense Manager</h1> -->
   <p>Expense Manager app can be used to manage day-to-day expenses.</p>
-  
-  <h2>Features</h2>
+  <h2 id="features">Features</h2>
   <ol>
-    <li>Manage incomes & expenses</li>
-    <li>Multiple accounts</li>
-    <li>Transfer funds between accounts</li>
-    <li>View stats of selected or all accounts</li>
-    <li>Complete activity logging</li>
-    <li>Backup & restore anytime</li>
-    <li>Platform agnostic. Use on any device including PC, laptop, mobiles, etc.</li>
-    <li>Free for everyone (or maybe?)</li>
+  <li>Manage incomes &amp; expenses</li>
+  <li>Multiple accounts</li>
+  <li>Transfer funds between accounts</li>
+  <li>Google sign-in</li>
+  <li>All data on cloud</li>
+  <li>View stats of selected or all accounts</li>
+  <li>Complete activity logging</li>
+  <li>Platform agnostic. Use on any device including PC, laptop, mobiles, etc</li>
+  <li>Free for everyone (or maybe?)</li>
   </ol>
-  
-  <h2>Why?</h2>
+  <h2 id="why-">Why?</h2>
   <p>I built this piece of code just to showcase some coding knowledge.</p>
-  
-  <h2>Tech Stack</h2>
+  <h2 id="tech-stack">Tech Stack</h2>
   <p>Following technologies were used to build this app:</p>
   <ol>
-    <li>SvelteKit</li>
-    <li>MySQL</li>
-    <li>Many other libraries (See package.json for more details)</li>
+  <li>SvelteKit</li>
+  <li>MySQL</li>
+  <li>Many other libraries (See package.json for more details)</li>
   </ol>
 
 </Content>
-
