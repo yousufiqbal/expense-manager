@@ -6,7 +6,7 @@
 
 <style>
   .logo {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
   h1 {
     color: var(--primary);
