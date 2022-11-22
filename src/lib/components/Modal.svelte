@@ -11,7 +11,7 @@
   }
 
   export let title
-  export let type = 'primary'
+  export let type = 'secondary'
 </script>
 
 {#if title}
