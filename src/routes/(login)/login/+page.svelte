@@ -7,7 +7,7 @@
 <Logo />
 
 <Content>
-  <p>Expense manager is a multi-accounts expense management cloud-based web application.</p>
+  <p>Expense manager is a multi-account, expense management cloud-based web application.</p>
 </Content>
 
 <Title title="Login" icon="ri:login-box-line"  />

@@ -1,16 +1,29 @@
+<script>
+
+    import Icon from "@iconify/svelte";
+
+</script>
 <div class="logo">
+  <i><Icon icon="ri:wallet-3-line" /></i>
   <h1>
-    Expense Manager
+    Expense<br>Manager
   </h1>
 </div>
 
 <style>
   .logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
     margin-bottom: 20px;
+
+  }
+  i {
+    font-size: 60px;
+    color: var(--primary);
   }
   h1 {
-    color: var(--primary);
-    font-size: 30px;
+    font-size: 21px;
     font-weight: bold;
     margin-bottom: 4px;
   }
