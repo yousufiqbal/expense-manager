@@ -1,8 +1,8 @@
 <script>
   import Breadcrumbs from "$lib/components/Breadcrumbs.svelte";
-    import Equal from "$lib/components/Equal.svelte";
-    import Option from "$lib/components/Option.svelte";
-    import Options from "$lib/components/Options.svelte";
+  import Equal from "$lib/components/Equal.svelte";
+  import Option from "$lib/components/Option.svelte";
+  import Options from "$lib/components/Options.svelte";
   import Title from "$lib/components/Title.svelte";
   import Tabs from "./Tabs.svelte";
 
