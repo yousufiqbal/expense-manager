@@ -47,5 +47,9 @@
   .active {
     color: var(--primary);
   }
-  
+  @media (max-height: 600px) {
+    .bar {
+      display: none;
+    }
+  }
 </style>
