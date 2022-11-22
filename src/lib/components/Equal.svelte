@@ -7,6 +7,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--mb, 25px);
+    margin-bottom: var(--mb, 20px);
   }
 </style>

@@ -7,6 +7,7 @@
   export let inputmode = 'text'
   export let placeholder = ''
   export let value = ''
+  export let el
 
   const typeMe = node => {
     node.type = type
@@ -19,7 +20,7 @@
 
 <div class="field">
   <label for={attr}>{label}</label>
-  <input on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} {value} size="1">
+  <input bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} {value} size="1">
   {#if error && touched}
   <span class="error">{error}</span>
   {/if}

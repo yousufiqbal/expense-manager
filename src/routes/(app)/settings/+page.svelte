@@ -3,9 +3,9 @@
     import Title from "$lib/components/Title.svelte";
 
   let items = [
-    { name: 'Categories', href: '/settings/categories', icon: 'bx:category' },
-    { name: 'Account Groups', href: '/settings/account-groups', icon: 'clarity:blocks-group-line' },
-    { name: 'Backups', href: '/settings/backups', icon: 'ri:database-2-line' },
+    { name: 'Categories', href: '/settings/categories?tab=expense', icon: 'bx:category' },
+    // { name: 'Account Groups', href: '/settings/account-groups', icon: 'clarity:blocks-group-line' },
+    // { name: 'Backups', href: '/settings/backups', icon: 'ri:database-2-line' },
     { name: 'Currency', href: '/settings/currency', icon: 'ri:currency-line' },
     { name: 'Profile', href: '/settings/profile', icon: 'ri:profile-line' },
     { name: 'Theme', href: '/settings/theme', icon: 'ri:sun-foggy-line' },

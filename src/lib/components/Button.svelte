@@ -7,7 +7,7 @@
 </script>
 
 {#if !href}
-<button class="button {type}">
+<button on:click class="button {type}">
   <i><Icon {icon} /></i>
   <span>{name}</span>
 </button>
