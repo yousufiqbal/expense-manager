@@ -45,9 +45,6 @@
     display: flex;
     gap: 15px;
     margin-bottom: var(--mb, 20px);
-    padding: 0 20px 10px;
-    margin: 0 -20px;
-    margin-bottom: var(--mb, 20px);
   }
   h1 {
     font-size: 24px;
