@@ -3,7 +3,7 @@
   import Plus from "$lib/components/Plus.svelte";
   import TransactionGroups from "$lib/components/TransactionGroups.svelte";
   import { title } from "$lib/others/stores";
-  import Summary from "./Summary.svelte";
+  import Summary from "$lib/components/Summary.svelte";
 
   $title = 'Home'
 </script>

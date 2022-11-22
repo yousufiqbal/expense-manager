@@ -83,10 +83,10 @@
     font-size: 14px;
     color: gray;
   }
-  .total-income {
+  /* .total-income {
     color: var(--primary);
   }
   .total-expense {
     color: var(--red);
-  }
+  } */
 </style>
