@@ -20,7 +20,7 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid var(--border);
-    padding: 12px 15px;
+    padding: 13px 15px;
   }
   .account:last-child {
     border-bottom: none;

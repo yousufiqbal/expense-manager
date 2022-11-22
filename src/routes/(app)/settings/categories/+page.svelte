@@ -1,6 +1,7 @@
 <script>
   import Breadcrumbs from "$lib/components/Breadcrumbs.svelte";
     import Equal from "$lib/components/Equal.svelte";
+    import IconButton from "$lib/components/IconButton.svelte";
     import Option from "$lib/components/Option.svelte";
     import Options from "$lib/components/Options.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
@@ -17,9 +18,10 @@
 
 <Equal>
   <Title title="Categories" back href="/settings" --mb="0" />
-  <Options>
+  <IconButton icon="ri:add-line" />
+  <!-- <Options>
     <Option icon="ri:add-line" name="Add Category" href="/settings/categories/add-category" />
-  </Options>
+  </Options> -->
 </Equal>
 
 <Tabs transfer={false} />
