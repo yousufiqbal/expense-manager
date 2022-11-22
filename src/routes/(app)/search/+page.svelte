@@ -11,12 +11,32 @@
 
   $title = 'Search'
   let filters = true
+  export let data = {
+    account: '',
+    category: '',
+    min: '', 
+    max: ''
+  }
 
   let modal = {
     chooseAccount: false, chooseCategory: false
   }
 
-  const close = () => {
+  const accounts = [
+    { name: 'Papa', urlName: 'papa' },
+    { name: 'Office', urlName: 'office' },
+    { name: 'Yousuf', urlName: 'yousuf' },
+  ]
+  
+  const expenseCategories = [
+    { name: 'Grocery', urlName: 'grocery' },
+    { name: 'Transport', urlName: 'transport' },
+    { name: 'Bills', urlName: 'bills' },
+    { name: 'Health', urlName: 'health' },
+    { name: 'Others', urlName: 'others' },
+  ]
+
+  const closeAllModals = () => {
     modal.chooseAccount = false
     modal.chooseCategory = false
   }
@@ -30,33 +50,42 @@
     e.target.blur()
     modal.chooseCategory = true
   }
+
+  const setAccount = e => {
+    data.account = accounts.filter(el => el.urlName == e.detail.result)[0].name
+    closeAllModals()
+  }
+
+  const setExpenseCategory = e => {
+    data.category = expenseCategories.filter(el => el.urlName == e.detail.result)[0].name
+    closeAllModals()
+  }
 </script>
 
 <Search />
 
 {#if filters}
 <Form --mb="30px">
-  <Field label="Account" on:focus={openAccountModal} />
-  <Field label="Category" on:focus={openCategoryModal} />
-  <Field label="Amount Min" inputmode="numeric" />
-  <Field label="Amount Max" inputmode="numeric" />
+  <Field bind:value={data.account} label="Account" on:focus={openAccountModal} />
+  <Field bind:value={data.category} label="Category" on:focus={openCategoryModal} />
+  <Field bind:value={data.min} label="Amount Min" inputmode="numeric" />
+  <Field bind:value={data.max} label="Amount Max" inputmode="numeric" />
 </Form>
 {/if}
 
 <FiltersToggle bind:filters />
 
 <Summary />
-
 <Results />
 
 {#if modal.chooseAccount}
-<Modal on:close={close} title="Choose Account">
-  <GridOptions options={['Home', 'Yousuf', 'Office']} />
+<Modal on:close={closeAllModals} title="Choose Account">
+  <GridOptions on:select={setAccount} options={accounts} />
 </Modal>
 {/if}
 
 {#if modal.chooseCategory}
-<Modal on:close={close} title="Choose Category">
-  <GridOptions options={['Grocery', 'Transport', 'Bills', 'Health', 'Others']} />
+<Modal on:close={closeAllModals} title="Choose Category">
+  <GridOptions on:select={setExpenseCategory} options={expenseCategories} />
 </Modal>
 {/if}

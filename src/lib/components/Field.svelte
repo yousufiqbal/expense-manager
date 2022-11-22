@@ -20,7 +20,7 @@
 
 <div class="field">
   <label for={attr}>{label}</label>
-  <input bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} {value} size="1">
+  <input bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} bind:value size="1">
   {#if error && touched}
   <span class="error">{error}</span>
   {/if}

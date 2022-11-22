@@ -1,21 +1,28 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher()
 
-  const dispatchSelect = () => {
-
+  /**
+   * 
+   * @param {MouseEvent} e
+   */
+  const dispatchSelect = e => {
+    dispatch('select', { result: e.target.dataset.result })
   }
 
+  /** @type {{ name: string, urlName: string }[]} */
   export let options = []
 </script>
 
 <div class="grid-options">
+
   {#each options as option}
-  <button on:click={dispatchSelect} class="option">
-    {option}
+  <button data-result="{option.urlName}" on:click={dispatchSelect} class="option">
+    {option.name}
   </button>
   {/each}
+
 </div>
 
 <style>

@@ -8,7 +8,7 @@
 
 <Equal>
   <Title title="Accounts" icon="ri:folders-line" --mb="0" />
-  <IconButton icon="ri:add-line" />
+  <IconButton icon="ri:add-line" href="/accounts/add-account" />
 </Equal>
 
 <Summary />

@@ -14,7 +14,7 @@
     place-items: center;
     color: white;
     background-color: var(--primary);
-    width: 45px; height: 45px;
+    width: 42px; height: 42px;
     border-radius: 50%;
     position: fixed;
     bottom: 90px; right: 40px;
