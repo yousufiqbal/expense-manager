@@ -1,11 +1,9 @@
 <script>
-    import Button from "$lib/components/Button.svelte";
-import Buttons from "$lib/components/Buttons.svelte";
-
-
-    import Profile from "./Profile.svelte";
-
+  import Button from "$lib/components/Button.svelte";
+  import Buttons from "$lib/components/Buttons.svelte";
+  import Profile from "./Profile.svelte";
 </script>
+
 <Profile />
 
 <Buttons>

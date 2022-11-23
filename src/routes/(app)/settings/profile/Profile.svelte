@@ -2,7 +2,6 @@
   export let profile = {
     name: 'Yousuf Iqbal',
     email: 'yousufiqbal@gmail.com',
-    method: 'Google',
     joined: 'Nov 22, 2022'
   }
 </script>
