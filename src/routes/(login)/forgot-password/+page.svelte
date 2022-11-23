@@ -18,6 +18,5 @@
 </Content>
 
 <Buttons --gap="25px">
-  <Button name="Send OTP" icon="ri:send-plane-line" type="warning" href="/forgot-password/reset-password" />
-  <Button name="Forgot Password?" type="ghost" href="/forgot-password" />
+  <Button name="Send OTP" icon="ri:send-plane-line" type="secondary" href="/forgot-password/reset-password" />
 </Buttons>
