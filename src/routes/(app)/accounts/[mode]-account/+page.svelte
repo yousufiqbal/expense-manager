@@ -14,6 +14,6 @@
 </Form>
 
 <Buttons>
-  <Button name="Save Account" icon="ri:save-line" />
+  <Button name="Save" icon="ri:save-line" />
   <Button name="Discard" icon="ri:close-line" href="/accounts" type="secondary" />
 </Buttons>

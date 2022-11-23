@@ -9,7 +9,7 @@
     import Categories from "./Categories.svelte";
 
   let accounts = [
-    { name: 'All', urlName: 'all' },
+    // { name: 'All', urlName: 'all' },
     { name: 'Papa', urlName: 'papa' },
     { name: 'Yousuf', urlName: 'yousuf' },
     { name: 'Office', urlName: 'office' },

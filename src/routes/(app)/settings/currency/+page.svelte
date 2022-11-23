@@ -21,6 +21,6 @@
 </Form>
 
 <Buttons>
-  <Button name="Save Unit" icon="ri:save-line" />
+  <Button name="Save" icon="ri:save-line" />
   <Button name="Discard" icon="ri:close-line" on:click={()=>history.back()} type="secondary" />
 </Buttons>
