@@ -49,3 +49,10 @@ export function outclickHandler(node) {
 export const axios = redaxios.create({
   withCredentials: true
 })
+
+export function isEmpty(object) {
+  for (const property in object) {
+    return false;
+  }
+  return true;
+}
