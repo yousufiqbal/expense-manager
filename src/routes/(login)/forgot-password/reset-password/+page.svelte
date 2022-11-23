@@ -23,6 +23,7 @@
   <Field label="New Password" --cols={2} />
 </Form>
 
+<!-- Message: Password Reset > Auto Login -->
 
 <Buttons --gap="25px">
   <Button name="Reset Password" icon="ri:save-line" href="/forgot-password/reset-password" />

@@ -1,8 +1,7 @@
 <script>
-
-    import Icon from "@iconify/svelte";
-
+  import Icon from "@iconify/svelte";
 </script>
+
 <div class="logo">
   <i><Icon icon="ri:wallet-3-line" /></i>
   <h1>
@@ -16,7 +15,6 @@
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
-
   }
   i {
     font-size: 60px;

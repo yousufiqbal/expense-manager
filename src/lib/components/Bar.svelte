@@ -3,7 +3,7 @@
   import Icon from '@iconify/svelte'
 
   const items = [
-    { name: 'Home', href: '/', icon: 'ri:home-3-line' },
+    { name: 'Home', href: '/', icon: 'ri:wallet-3-line' },
     { name: 'Stats', href: '/stats?tab=expense', icon: 'ri:line-chart-line' },
     { name: 'Search', href: '/search', icon: 'ri:search-2-line' },
     { name: 'Accounts', href: '/accounts', icon: 'ri:folders-line'},
