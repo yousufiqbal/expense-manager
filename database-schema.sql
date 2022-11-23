@@ -22,11 +22,15 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `accountId` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`accountId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`accountId`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.accounts: ~0 rows (approximately)
+-- Dumping data for table expense-manager.accounts: ~2 rows (approximately)
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `accounts` (`accountId`, `name`, `created`) VALUES
+	(1, 'Papa', '2022-11-23 17:21:41'),
+	(3, 'Yousuf', '2022-11-23 17:23:18');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.activities
@@ -50,11 +54,17 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(100) NOT NULL,
   `belongsTo` enum('income','expense') NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`categoryId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`categoryId`),
+  UNIQUE KEY `name_belongsTo` (`name`,`belongsTo`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.categories: ~0 rows (approximately)
+-- Dumping data for table expense-manager.categories: ~4 rows (approximately)
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` (`categoryId`, `name`, `belongsTo`, `created`) VALUES
+	(1, 'Others', 'income', '2022-11-23 17:17:35'),
+	(2, 'Others', 'expense', '2022-11-23 17:17:43'),
+	(3, 'Grocery', 'expense', '2022-11-23 17:20:09'),
+	(4, 'Salary', 'income', '2022-11-23 17:20:34');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.expenses
@@ -82,12 +92,12 @@ CREATE TABLE IF NOT EXISTS `expenses` (
 -- Dumping structure for table expense-manager.incomes
 CREATE TABLE IF NOT EXISTS `incomes` (
   `incomeId` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `accountId` int NOT NULL,
   `categoryId` int NOT NULL,
   `amount` decimal(13,0) NOT NULL,
-  `title` varchar(100) NOT NULL,
   `description` text,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`incomeId`),
@@ -95,10 +105,13 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   KEY `FK_incomes_categories` (`categoryId`),
   CONSTRAINT `FK_incomes_accounts` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_incomes_categories` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.incomes: ~0 rows (approximately)
+-- Dumping data for table expense-manager.incomes: ~2 rows (approximately)
 /*!40000 ALTER TABLE `incomes` DISABLE KEYS */;
+INSERT INTO `incomes` (`incomeId`, `title`, `date`, `time`, `accountId`, `categoryId`, `amount`, `description`, `created`) VALUES
+	(1, 'Starting Balance', '2022-11-23', '17:21:00', 1, 1, 15000, NULL, '2022-11-23 17:21:41'),
+	(3, 'Starting Balance', '2022-11-23', '17:23:00', 3, 1, 30000, NULL, '2022-11-23 17:23:18');
 /*!40000 ALTER TABLE `incomes` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.transfers
@@ -137,13 +150,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
-	(9, 'asdfasdf', 'babajani@baba.com', '$2a$10$q7IjyliA7b2aVRP/R8BGV.p0.hIg3lGBqtK3eMA4WPnsnSGqTyn/K', 0, NULL, 'd7ea653f117970549ce7b97c7ed71a7abf2c350dd67a5f7f4626f5c2df71', 'Rs.', '2022-11-23 15:48:28'),
-	(10, 'Yousuf Iqbal', 'yousufiqbal@gmail.com', '$2a$10$xKWawC4VhthggOX0omAH.OmcKKAd1fKSVd7vNOGaecddTEVT7XUPO', 0, NULL, '1b628f00619dfe8dcb64d3fca0c657b156aee58e3f99e17629e1261df7dd', 'Rs.', '2022-11-23 15:49:48');
+	(11, 'Yousuf Iqbal', 'yousufiqbal@gmail.com', '$2a$10$W4XA3PWYwdeaWBKHOkokMODjRX0wd.zqMiUfZ8cX3W6lTQFEeNq4W', 0, NULL, '793d0863f835afa0a6eac3c6f3a786079fae63b55c997dc112e34a76d6ae', 'Rs.', '2022-11-23 16:47:10');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

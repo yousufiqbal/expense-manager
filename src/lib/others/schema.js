@@ -31,3 +31,13 @@ export const registerSchema = yup.object({
   email: yup.string().email().required().ne(),
   password: yup.string().required().min(6).max(20).ne(),
 }).noUnknown(true)
+
+export const accountSchema = yup.object({
+  name: yup.string().min(3).max(100).required().ne(),
+  balance: yup.number().min(0).optional().ne(),
+}).noUnknown(true)
+
+export const categorySchema = yup.object({
+  name: yup.string().min(3).max(100).required().ne(),
+  belongsTo: yup.string().oneOf(['Income', 'Expense']).required().ne(),
+}).noUnknown(true)

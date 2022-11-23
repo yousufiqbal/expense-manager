@@ -1,14 +1,14 @@
 <script>
-    import { goto } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
-    import ServerError from "$lib/components/ServerError.svelte";
+  import ServerError from "$lib/components/ServerError.svelte";
   import { extractYupErrors, loginSchema } from "$lib/others/schema";
   import { title } from "$lib/others/stores";
   import { addToast } from "$lib/others/toasts";
-  import { axios, isEmpty, post } from "$lib/others/utils";
+  import { isEmpty, post } from "$lib/others/utils";
 
   $title = 'Login'
 
@@ -17,7 +17,6 @@
   }
 
   let touched = false, errors = {}
-  let fullError = null
 
   const validate = async () => {
     try {

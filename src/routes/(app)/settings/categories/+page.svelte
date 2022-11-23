@@ -1,10 +1,10 @@
 <script>
   import Breadcrumbs from "$lib/components/Breadcrumbs.svelte";
-    import Equal from "$lib/components/Equal.svelte";
-    import IconButton from "$lib/components/IconButton.svelte";
+  import Equal from "$lib/components/Equal.svelte";
+  import IconButton from "$lib/components/IconButton.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import Title from "$lib/components/Title.svelte";
-    import Categories from "./Categories.svelte";
+  import Categories from "./Categories.svelte";
 
   const crumbs = [
     { name: 'Settings', href: '/settings' },
