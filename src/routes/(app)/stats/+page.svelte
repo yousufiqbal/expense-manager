@@ -5,9 +5,11 @@
   import Title from "$lib/components/Title.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
     import { title } from "$lib/others/stores";
+    import PieChart from "./PieChart.svelte";
+    import Categories from "./Categories.svelte";
 
   let accounts = [
-    // { name: 'All', urlName: 'all' },
+    { name: 'All', urlName: 'all' },
     { name: 'Papa', urlName: 'papa' },
     { name: 'Yousuf', urlName: 'yousuf' },
     { name: 'Office', urlName: 'office' },
@@ -19,5 +21,7 @@
 <!-- <Title title="Stats" icon="ri:line-chart-line" /> -->
 <DateNavigator />
 <Tabs transfer={false} />
-<Subtitle subtitle="Accounts" icon="ri:folders-line" />
+<!-- <Subtitle subtitle="Accounts" icon="ri:folders-line" /> -->
 <Checkboxes items={accounts}  />
+<PieChart />
+<Categories />

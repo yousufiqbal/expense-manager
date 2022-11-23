@@ -28,7 +28,7 @@
     gap: 15px;
     grid-column: span 4;
     /* border: 1px dashed blue; */
-    margin-bottom: var(--mb, 20px);
+    margin-bottom: var(--mb, 30px);
   }
   .title {
     /* border: 1px dashed green; */

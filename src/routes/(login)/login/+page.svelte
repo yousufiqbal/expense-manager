@@ -14,6 +14,6 @@
 </Form>
 
 <Buttons --gap="25px">
-  <Button name="Login" icon="ri:login-box-line" type="secondary" />
+  <Button name="Login" icon="ri:login-box-line" type="secondary" href="/" />
   <Button name="Forgot Password?" type="ghost" href="/forgot-password" />
 </Buttons>
