@@ -34,7 +34,7 @@ export const POST = async ({ request, cookies }) => {
     currency: user.currency,
     isVerified: user.isVerified
   }
-  const fact = jwt.sign(payload, JWT_KEY)
+  const fact = jwt.sign(payload, JWT_KEY, { expiresIn: 7 * 86400 })
   
   // Setting cookie
   cookies.set('fact', fact, { maxAge: 7 * 86400 })
