@@ -25,3 +25,9 @@ export const loginSchema = yup.object({
   email: yup.string().email().required().ne(),
   password: yup.string().required().min(6).max(20).ne(),
 }).noUnknown(true)
+
+export const registerSchema = yup.object({
+  name: yup.string().min(3).max(100).required().ne(),
+  email: yup.string().email().required().ne(),
+  password: yup.string().required().min(6).max(20).ne(),
+}).noUnknown(true)

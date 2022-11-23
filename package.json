@@ -24,7 +24,12 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"bcryptjs": "^2.4.3",
 		"dayjs": "^1.11.6",
+		"jsonwebtoken": "^8.5.1",
+		"kysely": "^0.22.0",
+		"kysely-codegen": "^0.8.0",
+		"mysql2": "^2.3.3",
 		"nprogress": "^0.2.0",
 		"redaxios": "^0.5.1",
 		"yup": "^0.32.11"

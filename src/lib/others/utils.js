@@ -56,3 +56,19 @@ export function isEmpty(object) {
   }
   return true;
 }
+
+export const post = async (url, body) => {
+  return await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+    body: JSON.stringify(body)
+  });
+}
+
+export const put = async (url, body) => {
+  return await fetch(url, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+    body: JSON.stringify(body)
+  });
+}

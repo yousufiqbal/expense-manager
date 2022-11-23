@@ -1,15 +1,13 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               8.0.30 - MySQL Community Server - GPL
+-- Server version:               8.0.26 - MySQL Community Server - GPL
 -- Server OS:                    Win64
--- HeidiSQL Version:             12.1.0.6537
+-- HeidiSQL Version:             11.3.0.6295
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -28,6 +26,8 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.accounts: ~0 rows (approximately)
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.activities
 CREATE TABLE IF NOT EXISTS `activities` (
@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS `activities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.activities: ~0 rows (approximately)
+/*!40000 ALTER TABLE `activities` DISABLE KEYS */;
+/*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.categories
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -52,6 +54,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.categories: ~0 rows (approximately)
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.expenses
 CREATE TABLE IF NOT EXISTS `expenses` (
@@ -72,6 +76,8 @@ CREATE TABLE IF NOT EXISTS `expenses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.expenses: ~0 rows (approximately)
+/*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.incomes
 CREATE TABLE IF NOT EXISTS `incomes` (
@@ -92,6 +98,8 @@ CREATE TABLE IF NOT EXISTS `incomes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.incomes: ~0 rows (approximately)
+/*!40000 ALTER TABLE `incomes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `incomes` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.transfers
 CREATE TABLE IF NOT EXISTS `transfers` (
@@ -113,6 +121,8 @@ CREATE TABLE IF NOT EXISTS `transfers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.transfers: ~0 rows (approximately)
+/*!40000 ALTER TABLE `transfers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transfers` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -120,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
   `password` char(60) NOT NULL,
-  `is_verified` tinyint(1) NOT NULL DEFAULT '0',
+  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
   `otp` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `currency` varchar(10) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -129,8 +139,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.users: ~0 rows (approximately)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

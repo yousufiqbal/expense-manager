@@ -1,4 +1,5 @@
 <script>
+  // import { removeToast, toasts } from "$lib/others/toasts";
   import { toasts } from "$lib/others/toasts";
   import Icon from "@iconify/svelte";
   import { fly } from "svelte/transition";

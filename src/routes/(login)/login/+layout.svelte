@@ -8,7 +8,7 @@
 <Logo />
 
 <Content>
-  <p>Expense manager is a multi-account, expense management cloud-based web application.</p>
+  <p>Expense manager is a multi-account, cloud-based, expense management app.</p>
 </Content>
 
 <Tabs />
