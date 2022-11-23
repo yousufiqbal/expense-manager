@@ -6,7 +6,7 @@
   .content {
     display: grid;
     gap: 20px;
-    margin-bottom: 30px;
+    margin-bottom: var(--mb, 30px);
   }
   .content h1 {
     font-size: 24px;

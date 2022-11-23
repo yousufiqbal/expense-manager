@@ -1,6 +1,6 @@
-<div class="equal">
+<section class="equal">
   <slot></slot>
-</div>
+</section>
 
 <style>
   .equal {

@@ -11,7 +11,7 @@
   {#each Object.keys(profile) as item}
   <div class="part">
     <div class="property">{item}</div>
-    <div class="value">{profile[item]}</div>
+    <div class="value">{profile[item]}</div> 
   </div>
   {/each}
 

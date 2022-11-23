@@ -1,11 +1,12 @@
 <script>
-  import Button from "$lib/components/Button.svelte";
-  import Buttons from "$lib/components/Buttons.svelte";
-  import Profile from "./Profile.svelte";
+  import Message from "$lib/components/Message.svelte";
+  import Detail from "./Detail.svelte";
 </script>
 
-<Profile />
+<Detail />
 
-<Buttons>
-  <Button name="Logout" icon="ri:logout-box-line" type="secondary" href="/login" />
-</Buttons>
+<Message>
+  <p>
+    Your email is not verified. Please click on the link sent to your <em>email inbox</em> to complete verification.
+  </p>
+</Message>
