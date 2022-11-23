@@ -15,6 +15,6 @@
 </Form>
 
 <Buttons --gap="25px">
-  <Button name="Register" icon="ri:login-box-line" type="secondary" />
+  <Button name="Register" icon="ri:check-double-line" type="secondary" />
   <Button name="Already a user?" type="ghost" href="/login" />
 </Buttons>
