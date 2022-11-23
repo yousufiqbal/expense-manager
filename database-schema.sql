@@ -117,15 +117,15 @@ CREATE TABLE IF NOT EXISTS `transfers` (
 -- Dumping structure for table expense-manager.users
 CREATE TABLE IF NOT EXISTS `users` (
   `userId` int NOT NULL AUTO_INCREMENT,
-  `subId` int NOT NULL,
   `name` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
-  `loginMethod` enum('google') NOT NULL,
+  `password` char(60) NOT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT '0',
+  `otp` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `currency` varchar(10) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `subId` (`subId`)
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.users: ~0 rows (approximately)

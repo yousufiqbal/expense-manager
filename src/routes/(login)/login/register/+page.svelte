@@ -5,15 +5,16 @@
   import Form from "$lib/components/Form.svelte";
   import { title } from "$lib/others/stores";
 
-  $title = 'Login'
+  $title = 'Register'
 </script>
 
 <Form --gap="30px">
+  <Field label="Name" --cols={2} />
   <Field label="Email" --cols={2} type="email" />
   <Field label="Password" --cols={2} type="password" />
 </Form>
 
 <Buttons --gap="25px">
-  <Button name="Login" icon="ri:login-box-line" type="secondary" />
-  <Button name="Forgot Password?" type="ghost" href="/forgot-password" />
+  <Button name="Register" icon="ri:login-box-line" type="secondary" />
+  <Button name="Already a user?" type="ghost" href="/login" />
 </Buttons>

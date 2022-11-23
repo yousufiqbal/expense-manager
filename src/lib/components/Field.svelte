@@ -8,6 +8,7 @@
   export let placeholder = ''
   export let value = ''
   export let el
+  export let readonly = false
 
   const typeMe = node => {
     node.type = type
@@ -19,8 +20,8 @@
 </script>
 
 <div class="field">
-  <label for={attr}>{label}</label>
-  <input bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} bind:value size="1">
+  <label class:readonly for={attr}>{label}</label>
+  <input class:readonly {readonly} bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} bind:value size="1">
   {#if error && touched}
   <span class="error">{error}</span>
   {/if}
@@ -33,6 +34,7 @@
     /* border: 1px dashed red; */
   }
   label {
+    border-radius: var(--radius);
     z-index: 1;
     margin-left: 10px;
     margin-bottom: -10px;
@@ -55,5 +57,8 @@
     text-transform: capitalize;
     padding: 8px 10px;
     color: var(--red);
+  }
+  .readonly {
+    border-color: black;
   }
 </style>

@@ -8,13 +8,17 @@
 
 {#if !href}
 <button on:click class="button {type}">
+  {#if icon}
   <i><Icon {icon} /></i>
+  {/if}
   <span>{name}</span>
 </button>
 
 {:else}
 <a {href} class="button {type}">
+  {#if icon}
   <i><Icon {icon} /></i>
+  {/if}
   <span>{name}</span>
 </a>
 {/if}
@@ -44,12 +48,12 @@
     background-color: white;
     border: 1px solid var(--border);
   }
-  /* .ghost {
-    flex-flow: row-reverse;
+  .ghost {
+    text-decoration: underline;
     padding: 0;
     box-shadow: none;
     color: var(--primary);
-  } */
+  }
   i {
     font-size: 20px;
   }
