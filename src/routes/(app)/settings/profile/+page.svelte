@@ -1,9 +1,9 @@
 <script>
   import Message from "$lib/components/Message.svelte";
-  import Detail from "./Detail.svelte";
+  import Details from "./Details.svelte";
 </script>
 
-<Detail />
+<Details />
 
 <Message>
   <p>
