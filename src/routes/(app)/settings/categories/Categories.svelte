@@ -1,17 +1,26 @@
 <script>
   import Icon from "@iconify/svelte";
+
+  /** @type {(import('./$types').PageServerData} */
+  export let data
 </script>
 
+{#if data.categories?.length != 0}
 <div class="categories">
-  {#each Array(5) as category}
+  
+  {#each data.categories as category}
   <div class="category">
-    <div class="name">Grocery</div>
-    <a href="/settings/categories/edit-category?id=23" class="edit">
+    <div class="name">{category.name}</div>
+    {#if category.name != 'Transfers'}
+    <a href="/settings/categories/edit-category?category-id={category.categoryId}" class="edit">
       <Icon icon="ri:edit-line" />
     </a>
+    {/if}
   </div>
   {/each}
+  
 </div>
+{/if}
 
 <style>
   .categories {

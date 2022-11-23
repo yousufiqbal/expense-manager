@@ -11,8 +11,6 @@ export const POST = async ({ request, cookies }) => {
   const body = await request.json()
   const credentials = await loginSchema.validate(body, { abortEarly: false })
 
-  console.log(credentials)
-
   // Checking email..
   const user = await db.selectFrom('users')
     .where('users.email', '=', credentials.email)

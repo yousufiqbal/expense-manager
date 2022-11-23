@@ -10,6 +10,9 @@
     { name: 'Settings', href: '/settings' },
     { name: 'Categories', href: '/settings/categories' },
   ]
+
+  /** @type {import('./$types').PageServerData} */
+  export let data
 </script>
 
 <Breadcrumbs {crumbs} icon="ri:settings-4-line" />
@@ -21,4 +24,4 @@
 
 <Tabs transfer={false} />
 
-<Categories />
+<Categories {data} />
