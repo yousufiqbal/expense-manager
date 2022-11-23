@@ -139,10 +139,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.users: ~0 rows (approximately)
+-- Dumping data for table expense-manager.users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
-	(9, 'asdfasdf', 'babajani@baba.com', '$2a$10$q7IjyliA7b2aVRP/R8BGV.p0.hIg3lGBqtK3eMA4WPnsnSGqTyn/K', 0, NULL, 'd7ea653f117970549ce7b97c7ed71a7abf2c350dd67a5f7f4626f5c2df71', 'Rs.', '2022-11-23 15:48:28');
+	(9, 'asdfasdf', 'babajani@baba.com', '$2a$10$q7IjyliA7b2aVRP/R8BGV.p0.hIg3lGBqtK3eMA4WPnsnSGqTyn/K', 0, NULL, 'd7ea653f117970549ce7b97c7ed71a7abf2c350dd67a5f7f4626f5c2df71', 'Rs.', '2022-11-23 15:48:28'),
+	(10, 'Yousuf Iqbal', 'yousufiqbal@gmail.com', '$2a$10$xKWawC4VhthggOX0omAH.OmcKKAd1fKSVd7vNOGaecddTEVT7XUPO', 0, NULL, '1b628f00619dfe8dcb64d3fca0c657b156aee58e3f99e17629e1261df7dd', 'Rs.', '2022-11-23 15:49:48');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
