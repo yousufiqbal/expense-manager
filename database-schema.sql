@@ -127,19 +127,22 @@ CREATE TABLE IF NOT EXISTS `transfers` (
 -- Dumping structure for table expense-manager.users
 CREATE TABLE IF NOT EXISTS `users` (
   `userId` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(300) NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `email` varchar(300) NOT NULL,
   `password` char(60) NOT NULL,
   `isVerified` tinyint(1) NOT NULL DEFAULT '0',
-  `otp` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `currency` varchar(10) NOT NULL,
+  `otp` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `token` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `currency` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'Rs.',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
+	(9, 'asdfasdf', 'babajani@baba.com', '$2a$10$q7IjyliA7b2aVRP/R8BGV.p0.hIg3lGBqtK3eMA4WPnsnSGqTyn/K', 0, NULL, 'd7ea653f117970549ce7b97c7ed71a7abf2c350dd67a5f7f4626f5c2df71', 'Rs.', '2022-11-23 15:48:28');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
