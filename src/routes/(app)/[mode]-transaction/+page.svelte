@@ -13,10 +13,13 @@
 
   $: current = $page.url.searchParams.get('tab') || 'expense'
 
+  
+  let modal = {
+    accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
+  }
+
   /** @type {import('./$types').PageServerData} */
   export let data
-
-  console.log(data)
 
   let transaction = data.transaction || {
     date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
@@ -32,19 +35,19 @@
   const validateIncome = async () => {}
   const validateTransfer = async () => {}
 
-  const chooseAccount = () => {
+  const openAccountModal = () => {
     modal.accounts = true
   }
 
-  const chooseFromAccount = () => {
+  const openFromAccountModal = () => {
     modal.fromAccounts = true
   }
 
-  const chooseToAccount = () => {
+  const openToAccountModal = () => {
     modal.toAccounts = true
   }
 
-  const chooseCategory = () => {
+  const openCategoryModal = () => {
     if (current == 'expense') modal.expenseCategories = true
     if (current == 'income') modal.incomeCategories = true
   }
@@ -54,11 +57,6 @@
     closeAllModals()
   }
   
-  const setCategory = e => {
-    transaction.categoryId = +e.detail.result
-    closeAllModals()
-  }
-
   const setExpenseCategory = e => {
     transaction.expenseCategoryId = +e.detail.result
     closeAllModals()
@@ -68,31 +66,26 @@
     transaction.incomeCategoryId = +e.detail.result
     closeAllModals()
   }
-  
+
+  const setFromAccount = e => {
+    transaction.fromAccountId = +e.detail.result
+    closeAllModals()
+  }
+
+  const setToAccount = e => {
+    transaction.toAccountId = +e.detail.result
+    closeAllModals()
+  }
+
   const closeAllModals = () => {
     modal = {
       accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
     }
   }
 
-  const setFromAccount = e => {
-    transaction.fromAccountId = +e.detail.result
-    closeAllModals()
-  }
-  const setToAccount = e => {
-    transaction.toAccountId = +e.detail.result
-    closeAllModals()
-  }
-
-  let modal = {
-    accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
-  }
-
   $: if (current == 'expense') validateExpense()
   $: if (current == 'income') validateIncome()
   $: if (current == 'transfer') validateTransfer()
-
-  $: console.log(transaction)
 </script>
 
 <Title title="New {maps[current]}" back href="/" />
@@ -104,18 +97,18 @@
   <Field {touched} error={errors.time} bind:value={transaction.time} label="Time" type="time" />
 
   {#if current != 'transfer'}
-  <Select on:click={chooseAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.accountId} value={transaction.accountId} label="Account" />
+  <Select on:click={openAccountModal} n="name" v="accountId" options={data.accounts} {touched} error={errors.accountId} value={transaction.accountId} label="Account" />
   {#if current == 'expense'}
-  <Select on:click={chooseCategory} n="name" v="categoryId" options={data.expenseCategories} {touched} error={errors.expenseCategoryId} value={transaction.expenseCategoryId} label="Exp. Category" />
+  <Select on:click={openCategoryModal} n="name" v="categoryId" options={data.expenseCategories} {touched} error={errors.expenseCategoryId} value={transaction.expenseCategoryId} label="Exp. Category" />
   {/if}
   {#if current == 'income'}
-  <Select on:click={chooseCategory} n="name" v="categoryId" options={data.incomeCategories} {touched} error={errors.incomeCategoryId} value={transaction.incomeCategoryId} label="Inc. Category" />
+  <Select on:click={openCategoryModal} n="name" v="categoryId" options={data.incomeCategories} {touched} error={errors.incomeCategoryId} value={transaction.incomeCategoryId} label="Inc. Category" />
   {/if}
   {/if}
   
   {#if current == 'transfer'}
-  <Select on:click={chooseFromAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.fromAccountId} value={transaction.fromAccountId} label="From Account" />
-  <Select on:click={chooseToAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.toAccountId} value={transaction.toAccountId} label="To Account" />
+  <Select on:click={openFromAccountModal} n="name" v="accountId" options={data.accounts} {touched} error={errors.fromAccountId} value={transaction.fromAccountId} label="From Account" />
+  <Select on:click={openToAccountModal} n="name" v="accountId" options={data.accounts} {touched} error={errors.toAccountId} value={transaction.toAccountId} label="To Account" />
   {/if}
 
   <Field {touched} error={errors.amount} bind:value={transaction.amount} label="Amount (Rs.)" --cols={2} inputmode="numeric" />
