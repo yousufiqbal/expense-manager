@@ -8,13 +8,17 @@
   
   onMount(() => {
     setTimeout(async () => {
-      const response = await put(`/verify-email?email=${$page.url.searchParams.get('email')}.com&token=${$page.url.searchParams.get('token')}`)
-      if (response.ok) {
-        addToast({ message: (await response.json()).message })
-        goto('/')
-      }
+      await verifyEmail()
     }, 2000);
   })
+  
+  const verifyEmail = async () => {
+    const response = await put(`/verify-email?email=${$page.url.searchParams.get('email')}.com&token=${$page.url.searchParams.get('token')}`)
+    if (response.ok) {
+      addToast({ message: (await response.json()).message })
+    }
+    goto('/')
+  }
 </script>
 
 <Title title="Verifying Email" icon="ri:time-line" />

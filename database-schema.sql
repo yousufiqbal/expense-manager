@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.accounts: ~4 rows (approximately)
+-- Dumping data for table expense-manager.accounts: ~2 rows (approximately)
 INSERT INTO `accounts` (`accountId`, `name`, `created`) VALUES
 	(1, 'Papa', '2022-11-23 12:21:41'),
 	(3, 'Yousuf', '2022-11-23 12:23:18'),
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table expense-manager.users: ~1 rows (approximately)
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
-	(11, 'Yousuf Iqbal', 'yousufiqbal@gmail.com', '$2a$10$W4XA3PWYwdeaWBKHOkokMODjRX0wd.zqMiUfZ8cX3W6lTQFEeNq4W', 1, NULL, '793d0863f835afa0a6eac3c6f3a786079fae63b55c997dc112e34a76d6ae', 'Rs.', '2022-11-23 11:47:10');
+	(11, 'Yousuf Iqbal Dadda 2', 'yousufiqbal@gmail.com', '$2a$10$W4XA3PWYwdeaWBKHOkokMODjRX0wd.zqMiUfZ8cX3W6lTQFEeNq4W', 1, NULL, '793d0863f835afa0a6eac3c6f3a786079fae63b55c997dc112e34a76d6ae', 'Rs.', '2022-11-23 11:47:10');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { json, redirect } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
 export const PUT = async ({ url }) => {
@@ -13,10 +13,10 @@ export const PUT = async ({ url }) => {
     .where('users.email', '=', email)
     .select(['userId', 'isVerified']).executeTakeFirst()
 
-  // If no-user or no-user is verified..
+  // If no-user or no-user is already verified..
   if (!user || user.isVerified) {
     // Silent redirect, not telling user that this token is invalid
-    throw redirect('/')
+    throw error(400, 'Nothing')
   }
 
   await db.updateTable('users')
