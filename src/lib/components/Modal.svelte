@@ -10,6 +10,14 @@
     dispatch('close')
   }
 
+  /**
+   * 
+   * @param {KeyboardEvent} e
+   */
+  const handleEscapeKey = e => {
+    if (e.key == 'Escape') dispatchClose()
+  }
+
   export let title
   export let type = 'secondary'
 </script>
@@ -34,6 +42,8 @@
 
 </div>
 {/if}
+
+<svelte:body on:keydown={handleEscapeKey} />
 
 <style>
   .wrapper {

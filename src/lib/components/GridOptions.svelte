@@ -1,6 +1,8 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
+  export let n, v
+
   const dispatch = createEventDispatcher()
 
   /**
@@ -11,15 +13,14 @@
     dispatch('select', { result: e.target.dataset.result })
   }
 
-  /** @type {{ name: string, urlName: string }[]} */
   export let options = []
 </script>
 
 <div class="grid-options">
 
   {#each options as option}
-  <button data-result="{option.urlName}" on:click={dispatchSelect} class="option">
-    {option.name}
+  <button data-result="{option[v]}" on:click={dispatchSelect} class="option">
+    {option[n]}
   </button>
   {/each}
 

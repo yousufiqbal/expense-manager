@@ -7,6 +7,7 @@
   import Form from "$lib/components/Form.svelte";
   import GridOptions from "$lib/components/GridOptions.svelte";
   import Modal from "$lib/components/Modal.svelte";
+  import Select from "$lib/components/Select.svelte";
   import Title from "$lib/components/Title.svelte";
   import { categorySchema, extractYupErrors } from "$lib/others/schema";
   import { addToast } from "$lib/others/toasts";
@@ -38,7 +39,7 @@
     const body = await response.json()
     if (response.ok) {
       addToast({ message: body.message })
-      goto('/')
+      goto('/settings/categories?tab=' + data.category.belongsTo || 'expense')
     }
   }
 
@@ -47,7 +48,7 @@
     const body = await response.json()
     if (response.ok) {
       addToast({ message: body.message })
-      goto('/settings/categories')
+      goto('/settings/categories?tab=' + data.category.belongsTo || 'expense')
     }
   }
 
@@ -60,13 +61,14 @@
     }
   }
   
+  /** @param {MouseEvent} e */
   const openModal = e => {
-    e.target.blur()
+    console.log('came')
     modal = true
   }
   
   const setInside = e => {
-    data.category.belongsTo = types.filter(el => el.urlName == e.detail.result)[0].name
+    data.category.belongsTo = e.detail.result
     closeModal()
   }
   
@@ -81,7 +83,7 @@
 
 <Form>
   <Field {touched} error={errors.name} --cols={2} label="Category Name" bind:value={data.category.name} />
-  <Field {touched} error={errors.belongsTo} --cols={2} label="Belongs To" on:focus={openModal} value="{data.category.belongsTo}" />
+  <Select options={types} n="name" v="urlName" {touched} error={errors.belongsTo} --cols={2} label="Belongs To" on:click={openModal} value="{data.category.belongsTo}" />
 </Form>
 
 <Buttons>
@@ -91,6 +93,6 @@
 
 {#if modal}
 <Modal type="secondary" on:close={closeModal} title="Choose Type">
-  <GridOptions on:select={setInside} options={types} />
+  <GridOptions on:select={setInside} options={types} n="name" v="urlName" />
 </Modal>
 {/if}
