@@ -1,13 +1,22 @@
-<div class="activities">
+<script>
+  import dayjs from 'dayjs';
 
-  {#each Array(10) as item}
+  /** @type {import('./$types').PageServerData} */
+  export let data
+</script>
+
+{#if data.activities?.length != 0}
+<div class="activities">
+  
+  {#each data.activities as activity}
   <div class="activity">
-    <div class="dated">Nov 12, 2022 - 12:01 PM</div>
-    <div class="detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, odio!</div>
+    <div class="dated">{dayjs(activity.created).format('MMM DD, YYYY - hh:mm a')}</div>
+    <div class="detail">{activity.detail}</div>
   </div>
   {/each}
 
 </div>
+{/if}
 
 <style>
   .activities {
