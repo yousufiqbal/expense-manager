@@ -34,18 +34,15 @@
     modal.accounts = true
   }
 
-  const chooseFromAccount = e => {
-    e.target.blur()
+  const chooseFromAccount = () => {
     modal.fromAccounts = true
   }
 
-  const chooseToAccount = e => {
-    e.target.blur()
+  const chooseToAccount = () => {
     modal.toAccounts = true
   }
 
-  const chooseCategory = e => {
-    e.target.blur()
+  const chooseCategory = () => {
     if (current == 'expense') modal.expenseCategories = true
     if (current == 'income') modal.incomeCategories = true
   }
@@ -55,19 +52,24 @@
     closeAllModals()
   }
   
-  const setCategory = () => {
+  const setCategory = e => {
     transaction.categoryId = +e.detail.result
+    console.log(e.detail.result)
     closeAllModals()
   }
-
+  
   const closeAllModals = () => {
     modal = {
       accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
     }
   }
 
-  const setFromAccount = () => {}
-  const setToAccount = () => {}
+  const setFromAccount = e => {
+    closeAllModals()
+  }
+  const setToAccount = e => {
+    closeAllModals()
+  }
 
   let modal = {
     accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
@@ -87,8 +89,8 @@
   <Field {touched} error={errors.time} bind:value={transaction.time} label="Time" type="time" />
 
   {#if current != 'transfer'}
-  <Select on:click={chooseAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.account} value={transaction.accountId} label="Account" />
-  <Field {touched} error={errors.category} bind:value={transaction.category} label="Category" on:focus={chooseCategory} />
+  <Select on:click={chooseAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.accountId} value={transaction.accountId} label="Account" />
+  <Select on:click={chooseCategory} n="name" v="categoryId" options={data.categories} {touched} error={errors.categoryId} value={transaction.categoryId} label="Category" />
   {/if}
 
   {#if current == 'transfer'}
@@ -115,13 +117,13 @@
 
 {#if modal.expenseCategories}
 <Modal on:close={closeAllModals} title="Expense Categories">
-  <GridOptions on:select={setCategory} options={data.expenseCategories} n="name" v="accountId" />
+  <GridOptions on:select={setCategory} options={data.expenseCategories} n="name" v="categoryId" />
 </Modal>
 {/if}
 
 {#if modal.incomeCategories}
 <Modal on:close={closeAllModals} title="Income Categories">
-  <GridOptions on:select={setCategory} options={data.incomeCategories} n="name" v="accountId" />
+  <GridOptions on:select={setCategory} options={data.incomeCategories} n="name" v="categoryId" />
 </Modal>
 {/if}
 
