@@ -34,7 +34,7 @@ export const registerSchema = yup.object({
 
 export const accountSchema = yup.object({
   name: yup.string().min(3).max(100).required().ne(),
-  balance: yup.number().min(0).optional().ne(),
+  balance: yup.number('Only numbers allowed').min(0).optional().ne(),
 }).noUnknown(true)
 
 export const categorySchema = yup.object({

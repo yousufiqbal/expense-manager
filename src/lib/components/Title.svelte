@@ -43,11 +43,12 @@
     position: sticky;
     top: 0;
     display: flex;
+    align-items: center;
     gap: 15px;
     margin-bottom: var(--mb, 20px);
   }
   h1 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
   }
   i {

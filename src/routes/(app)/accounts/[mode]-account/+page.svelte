@@ -1,22 +1,25 @@
 <script>
-    import { goto } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import Button from "$lib/components/Button.svelte";
   import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
-    import ServerError from "$lib/components/ServerError.svelte";
+  import ServerError from "$lib/components/ServerError.svelte";
   import Title from "$lib/components/Title.svelte";
   import { accountSchema, extractYupErrors } from "$lib/others/schema";
   import { addToast } from "$lib/others/toasts";
-  import { isEmpty, post, put } from "$lib/others/utils";
+  import { capitalize, isEmpty, post, put } from "$lib/others/utils";
 
-  export let data = { name: '', balance: 0 }
+  /** @type {import('./\types').PageServerData} */
+  export let data
+
+  $: account = data.account || { name: '', balance: 0 }
   let touched = false, errors = {}
 
   const validate = async () => {
     try {
-      await accountSchema.validate(data, { abortEarly: false })
+      await accountSchema.validate(account, { abortEarly: false })
       errors = {}
     } catch (error) {
       errors = extractYupErrors(error)
@@ -24,7 +27,7 @@
   }
 
   const addAccount = async () => {
-    const response = await post('/accounts/add-account', data)
+    const response = await post('/accounts/add-account', account)
     const body = await response.json()
     if (response.ok) {
       addToast({ message: body.message })
@@ -36,9 +39,8 @@
   }
 
   const editAccount = async () => {
-    const response = await put(`/accounts/${$page.params.mode}-account?account-id=${$page.url.searchParams.get('account-id')}`, data)
+    const response = await put(`/accounts/${$page.params.mode}-account?account-id=${$page.url.searchParams.get('account-id')}`, account)
     const body = await response.json()
-    console.log(body)
     if (response.ok) {
       addToast({ message: body.message })
       goto('/accounts')
@@ -60,12 +62,12 @@
   $: data && validate()
 </script>
 
-<Title title="Add Account" back href="/accounts" />
+<Title title="{capitalize($page.params.mode)} Account" back href="/accounts" />
 
 <Form>
-  <Field {touched} error={errors.name} bind:value={data.name} --cols={2} label="Account Name" />
+  <Field {touched} error={errors.name} bind:value={account.name} --cols={2} label="Account Name" />
   {#if $page.params.mode == 'add'}
-  <Field {touched} error={errors.balance} bind:value={data.balance} --cols={2} label="Starting Balance (Rs.)" inputmode="numeric" />
+  <Field {touched} error={errors.balance} bind:value={account.balance} --cols={2} label="Starting Balance (Rs.)" inputmode="numeric" />
   {/if}
 </Form>
 
