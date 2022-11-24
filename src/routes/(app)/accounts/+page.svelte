@@ -6,7 +6,7 @@
   import Title from "$lib/components/Title.svelte";
   import Accounts from "./Accounts.svelte";
 
-  /** @type {import('./\types').PageServerData} */
+  /** @type {import('./$types').PageServerData} */
   export let data
 </script>
 

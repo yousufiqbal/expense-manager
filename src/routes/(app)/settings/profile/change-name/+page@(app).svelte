@@ -11,7 +11,7 @@
     import { addToast } from "$lib/others/toasts";
     import { isEmpty, post } from "$lib/others/utils";
 
-  /** @type {import('./\types').PageServerData} */
+  /** @type {import('./$types').PageServerData} */
   export let data
   let touched = false, errors = {}
 

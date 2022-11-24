@@ -2,7 +2,7 @@
   import Message from "$lib/components/Message.svelte";
   import Profile from "./Profile.svelte";
 
-  /** @type {import('./\types').PageServerData} */
+  /** @type {import('./$types').PageServerData} */
   export let data
 </script>
 

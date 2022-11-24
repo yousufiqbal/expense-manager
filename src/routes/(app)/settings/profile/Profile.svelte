@@ -1,7 +1,7 @@
 <script>
   import dayjs from 'dayjs';
 
-  /** @type {import('./\types').PageServerData} */
+  /** @type {import('./$types').PageServerData} */
   export let data
 </script>
 

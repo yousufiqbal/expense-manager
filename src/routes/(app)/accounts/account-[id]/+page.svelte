@@ -8,7 +8,7 @@
   import Title from "$lib/components/Title.svelte";
   import TransactionGroups from "$lib/components/TransactionGroups.svelte";
 
-  /** @type {import('./\types').PageServerData} */
+  /** @type {import('./$types').PageServerData} */
   export let data
 </script>
 
