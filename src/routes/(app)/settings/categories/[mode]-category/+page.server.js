@@ -3,17 +3,16 @@ import { db } from '$lib/server/db';
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ params, url, locals }) => {
 
-  if (params.mode != 'edit') return {
-    category: { name: '', belongsTo: '' }
+  if (params.mode == 'edit') {
+
+    const category = await db.selectFrom(`${url.searchParams.get('type')}_categories`)
+      .selectAll()
+      .where('categories.categoryId', '=', categoryId)
+      .where('categories.userId', '=', locals.userId)
+      .executeTakeFirst()
+  
+    return { category }
   }
 
-  const categoryId = url.searchParams.get('category-id')
-  const category = await db.selectFrom('categories')
-    .selectAll()
-    .where('categories.categoryId', '=', categoryId)
-    .where('categories.userId', '=', locals.userId)
-    .executeTakeFirst()
-
-  return { category }
 
 };
