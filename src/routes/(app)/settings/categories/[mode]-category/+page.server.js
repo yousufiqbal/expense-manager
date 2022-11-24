@@ -14,7 +14,6 @@ export const load = async ({ params, url, locals }) => {
     .where('categories.userId', '=', locals.userId)
     .executeTakeFirst()
 
-    console.log(category)
   return { category }
 
 };

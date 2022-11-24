@@ -63,7 +63,6 @@
   
   /** @param {MouseEvent} e */
   const openModal = e => {
-    console.log('came')
     modal = true
   }
   

@@ -9,14 +9,6 @@ export const db = new Kysely<DB>({
     pool: createPool({
       uri: DATABASE_URL
     }),
-  }),
-
-  // log: event => {
-  //   if (event.level === 'query') {
-  //     console.log(event.query.sql)
-  //     console.log(event.query.parameters)
-  //     console.log('\n')
-  //   }
-  // },
+  })
 
 })
