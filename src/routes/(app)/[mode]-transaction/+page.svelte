@@ -7,11 +7,26 @@
   import Modal from "$lib/components/Modal.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import Title from "$lib/components/Title.svelte";
+  import dayjs from "dayjs";
+
+  /** @type {import('./$types').PageServerData} */
+  export let data
+
+  let transaction = data.transaction || {
+    date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), account: '', category: '', fromAccount: '', toAccount: '', amount: '', title: '', description: ''
+  }
 
   $: current = $page.url.searchParams.get('tab') || 'expense'
+
+  let touched = false, errors = {}
+
   
   const maps = { 'expense': 'Expense', 'income': 'Income', 'transfer': 'Transfer', }
   const colors = { 'expense': 'warning', 'income': 'primary', 'transfer': 'secondary', }
+  
+  const validateExpense = async () => {}
+  const validateIncome = async () => {}
+  const validateTransfer = async () => {}
 
   const chooseAccount = e => {
     e.target.blur()
@@ -51,6 +66,12 @@
   let modal = {
     accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
   }
+
+  $: if (current == 'expense') validateExpense()
+  $: if (current == 'income') validateIncome()
+  $: if (current == 'transfer') validateTransfer()
+
+  $: console.log(transaction)
 </script>
 
 <Title title="New {maps[current]}" back href="/" />
@@ -58,22 +79,22 @@
 
 <Form>
 
-  <Field label="Date" type="date" />
-  <Field label="Time" type="time" />
+  <Field {touched} error={errors.date} bind:value={transaction.date} label="Date" type="date" />
+  <Field {touched} error={errors.time} bind:value={transaction.time} label="Time" type="time" />
 
   {#if current != 'transfer'}
-  <Field label="Account" on:focus={chooseAccount} />
-  <Field label="Category" on:focus={chooseCategory} />
+  <Field {touched} error={errors.account} bind:value={transaction.account} label="Account" on:focus={chooseAccount} />
+  <Field {touched} error={errors.category} bind:value={transaction.category} label="Category" on:focus={chooseCategory} />
   {/if}
 
   {#if current == 'transfer'}
-  <Field label="From" on:focus={chooseFromAccount} />
-  <Field label="To" on:focus={chooseToAccount} />
+  <Field {touched} error={errors.fromAccount} bind:value={transaction.fromAccount} label="From" on:focus={chooseFromAccount} />
+  <Field {touched} error={errors.toAccount} bind:value={transaction.toAccount} label="To" on:focus={chooseToAccount} />
   {/if}
 
-  <Field label="Amount" --cols={2} inputmode="numeric" />
-  <Field label="Title" --cols={2} />
-  <Field label="Description" --cols={2} textarea />
+  <Field {touched} error={errors.amount} bind:value={transaction.amount} label="Amount" --cols={2} inputmode="numeric" />
+  <Field {touched} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
+  <Field {touched} error={errors.description} bind:value={transaction.description} label="Description" --cols={2} textarea />
 
 </Form>
 

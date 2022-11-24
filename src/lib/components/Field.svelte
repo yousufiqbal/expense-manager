@@ -20,11 +20,14 @@
 </script>
 
 <div class="field">
-  <label class:readonly for={attr}>{label}</label>
+
+  <label for={attr}>{label}</label>
   <input class:readonly {readonly} bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} bind:value size="1">
+
   {#if error && touched}
   <span class="error">{error}</span>
   {/if}
+
 </div>
 
 <style>
