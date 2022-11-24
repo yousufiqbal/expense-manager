@@ -29,7 +29,7 @@
 <style>
   .grid-options {
     display: grid;
-    gap: 10px;
+    gap: 15px;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     /* border: 1px dashed red; */
   }
@@ -38,5 +38,6 @@
     padding: 10px;
     text-align: center;
     border: 1px solid var(--border);
+    box-shadow: var(--shadow);
   }
 </style>

@@ -4,10 +4,14 @@
   import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
+    import GridOptions from "$lib/components/GridOptions.svelte";
   import Modal from "$lib/components/Modal.svelte";
+    import Select from "$lib/components/Select.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import Title from "$lib/components/Title.svelte";
   import dayjs from "dayjs";
+
+  $: current = $page.url.searchParams.get('tab') || 'expense'
 
   /** @type {import('./$types').PageServerData} */
   export let data
@@ -16,11 +20,9 @@
     date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), account: '', category: '', fromAccount: '', toAccount: '', amount: '', title: '', description: ''
   }
 
-  $: current = $page.url.searchParams.get('tab') || 'expense'
-
   let touched = false, errors = {}
 
-  
+  // others..
   const maps = { 'expense': 'Expense', 'income': 'Income', 'transfer': 'Transfer', }
   const colors = { 'expense': 'warning', 'income': 'primary', 'transfer': 'secondary', }
   
@@ -28,8 +30,7 @@
   const validateIncome = async () => {}
   const validateTransfer = async () => {}
 
-  const chooseAccount = e => {
-    e.target.blur()
+  const chooseAccount = () => {
     modal.accounts = true
   }
 
@@ -49,12 +50,14 @@
     if (current == 'income') modal.incomeCategories = true
   }
 
-  const setAccount = () => {
-
+  const setAccount = e => {
+    transaction.accountId = +e.detail.result
+    closeAllModals()
   }
-
+  
   const setCategory = () => {
-
+    transaction.categoryId = +e.detail.result
+    closeAllModals()
   }
 
   const closeAllModals = () => {
@@ -63,6 +66,9 @@
     }
   }
 
+  const setFromAccount = () => {}
+  const setToAccount = () => {}
+
   let modal = {
     accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
   }
@@ -70,8 +76,6 @@
   $: if (current == 'expense') validateExpense()
   $: if (current == 'income') validateIncome()
   $: if (current == 'transfer') validateTransfer()
-
-  $: console.log(transaction)
 </script>
 
 <Title title="New {maps[current]}" back href="/" />
@@ -83,7 +87,7 @@
   <Field {touched} error={errors.time} bind:value={transaction.time} label="Time" type="time" />
 
   {#if current != 'transfer'}
-  <Field {touched} error={errors.account} bind:value={transaction.account} label="Account" on:focus={chooseAccount} />
+  <Select on:click={chooseAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.account} value={transaction.accountId} label="Account" />
   <Field {touched} error={errors.category} bind:value={transaction.category} label="Category" on:focus={chooseCategory} />
   {/if}
 
@@ -105,30 +109,31 @@
 
 {#if modal.accounts}
 <Modal on:close={closeAllModals} title="Accounts">
-  
+  <GridOptions on:select={setAccount} options={data.accounts} n="name" v="accountId" />
 </Modal>
 {/if}
 
 {#if modal.expenseCategories}
 <Modal on:close={closeAllModals} title="Expense Categories">
-  
+  <GridOptions on:select={setCategory} options={data.expenseCategories} n="name" v="accountId" />
 </Modal>
 {/if}
 
 {#if modal.incomeCategories}
 <Modal on:close={closeAllModals} title="Income Categories">
-  
+  <GridOptions on:select={setCategory} options={data.incomeCategories} n="name" v="accountId" />
 </Modal>
 {/if}
 
 {#if modal.fromAccounts}
 <Modal on:close={closeAllModals} title="From Account">
-  
+  <GridOptions on:select={setFromAccount} options={data.accounts} n="name" v="accountId" />
 </Modal>
 {/if}
 
 {#if modal.toAccounts}
 <Modal on:close={closeAllModals} title="To Account">
+  <GridOptions on:select={setToAccount} options={data.accounts} n="name" v="accountId" />
   
 </Modal>
 {/if}

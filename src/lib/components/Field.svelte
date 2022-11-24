@@ -5,7 +5,7 @@
   export let touched = false, error = null
   export let type = 'text'
   export let inputmode = 'text'
-  export let placeholder = ''
+  export let placeholder = null
   export let value = ''
   export let el
   export let readonly = false

@@ -11,10 +11,9 @@
   import { addToast } from "$lib/others/toasts";
   import { capitalize, isEmpty, post, put } from "$lib/others/utils";
 
-  /** @type {import('./\types').PageServerData} */
+  /** @type {import('./$types').PageServerData} */
   export let data
-
-  $: account = data.account || { name: '', balance: 0 }
+  let account = data.account || { name: '', balance: 0 }
   let touched = false, errors = {}
 
   const validate = async () => {
@@ -59,7 +58,7 @@
     }
   }
 
-  $: data && validate()
+  $: account && validate()
 </script>
 
 <Title title="{capitalize($page.params.mode)} Account" back href="/accounts" />

@@ -19,16 +19,18 @@ export const POST = async ({ request, cookies, locals }) => {
   const accountId = Number(result.insertId)
 
   // If has starting balance.. adding income as 'starting balance'
-  await db.insertInto('incomes')
-    .values({
-      userId: locals.userId,
-      accountId,
-      amount: account.balance,
-      date: dayjs().format('YYYY-MM-DD'),
-      time: dayjs().format('HH:mm'),
-      title: 'Starting Balance',
-      categoryId: 1 // Others in income category
-    }).execute()
+  if (account.balance) {
+    await db.insertInto('incomes')
+      .values({
+        userId: locals.userId,
+        accountId,
+        amount: account.balance,
+        date: dayjs().format('YYYY-MM-DD'),
+        time: dayjs().format('HH:mm'),
+        title: 'Starting Balance',
+        categoryId: 1 // Others in income category
+      }).execute()
+  } 
 
   return json({
     message: 'Account Added'
