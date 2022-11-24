@@ -14,15 +14,11 @@ export const load = async ({ locals }) => {
     .orderBy('categories.name', 'asc')
     .selectAll().execute()
     
-  console.log(expenseCategories)
-  
   const incomeCategories = await db.selectFrom('categories')
     .where('categories.userId', '=', locals.userId)
     .where('categories.belongsTo', '=', 'income')
     .orderBy('categories.name', 'asc')
     .selectAll().execute()
   
-  console.log(incomeCategories)
-
   return { accounts, expenseCategories, incomeCategories }
 };

@@ -4,9 +4,9 @@
   import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
-    import GridOptions from "$lib/components/GridOptions.svelte";
+  import GridOptions from "$lib/components/GridOptions.svelte";
   import Modal from "$lib/components/Modal.svelte";
-    import Select from "$lib/components/Select.svelte";
+  import Select from "$lib/components/Select.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import Title from "$lib/components/Title.svelte";
   import dayjs from "dayjs";
@@ -16,8 +16,10 @@
   /** @type {import('./$types').PageServerData} */
   export let data
 
+  console.log(data)
+
   let transaction = data.transaction || {
-    date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), account: '', category: '', fromAccount: '', toAccount: '', amount: '', title: '', description: ''
+    date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
   }
 
   let touched = false, errors = {}
@@ -54,7 +56,16 @@
   
   const setCategory = e => {
     transaction.categoryId = +e.detail.result
-    console.log(e.detail.result)
+    closeAllModals()
+  }
+
+  const setExpenseCategory = e => {
+    transaction.expenseCategoryId = +e.detail.result
+    closeAllModals()
+  }
+
+  const setIncomeCategory = e => {
+    transaction.incomeCategoryId = +e.detail.result
     closeAllModals()
   }
   
@@ -65,9 +76,11 @@
   }
 
   const setFromAccount = e => {
+    transaction.fromAccountId = +e.detail.result
     closeAllModals()
   }
   const setToAccount = e => {
+    transaction.toAccountId = +e.detail.result
     closeAllModals()
   }
 
@@ -78,6 +91,8 @@
   $: if (current == 'expense') validateExpense()
   $: if (current == 'income') validateIncome()
   $: if (current == 'transfer') validateTransfer()
+
+  $: console.log(transaction)
 </script>
 
 <Title title="New {maps[current]}" back href="/" />
@@ -90,15 +105,20 @@
 
   {#if current != 'transfer'}
   <Select on:click={chooseAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.accountId} value={transaction.accountId} label="Account" />
-  <Select on:click={chooseCategory} n="name" v="categoryId" options={data.categories} {touched} error={errors.categoryId} value={transaction.categoryId} label="Category" />
+  {#if current == 'expense'}
+  <Select on:click={chooseCategory} n="name" v="categoryId" options={data.expenseCategories} {touched} error={errors.expenseCategoryId} value={transaction.expenseCategoryId} label="Exp. Category" />
   {/if}
-
+  {#if current == 'income'}
+  <Select on:click={chooseCategory} n="name" v="categoryId" options={data.incomeCategories} {touched} error={errors.incomeCategoryId} value={transaction.incomeCategoryId} label="Inc. Category" />
+  {/if}
+  {/if}
+  
   {#if current == 'transfer'}
-  <Field {touched} error={errors.fromAccount} bind:value={transaction.fromAccount} label="From" on:focus={chooseFromAccount} />
-  <Field {touched} error={errors.toAccount} bind:value={transaction.toAccount} label="To" on:focus={chooseToAccount} />
+  <Select on:click={chooseFromAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.fromAccountId} value={transaction.fromAccountId} label="From Account" />
+  <Select on:click={chooseToAccount} n="name" v="accountId" options={data.accounts} {touched} error={errors.toAccountId} value={transaction.toAccountId} label="To Account" />
   {/if}
 
-  <Field {touched} error={errors.amount} bind:value={transaction.amount} label="Amount" --cols={2} inputmode="numeric" />
+  <Field {touched} error={errors.amount} bind:value={transaction.amount} label="Amount (Rs.)" --cols={2} inputmode="numeric" />
   <Field {touched} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
   <Field {touched} error={errors.description} bind:value={transaction.description} label="Description" --cols={2} textarea />
 
@@ -117,13 +137,13 @@
 
 {#if modal.expenseCategories}
 <Modal on:close={closeAllModals} title="Expense Categories">
-  <GridOptions on:select={setCategory} options={data.expenseCategories} n="name" v="categoryId" />
+  <GridOptions on:select={setExpenseCategory} options={data.expenseCategories} n="name" v="categoryId" />
 </Modal>
 {/if}
 
 {#if modal.incomeCategories}
 <Modal on:close={closeAllModals} title="Income Categories">
-  <GridOptions on:select={setCategory} options={data.incomeCategories} n="name" v="categoryId" />
+  <GridOptions on:select={setIncomeCategory} options={data.incomeCategories} n="name" v="categoryId" />
 </Modal>
 {/if}
 
