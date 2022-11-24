@@ -9,6 +9,9 @@
   import Select from "$lib/components/Select.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import Title from "$lib/components/Title.svelte";
+    import { extractYupErrors, generateExpenseSchema } from "$lib/others/schema";
+    import { addToast } from "$lib/others/toasts";
+    import { isEmpty, post } from "$lib/others/utils";
   import dayjs from "dayjs";
 
   $: current = $page.url.searchParams.get('tab') || 'expense'
@@ -17,9 +20,12 @@
   let modal = {
     accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
   }
-
+  
   /** @type {import('./$types').PageServerData} */
   export let data
+
+  // Schema generation..
+  let expenseSchema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.categoryId)))
 
   let transaction = data.transaction || {
     date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
@@ -31,7 +37,14 @@
   const maps = { 'expense': 'Expense', 'income': 'Income', 'transfer': 'Transfer', }
   const colors = { 'expense': 'warning', 'income': 'primary', 'transfer': 'secondary', }
   
-  const validateExpense = async () => {}
+  const validateExpense = async () => {
+    try {
+      await expenseSchema.validate(transaction, { abortEarly: false })
+      errors = {}
+    } catch (error) {
+      errors = extractYupErrors(error)
+    }
+  }
   const validateIncome = async () => {}
   const validateTransfer = async () => {}
 
@@ -83,9 +96,29 @@
     }
   }
 
-  $: if (current == 'expense') validateExpense()
-  $: if (current == 'income') validateIncome()
-  $: if (current == 'transfer') validateTransfer()
+  const addExpense = async () => {
+    console.log('came2me')
+    const response = await post('/add-expense', transaction)
+    const body = await response.json()
+    if (response.ok) {
+      addToast({ message: body.message })
+    }
+  }
+
+  const submit = async () => {
+    if (isEmpty(errors)) {
+      if ($page.params.mode == 'add' && current == 'expense') await addExpense()
+    } else {
+      console.log(errors)
+      touched = true
+    }
+  }
+
+  $: console.log(transaction)
+
+  $: transaction && current == 'expense' && validateExpense()
+  $: transaction && current == 'income' && validateIncome()
+  $: transaction && current == 'transfer' && validateTransfer()
 </script>
 
 <Title title="New {maps[current]}" back href="/" />
@@ -118,9 +151,12 @@
 </Form>
 
 <Buttons>
-  <Button name="Save {maps[current]}" type={colors[current]} icon="ri:save-line" />
+  <Button on:click={submit} name="Save {maps[current]}" type={colors[current]} icon="ri:save-line" />
   <Button name="Discard" type="transparent" icon="ri:close-line" href="/" />
 </Buttons>
+
+
+<!-- Modals... -->
 
 {#if modal.accounts}
 <Modal on:close={closeAllModals} title="Accounts">
@@ -149,6 +185,5 @@
 {#if modal.toAccounts}
 <Modal on:close={closeAllModals} title="To Account">
   <GridOptions on:select={setToAccount} options={data.accounts} n="name" v="accountId" />
-  
 </Modal>
 {/if}

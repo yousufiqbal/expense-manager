@@ -45,3 +45,15 @@ export const categorySchema = yup.object({
 export const profileNameSchema = yup.object({
   name: yup.string().min(3).max(100).required().ne(),
 }).noUnknown(true)
+
+export const generateExpenseSchema = (accountIds, expenseCategoryIds) => {
+  return yup.object({
+    date: yup.string().length(10).required().ne(),
+    time: yup.string().length(5).required().ne(),
+    accountId: yup.string().oneOf(accountIds).required().ne(),
+    expenseCategoryId: yup.string().oneOf(expenseCategoryIds).required().ne(),
+    amount: yup.number().min(0).required().ne(),
+    title: yup.string().min(3).max(100).required().ne(),
+    description: yup.string().min(1).max(100).optional().ne(),
+  }).noUnknown(true)
+}

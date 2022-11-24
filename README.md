@@ -13,6 +13,7 @@ Expense Manager app can be used to manage day-to-day expenses.
 7. Complete activity logging
 8. Platform agnostic. Use on any device including PC, laptop, mobiles, etc
 9. Free for everyone (or maybe?)
+10. Fully refrential data, accounts, categories, transactions, etc.
 
 ## Why?
 
@@ -25,3 +26,7 @@ Following technologies were used to build this app:
 1. SvelteKit
 2. MySQL
 3. Many other libraries (See package.json for more details)
+
+# TODO
+
+1. Differ categories b/w expense and income categories table wise (but one crud interface)
