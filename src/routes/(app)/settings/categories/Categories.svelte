@@ -13,7 +13,7 @@
   <div class="category">
 
     <div class="name">{category.name}</div>
-    <a href="{$page.url.pathname}/edit-category?id={category.expenseCategoryId || category.incomeCategoryId}" class="edit">
+    <a href="{$page.url.pathname}/edit-category?category-id={category.expenseCategoryId || category.incomeCategoryId}" class="edit">
       <Icon icon="ri:edit-line" />
     </a>
 

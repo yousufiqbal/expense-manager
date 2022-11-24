@@ -5,10 +5,12 @@ export const load = async ({ params, url, locals }) => {
 
   if (params.mode == 'edit') {
 
-    const category = await db.selectFrom(`${url.searchParams.get('type')}_categories`)
+    const categoryId = url.searchParams.get('category-id')
+
+    const category = await db.selectFrom(`expense_categories`)
       .selectAll()
-      .where('categories.categoryId', '=', categoryId)
-      .where('categories.userId', '=', locals.userId)
+      .where('expense_categories.expenseCategoryId', '=', categoryId)
+      .where('expense_categories.userId', '=', locals.userId)
       .executeTakeFirst()
   
     return { category }

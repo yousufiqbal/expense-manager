@@ -8,7 +8,7 @@ export const POST = async ({ request, locals }) => {
   const body = await request.json()
   const category = await categorySchema.validate(body, { abortEarly: false })
 
-  await db.insertInto('categories')
+  await db.insertInto('expense_categories')
     .values({
       ...category,
       userId: locals.userId
@@ -16,7 +16,7 @@ export const POST = async ({ request, locals }) => {
     .execute()
   
   return json({
-    message: 'Category added'
+    message: 'Expense Category added'
   })
 }
 
@@ -27,12 +27,12 @@ export const PUT = async ({ request, url, locals }) => {
   const body = await request.json()
   const category = await categorySchema.validate(body, { abortEarly: false })
 
-  await db.updateTable('categories')
-    .where('categories.categoryId', '=', categoryId)
-    .where('categories.userId', '=', locals.userId)
+  await db.updateTable('expense_categories')
+    .where('expense_categories.expenseCategoryId', '=', categoryId)
+    .where('expense_categories.userId', '=', locals.userId)
     .set(category).execute()
   
   return json({
-    message: 'Category updated'
+    message: 'Expense Category updated'
   })
 }
