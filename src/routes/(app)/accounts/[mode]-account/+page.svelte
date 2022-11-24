@@ -5,10 +5,11 @@
   import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
+    import ServerError from "$lib/components/ServerError.svelte";
   import Title from "$lib/components/Title.svelte";
   import { accountSchema, extractYupErrors } from "$lib/others/schema";
   import { addToast } from "$lib/others/toasts";
-  import { isEmpty, post } from "$lib/others/utils";
+  import { isEmpty, post, put } from "$lib/others/utils";
 
   export let data = { name: '', balance: 0 }
   let touched = false, errors = {}
@@ -27,7 +28,20 @@
     const body = await response.json()
     if (response.ok) {
       addToast({ message: body.message })
-      goto('/')
+      goto('/accounts')
+    }
+    if (response.status == 400) {
+      errors.server = body.message
+    }
+  }
+
+  const editAccount = async () => {
+    const response = await put(`/accounts/${$page.params.mode}-account?account-id=${$page.url.searchParams.get('account-id')}`, data)
+    const body = await response.json()
+    console.log(body)
+    if (response.ok) {
+      addToast({ message: body.message })
+      goto('/accounts')
     }
     if (response.status == 400) {
       errors.server = body.message
@@ -36,7 +50,8 @@
 
   const submit = async () => {
     if (isEmpty(errors)) {
-      await addAccount()
+      if ($page.params.mode == 'add') await addAccount()
+      if ($page.params.mode == 'edit') await editAccount()
     } else {
       touched = true
     }
@@ -53,6 +68,8 @@
   <Field {touched} error={errors.balance} bind:value={data.balance} --cols={2} label="Starting Balance (Rs.)" inputmode="numeric" />
   {/if}
 </Form>
+
+<ServerError {errors} />
 
 <Buttons>
   <Button name="Save" icon="ri:save-line" on:click={submit} />

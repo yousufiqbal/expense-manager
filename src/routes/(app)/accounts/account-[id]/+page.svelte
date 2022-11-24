@@ -10,7 +10,7 @@
 
 <Equal>
   <Title title="Papa Account" back --mb="0" />
-  <IconButton icon="ri:edit-line" href="/accounts/edit-account?id=42" />
+  <IconButton icon="ri:edit-line" href="/accounts/edit-account?account-id=42" />
 </Equal>
 
 <DateNavigator />

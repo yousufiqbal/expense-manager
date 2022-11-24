@@ -1,13 +1,20 @@
-<div class="accounts">
+<script>
+  /** @type {import('./\types').PageServerData} */
+  export let data
+</script>
 
-  {#each Array(3) as account}
-  <a href="/accounts/account-12" class="account">
-    <div class="name">Papa</div>
-    <div class="balance">Rs. 45000</div>
+{#if data?.accounts.length != 0}
+<div class="accounts">
+  
+  {#each data.accounts as account}
+  <a href="/accounts/account-{account.accountId}" class="account">
+    <div class="name">{account.name}</div>
+    <div class:expense={account.balance < 0} class:income={account.balance > 0} class="balance">Rs. {account.balance}</div>
   </a>
   {/each}
-
+  
 </div>
+{/if}
 
 <style>
   .accounts {
@@ -25,7 +32,10 @@
   .account:last-child {
     border-bottom: none;
   }
-  .balance {
+  .expense {
     color: var(--red);
+  }
+  .income {
+    color: var(--primary);
   }
 </style>

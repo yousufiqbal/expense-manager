@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken'
 /** @type {import('@sveltejs/kit').Handle} */
 export const handle = async ({ event, resolve }) => { 
 
+  console.log(event.request.method, event.url.pathname)
+
   const allowedUrls = ['/login', '/login/register', '/forgot-password', '/forgot-password/reset-password']
 
   if (allowedUrls.includes(event.url.pathname)) {

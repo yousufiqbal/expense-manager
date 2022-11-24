@@ -1,6 +1,6 @@
 import { accountSchema } from '$lib/others/schema'
 import { db } from '$lib/server/db'
-import { json } from '@sveltejs/kit'
+import { error, json } from '@sveltejs/kit'
 import dayjs from 'dayjs'
 
 /** @type {import('./$types').RequestHandler} */
@@ -30,6 +30,34 @@ export const POST = async ({ request, cookies }) => {
 
   return json({
     message: 'Account Added'
+  })
+
+}
+
+/** @type {import('./$types').RequestHandler} */
+export const PUT = async ({ request, url }) => {
+
+  const accountId = await url.searchParams.get('account-id')
+  const body = await request.json()
+  const account = await accountSchema.validate(body, { abortEarly: false })
+
+  // Check Duplicate
+  const result = await db.selectFrom('accounts')
+    .where('accounts.name', '=', account.name)
+    .selectAll().executeTakeFirst()
+  
+  if (result) throw error(400, 'Account with this name already exist. Use different name.')
+
+  // Adding..
+  await db.updateTable('accounts')
+    .set({
+      name: account.name
+    })
+    .where('accounts.accountId', '=', accountId)
+    .executeTakeFirst()
+
+  return json({
+    message: 'Account Updated'
   })
 
 }
