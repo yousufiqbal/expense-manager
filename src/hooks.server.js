@@ -7,7 +7,7 @@ export const handle = async ({ event, resolve }) => {
 
   console.log(event.request.method, event.url.pathname)
 
-  const allowedUrls = ['/login', '/login/register', '/forgot-password', '/forgot-password/reset-password']
+  const allowedUrls = ['/login', '/verify-email', '/login/register', '/forgot-password', '/forgot-password/reset-password']
 
   if (allowedUrls.includes(event.url.pathname)) {
     return await resolve(event);

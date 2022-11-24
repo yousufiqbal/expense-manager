@@ -41,3 +41,7 @@ export const categorySchema = yup.object({
   name: yup.string().min(3).max(100).required().ne(),
   belongsTo: yup.string().oneOf(['income', 'expense']).required().ne(),
 }).noUnknown(true)
+
+export const profileNameSchema = yup.object({
+  name: yup.string().min(3).max(100).required().ne(),
+}).noUnknown(true)
