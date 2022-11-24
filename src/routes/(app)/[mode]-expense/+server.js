@@ -12,19 +12,18 @@ export const POST = async ({ request, locals }) => {
     .where('accounts.userId', '=', locals.userId)
     .selectAll().execute()
   
-  const expenseCategories = await db.selectFrom('categories')
-    .where('categories.userId', '=', locals.userId)
-    .where('categories.belongsTo', '=', 'expense')
+  const expenseCategories = await db.selectFrom('expense_categories')
+    .where('expense_categories.userId', '=', locals.userId)
     .selectAll().execute()
 
-  const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.categoryId)))
+  const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
   const expense = await expenseSchema.validate(body, { abortEarly: false })
   
   // Adding expense..
   await db.insertInto('expenses')
     .values({
       accountId: expense.accountId,
-      categoryId: expense.expenseCategoryId,
+      expenseCategoryId: expense.expenseCategoryId,
       date: expense.date, 
       time: expense.time,
       title: expense.title,

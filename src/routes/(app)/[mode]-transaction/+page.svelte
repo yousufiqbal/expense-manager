@@ -9,13 +9,12 @@
   import Select from "$lib/components/Select.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import Title from "$lib/components/Title.svelte";
-    import { extractYupErrors, generateExpenseSchema } from "$lib/others/schema";
-    import { addToast } from "$lib/others/toasts";
-    import { isEmpty, post } from "$lib/others/utils";
+  import { extractYupErrors, generateExpenseSchema } from "$lib/others/schema";
+  import { addToast } from "$lib/others/toasts";
+  import { isEmpty, post } from "$lib/others/utils";
   import dayjs from "dayjs";
 
   $: current = $page.url.searchParams.get('tab') || 'expense'
-
   
   let modal = {
     accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
@@ -25,7 +24,7 @@
   export let data
 
   // Schema generation..
-  let expenseSchema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.categoryId)))
+  let expenseSchema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.expenseCategoryId)))
 
   let transaction = data.transaction || {
     date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
@@ -132,10 +131,10 @@
   {#if current != 'transfer'}
   <Select on:click={openAccountModal} n="name" v="accountId" options={data.accounts} {touched} error={errors.accountId} value={transaction.accountId} label="Account" />
   {#if current == 'expense'}
-  <Select on:click={openCategoryModal} n="name" v="categoryId" options={data.expenseCategories} {touched} error={errors.expenseCategoryId} value={transaction.expenseCategoryId} label="Exp. Category" />
+  <Select on:click={openCategoryModal} n="name" v="expenseCategoryId" options={data.expenseCategories} {touched} error={errors.expenseCategoryId} value={transaction.expenseCategoryId} label="Exp. Category" />
   {/if}
   {#if current == 'income'}
-  <Select on:click={openCategoryModal} n="name" v="categoryId" options={data.incomeCategories} {touched} error={errors.incomeCategoryId} value={transaction.incomeCategoryId} label="Inc. Category" />
+  <Select on:click={openCategoryModal} n="name" v="incomeCategoryId" options={data.incomeCategories} {touched} error={errors.incomeCategoryId} value={transaction.incomeCategoryId} label="Inc. Category" />
   {/if}
   {/if}
   
@@ -166,13 +165,13 @@
 
 {#if modal.expenseCategories}
 <Modal on:close={closeAllModals} title="Expense Categories">
-  <GridOptions on:select={setExpenseCategory} options={data.expenseCategories} n="name" v="categoryId" />
+  <GridOptions on:select={setExpenseCategory} options={data.expenseCategories} n="name" v="expenseCategoryId" />
 </Modal>
 {/if}
 
 {#if modal.incomeCategories}
 <Modal on:close={closeAllModals} title="Income Categories">
-  <GridOptions on:select={setIncomeCategory} options={data.incomeCategories} n="name" v="categoryId" />
+  <GridOptions on:select={setIncomeCategory} options={data.incomeCategories} n="name" v="incomeCategoryId" />
 </Modal>
 {/if}
 

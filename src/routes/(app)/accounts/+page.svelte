@@ -1,8 +1,7 @@
 <script>
-    import { page } from "$app/stores";
   import Equal from "$lib/components/Equal.svelte";
   import IconButton from "$lib/components/IconButton.svelte";
-  import Summary from "$lib/components/Summary.svelte";
+  import Summary from "./Summary.svelte";
   import Title from "$lib/components/Title.svelte";
   import Accounts from "./Accounts.svelte";
 
