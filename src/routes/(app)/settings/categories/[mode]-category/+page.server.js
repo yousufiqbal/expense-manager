@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async ({ params, url }) => {
+export const load = async ({ params, url, locals }) => {
 
   if (params.mode != 'edit') return {
     category: { name: '', belongsTo: '' }
@@ -11,6 +11,7 @@ export const load = async ({ params, url }) => {
   const category = await db.selectFrom('categories')
     .selectAll()
     .where('categories.categoryId', '=', categoryId)
+    .where('categories.userId', '=', locals.userId)
     .executeTakeFirst()
 
     console.log(category)
