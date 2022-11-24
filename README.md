@@ -7,7 +7,7 @@ Expense Manager app can be used to manage day-to-day expenses.
 1. Manage incomes & expenses
 2. Multiple accounts
 3. Transfer funds between accounts
-4. Google sign-in
+4. Multiple users (login and registration)
 5. All data on cloud
 6. View stats of selected or all accounts
 7. Complete activity logging
