@@ -1,13 +1,15 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               8.0.26 - MySQL Community Server - GPL
+-- Server version:               8.0.30 - MySQL Community Server - GPL
 -- Server OS:                    Win64
--- HeidiSQL Version:             11.3.0.6295
+-- HeidiSQL Version:             12.1.0.6537
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -27,11 +29,12 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   UNIQUE KEY `name` (`name`),
   KEY `FK_accounts_users` (`userId`),
   CONSTRAINT `FK_accounts_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.accounts: ~0 rows (approximately)
-/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+INSERT INTO `accounts` (`accountId`, `userId`, `name`, `created`) VALUES
+	(6, 11, 'Papa', '2022-11-24 16:51:57'),
+	(7, 11, 'Shoaib', '2022-11-24 16:52:07');
 
 -- Dumping structure for table expense-manager.activities
 CREATE TABLE IF NOT EXISTS `activities` (
@@ -45,25 +48,6 @@ CREATE TABLE IF NOT EXISTS `activities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.activities: ~0 rows (approximately)
-/*!40000 ALTER TABLE `activities` DISABLE KEYS */;
-/*!40000 ALTER TABLE `activities` ENABLE KEYS */;
-
--- Dumping structure for table expense-manager.categories
-CREATE TABLE IF NOT EXISTS `categories` (
-  `categoryId` int NOT NULL AUTO_INCREMENT,
-  `userId` int NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `belongsTo` enum('income','expense') NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`categoryId`),
-  UNIQUE KEY `name_belongsTo` (`name`,`belongsTo`),
-  KEY `FK_categories_users` (`userId`),
-  CONSTRAINT `FK_categories_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Dumping data for table expense-manager.categories: ~0 rows (approximately)
-/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.expenses
 CREATE TABLE IF NOT EXISTS `expenses` (
@@ -72,23 +56,45 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `date` date NOT NULL,
   `time` time NOT NULL,
   `accountId` int NOT NULL,
-  `categoryId` int NOT NULL,
+  `expenseCategoryId` int NOT NULL,
   `amount` decimal(13,0) NOT NULL DEFAULT '0',
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`expenseId`) USING BTREE,
   KEY `FK_incomes_accounts` (`accountId`) USING BTREE,
-  KEY `FK_incomes_categories` (`categoryId`) USING BTREE,
   KEY `FK_expenses_users` (`userId`),
+  KEY `FK_incomes_categories` (`expenseCategoryId`) USING BTREE,
   CONSTRAINT `expenses_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
-  CONSTRAINT `expenses_ibfk_2` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`),
+  CONSTRAINT `FK_expenses_expense_categories` FOREIGN KEY (`expenseCategoryId`) REFERENCES `expense_categories` (`expenseCategoryId`),
   CONSTRAINT `FK_expenses_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.expenses: ~0 rows (approximately)
-/*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
+INSERT INTO `expenses` (`expenseId`, `userId`, `date`, `time`, `accountId`, `expenseCategoryId`, `amount`, `title`, `description`, `created`) VALUES
+	(1, 11, '2022-11-24', '21:55:00', 6, 8, 420, 'Eggs 12', NULL, '2022-11-24 16:56:00');
+
+-- Dumping structure for table expense-manager.expense_categories
+CREATE TABLE IF NOT EXISTS `expense_categories` (
+  `expenseCategoryId` int NOT NULL AUTO_INCREMENT,
+  `userId` int NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`expenseCategoryId`) USING BTREE,
+  UNIQUE KEY `name_belongsTo` (`name`) USING BTREE,
+  KEY `FK_categories_users` (`userId`) USING BTREE,
+  CONSTRAINT `expense_categories_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table expense-manager.expense_categories: ~0 rows (approximately)
+INSERT INTO `expense_categories` (`expenseCategoryId`, `userId`, `name`, `created`) VALUES
+	(8, 11, 'Grocery', '2022-11-24 15:44:08'),
+	(9, 11, 'Restaurants', '2022-11-24 15:44:21'),
+	(10, 11, 'Health', '2022-11-24 15:44:28'),
+	(11, 11, 'Transport', '2022-11-24 15:44:40'),
+	(12, 11, 'Monthly', '2022-11-24 15:44:48'),
+	(13, 11, 'Software', '2022-11-24 16:44:26'),
+	(14, 11, 'Books', '2022-11-24 16:46:41');
 
 -- Dumping structure for table expense-manager.incomes
 CREATE TABLE IF NOT EXISTS `incomes` (
@@ -98,22 +104,38 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   `date` date NOT NULL,
   `time` time NOT NULL,
   `accountId` int NOT NULL,
-  `categoryId` int NOT NULL,
+  `incomeCategoryId` int NOT NULL,
   `amount` decimal(13,0) NOT NULL DEFAULT '0',
   `description` text,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`incomeId`),
   KEY `FK_incomes_accounts` (`accountId`),
-  KEY `FK_incomes_categories` (`categoryId`),
   KEY `FK_incomes_users` (`userId`),
+  KEY `FK_incomes_categories` (`incomeCategoryId`) USING BTREE,
   CONSTRAINT `FK_incomes_accounts` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
-  CONSTRAINT `FK_incomes_categories` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`),
+  CONSTRAINT `FK_incomes_categories` FOREIGN KEY (`incomeCategoryId`) REFERENCES `income_categories` (`incomeCategoryId`),
   CONSTRAINT `FK_incomes_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.incomes: ~0 rows (approximately)
-/*!40000 ALTER TABLE `incomes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `incomes` ENABLE KEYS */;
+
+-- Dumping structure for table expense-manager.income_categories
+CREATE TABLE IF NOT EXISTS `income_categories` (
+  `incomeCategoryId` int NOT NULL AUTO_INCREMENT,
+  `userId` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`incomeCategoryId`) USING BTREE,
+  UNIQUE KEY `name_belongsTo` (`name`),
+  KEY `FK_categories_users` (`userId`),
+  CONSTRAINT `FK_categories_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table expense-manager.income_categories: ~0 rows (approximately)
+INSERT INTO `income_categories` (`incomeCategoryId`, `userId`, `name`, `created`) VALUES
+	(8, 11, 'Salary', '2022-11-24 15:44:58'),
+	(9, 11, 'Bonus', '2022-11-24 15:45:46'),
+	(10, 11, 'Others', '2022-11-24 15:45:53');
 
 -- Dumping structure for table expense-manager.transfers
 CREATE TABLE IF NOT EXISTS `transfers` (
@@ -137,8 +159,6 @@ CREATE TABLE IF NOT EXISTS `transfers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.transfers: ~0 rows (approximately)
-/*!40000 ALTER TABLE `transfers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `transfers` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -156,13 +176,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.users: ~3 rows (approximately)
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
-	(11, 'Yousuf Iqbal Dadda 2', 'yousufiqbal@gmail.com', '$2a$10$W4XA3PWYwdeaWBKHOkokMODjRX0wd.zqMiUfZ8cX3W6lTQFEeNq4W', 1, NULL, '793d0863f835afa0a6eac3c6f3a786079fae63b55c997dc112e34a76d6ae', 'Rs.', '2022-11-23 16:47:10'),
-	(12, 'Saeed Ahmed', 'saeedahmed@gmail.com', '$2a$10$89c6q5lXV0.ANEQbGELFheQZ1K2CRJHkeNizWwRClLEyR1frLYUHi', 0, NULL, '2b9886d50d8b586e74337488ad10e0604248f515befc09151dc46bf80bbb', 'Rs.', '2022-11-24 13:17:04'),
-	(13, 'Shoaib Iqbal', 'shoaibiqbal@gmail.com', '$2a$10$ufJFd61yvOutJ7SCH2L/buon9t5e88D9KsHVTlluO74C.efChifGm', 0, NULL, '25f270e876c292c480f1af2cdab06c0f9150dfe0f1433ddd23f58b6b021d', 'Rs.', '2022-11-24 13:19:37');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+	(11, 'Yousuf Iqbal Dadda 2', 'yousufiqbal@gmail.com', '$2a$10$W4XA3PWYwdeaWBKHOkokMODjRX0wd.zqMiUfZ8cX3W6lTQFEeNq4W', 1, NULL, '793d0863f835afa0a6eac3c6f3a786079fae63b55c997dc112e34a76d6ae', 'Rs.', '2022-11-23 11:47:10'),
+	(12, 'Saeed Ahmed', 'saeedahmed@gmail.com', '$2a$10$89c6q5lXV0.ANEQbGELFheQZ1K2CRJHkeNizWwRClLEyR1frLYUHi', 0, NULL, '2b9886d50d8b586e74337488ad10e0604248f515befc09151dc46bf80bbb', 'Rs.', '2022-11-24 08:17:04'),
+	(13, 'Shoaib Iqbal', 'shoaibiqbal@gmail.com', '$2a$10$ufJFd61yvOutJ7SCH2L/buon9t5e88D9KsHVTlluO74C.efChifGm', 0, NULL, '25f270e876c292c480f1af2cdab06c0f9150dfe0f1433ddd23f58b6b021d', 'Rs.', '2022-11-24 08:19:37');
 
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
