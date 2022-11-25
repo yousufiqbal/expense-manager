@@ -32,6 +32,31 @@ export const POST = async ({ request, cookies }) => {
     .where('users.email', '=', form.email)
     .selectAll().executeTakeFirst()
 
+  // Preparing accounts and categories for new user..
+  await db.insertInto('accounts')
+    .values([
+      { name: 'Personal', userId: user.userId },
+      { name: 'Savings', userId: user.userId },
+    ]).execute()
+
+  await db.insertInto('expense_categories')
+    .values([
+      { name: 'Grocery',  userId: user.userId },
+      { name: 'Health',  userId: user.userId },
+      { name: 'Transport',  userId: user.userId },
+      { name: 'Clothing',  userId: user.userId },
+      { name: 'Bills',  userId: user.userId },
+      { name: 'Others',  userId: user.userId },
+    ]).execute()
+
+  await db.insertInto('income_categories')
+    .values([
+      { name: 'Salary',  userId: user.userId },
+      { name: 'Bonus',  userId: user.userId },
+      { name: 'Allowance',  userId: user.userId },
+      { name: 'Others',  userId: user.userId },
+    ]).execute()
+
   // Logging In..
   const payload = {
     userId: user.userId,
