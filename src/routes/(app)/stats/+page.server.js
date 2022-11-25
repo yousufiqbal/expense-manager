@@ -6,13 +6,14 @@ import { sql } from 'kysely';
 export const load = async ({ locals, url }) => {
 
   const accountIds = url.searchParams.get('accounts')?.split('-') || []
-  console.log('ids', accountIds)
   const tab = url.searchParams.get('tab')
 
   let start = url.searchParams.get('start') || dayjs().startOf('month').format('YYYY-MM-DD')
   let end = url.searchParams.get('end') || dayjs().endOf('month').format('YYYY-MM-DD');
 
   let categories = []
+
+  console.log(parseInt(accountIds.join(', ')))
 
   if (tab == 'expense') {
     categories = (await sql`
@@ -21,7 +22,7 @@ export const load = async ({ locals, url }) => {
         FROM expense_categories ec
         LEFT JOIN expenses e ON e.expenseCategoryId = ec.expenseCategoryId
         WHERE ec.userId = ${locals.userId}
-        AND e.accountId IN (${accountIds.join(', ')})
+        AND e.accountId IN (${sql.join(accountIds)})
         AND e.date BETWEEN ${start} AND ${end}
         GROUP BY ec.expenseCategoryId
       )
@@ -35,8 +36,6 @@ export const load = async ({ locals, url }) => {
     `.execute(db)).rows
     }
 
-    console.log(categories)
-    
   let accounts = await db.selectFrom('accounts')
     .where('accounts.userId', '=', locals.userId)
     .selectAll().execute()
