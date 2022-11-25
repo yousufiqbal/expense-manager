@@ -1,13 +1,14 @@
 <script>
   import { page } from "$app/stores";
+    import { setQuery } from "$lib/others/utils";
   export let transfer = true
 </script>
 
 <div class="tabs">
-  <a class:active={$page.url.searchParams.get('tab') == 'income'} class="income" href="?tab=income">Income</a>
-  <a class:active={$page.url.searchParams.get('tab') == 'expense'} class="expense" href="?tab=expense">Expense</a>
+  <a class:active={$page.url.searchParams.get('tab') == 'income'} class="income" href="{setQuery({ tab: 'income' }, $page)}">Income</a>
+  <a class:active={$page.url.searchParams.get('tab') == 'expense'} class="expense" href="{setQuery({ tab: 'expense' }, $page)}">Expense</a>
   {#if transfer}
-  <a class:active={$page.url.searchParams.get('tab') == 'transfer'} class="transfer" href="?tab=transfer">Transfer</a>
+  <a class:active={$page.url.searchParams.get('tab') == 'transfer'} class="transfer" href="{setQuery({ tab: 'transfer' }, $page)}">Transfer</a>
   {/if}
 </div>
 

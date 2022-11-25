@@ -11,7 +11,7 @@
   import Title from "$lib/components/Title.svelte";
   import { extractYupErrors, generateExpenseSchema, generateIncomeSchema, generateTransferSchema } from "$lib/others/schema";
   import { addToast } from "$lib/others/toasts";
-  import { isEmpty, post } from "$lib/others/utils";
+  import { capitalize, isEmpty, post } from "$lib/others/utils";
   import dayjs from "dayjs";
 
   $: current = $page.url.searchParams.get('tab') || 'expense'
@@ -24,47 +24,123 @@
   export let data
 
   // Schema generation..
-  let expenseSchema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.expenseCategoryId)))
-  let incomeSchema = generateIncomeSchema(data.accounts.map(a => String(a.accountId)), data.incomeCategories.map(a => String(a.incomeCategoryId)))
-  let transferSchema = generateTransferSchema(data.accounts.map(a => String(a.accountId)))
+  let schema
+  $: if (current == 'expense') schema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.expenseCategoryId)));
+  $: if (current == 'income') schema = generateIncomeSchema(data.accounts.map(a => String(a.accountId)), data.incomeCategories.map(a => String(a.incomeCategoryId)))
+  $: if (current == 'transfer') schema = generateTransferSchema(data.accounts.map(a => String(a.accountId)))
+
+  // Schema generation..
+  // let expenseSchema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.expenseCategoryId)))
+  // let incomeSchema = generateIncomeSchema(data.accounts.map(a => String(a.accountId)), data.incomeCategories.map(a => String(a.incomeCategoryId)))
+  // let transferSchema = generateTransferSchema(data.accounts.map(a => String(a.accountId)))
 
   let transaction = data.transaction || {
     date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
   }
+
+  $: transaction.intent = current
 
   let touched = false, errors = {}
 
   // others..
   const maps = { 'expense': 'Expense', 'income': 'Income', 'transfer': 'Transfer', }
   const colors = { 'expense': 'warning', 'income': 'primary', 'transfer': 'secondary', }
-  
-  const validateExpense = async () => {
+
+
+  const validate = async () => {
     try {
-      await expenseSchema.validate(transaction, { abortEarly: false })
+      await schema.validate(transaction, { abortEarly: false })
       errors = {}
     } catch (error) {
       errors = extractYupErrors(error)
     }
   }
   
-  const validateIncome = async () => {
-    try {
-      await incomeSchema.validate(transaction, { abortEarly: false })
-      errors = {}
-    } catch (error) {
-      errors = extractYupErrors(error)
-    }
-  }
+  // const validateExpense = async () => {
+  //   try {
+  //     await expenseSchema.validate(transaction, { abortEarly: false })
+  //     errors = {}
+  //   } catch (error) {
+  //     errors = extractYupErrors(error)
+  //   }
+  // }
   
-  const validateTransfer = async () => {
-    try {
-      await transferSchema.validate(transaction, { abortEarly: false })
-      errors = {}
-    } catch (error) {
-      errors = extractYupErrors(error)
+  // const validateIncome = async () => {
+  //   try {
+  //     await incomeSchema.validate(transaction, { abortEarly: false })
+  //     errors = {}
+  //   } catch (error) {
+  //     errors = extractYupErrors(error)
+  //   }
+  // }
+  
+  // const validateTransfer = async () => {
+  //   try {
+  //     await transferSchema.validate(transaction, { abortEarly: false })
+  //     errors = {}
+  //   } catch (error) {
+  //     errors = extractYupErrors(error)
+  //   }
+  // }
+
+
+
+  const closeAllModals = () => {
+    modal = {
+      accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
     }
   }
 
+  const addTransaction = async () => {
+    const response = await post('/add-transaction', transaction)
+    addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  }
+
+  // const addExpense = async () => {
+  //   const response = await post('/add-expense', transaction)
+  //   addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  // }
+
+  // const addIncome = async () => {
+  //   const response = await post('/add-income', transaction)
+  //   addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  // }
+
+  // const addTransfer = async () => {
+  //   const response = await post('/add-transfer', transaction)
+  //   addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  // }
+
+  // const editExpense = async () => {
+  //   const response = await post(`/edit-expense?expense-id=${$page.url.searchParams.get('expense-id')}`, transaction)
+  //   addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  // }
+
+  // const editIncome = async () => {
+  //   const response = await post(`/edit-income?income-id=${$page.url.searchParams.get('income-id')}`, transaction)
+  //   addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  // }
+
+  // const editTransfer = async () => {
+  //   const response = await post(`/edit-transfer?transfer-id=${$page.url.searchParams.get('transfer-id')}`, transaction)
+  //   addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  // }
+
+  const editTransaction = async () => {
+    const response = await post(`/edit-transaction?transfer-id=${$page.url.searchParams.get('transfer-id')}`, transaction)
+    addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+  }
+
+  const submit = async () => {
+    if (isEmpty(errors)) {
+      if ($page.params.mode == 'add') await addTransaction()
+      if ($page.params.mode == 'edit') await editTransaction()
+    } else {
+      touched = true
+    }
+  }
+
+  // SETS AND MODALS..
   const openAccountModal = () => {
     modal.accounts = true
   }
@@ -106,48 +182,12 @@
     transaction.toAccountId = +e.detail.result
     closeAllModals()
   }
-
-  const closeAllModals = () => {
-    modal = {
-      accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
-    }
-  }
-
-  const addExpense = async () => {
-    const response = await post('/add-expense', transaction)
-    addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
-  }
-
-  const addIncome = async () => {
-    const response = await post('/add-income', transaction)
-    addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
-  }
-
-  const addTransfer = async () => {
-    const response = await post('/add-transfer', transaction)
-    addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
-  }
-
-  const submit = async () => {
-    if (isEmpty(errors)) {
-      if ($page.params.mode == 'add' && current == 'expense') await addExpense()
-      if ($page.params.mode == 'add' && current == 'income') await addIncome()
-      if ($page.params.mode == 'add' && current == 'transfer') await addTransfer()
-    } else {
-      console.log(errors)
-      touched = true
-    }
-  }
-
   
-  $: transaction && current == 'expense' && validateExpense()
-  $: transaction && current == 'income' && validateIncome()
-  $: transaction && current == 'transfer' && validateTransfer()
-  
+  $: transaction && validate()
   $: console.log(transaction)
 </script>
 
-<Title title="New {maps[current]}" back href="/" />
+<Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
 <Tabs />
 
 <Form>

@@ -3,7 +3,7 @@
   import Bar from "$lib/components/Bar.svelte";
 
   const list = [
-    '/add-transaction', 'edit-transaction'
+    '/add-transaction', '/edit-transaction'
   ]
 </script>
 
