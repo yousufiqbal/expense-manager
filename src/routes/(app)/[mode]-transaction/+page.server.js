@@ -1,16 +1,13 @@
 import { db } from '$lib/server/db';
+import dayjs from 'dayjs';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, params, url }) => {
 
   let transaction 
-
   if (params.mode == 'edit') {
-
     
-    // Choosing table
     let table, column, id
-    
     if (url.searchParams.has('expense-id')) {
       table = 'expenses'
       column = 'expenseId'
@@ -34,12 +31,10 @@ export const load = async ({ locals, params, url }) => {
       .where(table + '.' + column, '=', +id)
       .selectAll().executeTakeFirst()
 
-    // console.log('111')
+    // For date input converting to YYYY-MM-DD
+    if (transaction.date) transaction.date = dayjs(transaction.date).format('YYYY-MM-DD')
 
   }
-
-  console.log(transaction)
-
 
 
   const accounts = await db.selectFrom('accounts')

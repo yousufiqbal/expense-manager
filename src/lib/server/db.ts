@@ -11,12 +11,12 @@ export const db = new Kysely<DB>({
     }),
   }),
 
-  log: event => {
-    if (event.level === 'query') {
-      console.log(event.query.sql)
-      console.log(event.query.parameters)
-      console.log('\n')
-    }
-  },
+  // log: event => {
+  //   if (event.level === 'query') {
+  //     console.log(event.query.sql)
+  //     console.log(event.query.parameters)
+  //     console.log('\n')
+  //   }
+  // },
 
 })

@@ -45,11 +45,8 @@ export const profileNameSchema = yup.object({
   name: yup.string().min(3).max(100).required().ne(),
 }).noUnknown(true)
 
-let intents = ['expense', 'income', 'transfer']
-
 export const generateExpenseSchema = (accountIds, expenseCategoryIds) => {
   return yup.object({
-    intent: yup.string().oneOf(intents).required().ne(),
     date: yup.string().length(10).required().ne(),
     time: yup.string().length(5).required().ne(),
     accountId: yup.string().oneOf(accountIds).required().ne(),
@@ -62,7 +59,6 @@ export const generateExpenseSchema = (accountIds, expenseCategoryIds) => {
 
 export const generateIncomeSchema = (accountIds, incomeCategoryIds) => {
   return yup.object({
-    intent: yup.string().oneOf(intents).required().ne(),
     date: yup.string().length(10).required().ne(),
     time: yup.string().length(5).required().ne(),
     accountId: yup.string().oneOf(accountIds).required().ne(),
@@ -75,7 +71,6 @@ export const generateIncomeSchema = (accountIds, incomeCategoryIds) => {
 
 export const generateTransferSchema = (accountIds) => {
   return yup.object({
-    intent: yup.string().oneOf(intents).required().ne(),
     date: yup.string().length(10).required().ne(),
     time: yup.string().length(5).required().ne(),
     fromAccountId: yup.string().oneOf(accountIds).notOneOf([yup.ref('toAccountId')], 'Use different accounts').required().ne(),
