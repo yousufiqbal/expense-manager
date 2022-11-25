@@ -61,7 +61,7 @@
     display: flex;
     gap: 20px;
     border-bottom: 1px solid var(--border);
-    background-color: rgb(245, 249, 255);
+    background-color: rgb(247, 247, 247);
     /* border-radius: var(--radius); */
     /* border: 1px solid var(--border); */
     align-items: center;
