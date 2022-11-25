@@ -1,19 +1,24 @@
 <script>
   import Checkboxes from "$lib/components/Checkboxes.svelte";
   import DateNavigator from "$lib/components/DateNavigator.svelte";
-  import Subtitle from "$lib/components/Subtitle.svelte";
-  import Title from "$lib/components/Title.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
-    import { title } from "$lib/others/stores";
-    import PieChart from "./PieChart.svelte";
-    import Categories from "./Categories.svelte";
+  import { title } from "$lib/others/stores";
+  import PieChart from "./PieChart.svelte";
+  import Categories from "./Categories.svelte";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+  import { setQuery } from "$lib/others/utils";
 
-  let accounts = [
-    // { name: 'All', urlName: 'all' },
-    { name: 'Papa', urlName: 'papa' },
-    { name: 'Yousuf', urlName: 'yousuf' },
-    { name: 'Office', urlName: 'office' },
-  ]
+  /** @type {import('./$types').PageServerData} */
+  export let data
+
+  let choosenAccounts = []
+
+  const fire = () => {
+    setTimeout(() => {
+      goto(setQuery({ accounts: choosenAccounts.join('-')}, $page))
+    }, 0);
+  }
 
   $title = 'Stats'
 </script>
@@ -22,6 +27,6 @@
 <DateNavigator />
 <Tabs transfer={false} />
 <!-- <Subtitle subtitle="Accounts" icon="ri:folders-line" /> -->
-<Checkboxes items={accounts}  />
+<Checkboxes on:change={fire} items={data.accounts} n="name" v="accountId" bind:result={choosenAccounts}  />
 <PieChart />
-<Categories />
+<Categories {data} />

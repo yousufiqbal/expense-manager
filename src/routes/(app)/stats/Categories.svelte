@@ -1,14 +1,25 @@
-<div class="categories">
+<script>
+  import { page } from "$app/stores";
 
-  {#each Array(5) as category}
+  /** @type {import('./$types').PageServerData} */
+  export let data
+
+  $: current = $page.url.searchParams.get('tab')
+</script>
+
+{#if data.categories?.length != 0}
+<div class="categories">
+  
+  {#each data?.categories as category}
   <div class="category">
-    <div class="percentage">15%</div>
-    <div class="name">Grocery</div>
-    <div class="amount">Rs. 54,250</div>
+    <div class="{current} percentage">15%</div>
+    <div class="name">{category.name}</div>
+    <div class="amount">Rs. {category.total}</div>
   </div>
   {/each}
-
+  
 </div>
+{/if}
 
 <style>
   .categories {
@@ -29,8 +40,13 @@
     padding: 2px 4px;
     font-size: 14px;
     border-radius: var(--radius);
-    background-color: var(--primary);
     color: white;
+  }
+  .expense {
+    background-color: var(--red);
+  }
+  .income {
+    background-color: var(--primary);
   }
   .category:last-child {
     border-bottom: none;

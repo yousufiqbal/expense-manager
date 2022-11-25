@@ -1,7 +1,11 @@
 <script>
-  export let items = []
+
   export let title = null
+  
+  export let items = []
   export let result = []
+
+  export let n, v
 </script>
 
 {#if items.length != 0}
@@ -13,8 +17,8 @@
 
   {#each items as item}
   <div class="checkbox">
-    <input type="checkbox" bind:group={result} id="{item.urlName}" name="{item.urlName}" value={item.urlName}>
-    <label for="{item.urlName}">{item.name}</label>
+    <input on:change type="checkbox" bind:group={result} id="{item[v]}" name="{item[v]}" value={item[v]}>
+    <label for="{item[v]}">{item[n]}</label>
   </div>
   {/each}
 
