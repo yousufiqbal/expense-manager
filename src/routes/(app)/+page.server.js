@@ -1,11 +1,22 @@
 import { db } from '$lib/server/db';
 import dayjs from 'dayjs'
+import { sql } from 'kysely';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, url }) => {
 
   let start = url.searchParams.get('start') || dayjs().startOf('month').format('YYYY-MM-DD')
-  let end = url.searchParams.get('end') || dayjs().endOf('month').format('YYYY-MM-DD')
+  let end = url.searchParams.get('end') || dayjs().endOf('month').format('YYYY-MM-DD');
+
+  const { sum } = db.fn;
+
+  const totalIncome = await db.selectFrom('incomes')
+    .where('incomes.date', '>=', start)
+    .where('incomes.date', '<=', end)
+    .select(sum('incomes.amount').as('result'))
+    .execute()
+
+  console.log(totalIncome)
 
   console.log(start, end)
 
@@ -13,12 +24,14 @@ export const load = async ({ locals, url }) => {
     .where('incomes.userId', '=', locals.userId)
     .where('date', '>=', start)
     .where('date', '<=', end)
+    // .orderBy('date', 'desc')
     .selectAll()
     .unionAll(
       db.selectFrom('expenses')
       .where('expenses.userId', '=', locals.userId)
       .where('date', '>=', start)
       .where('date', '<=', end)
+      // .orderBy('date', 'desc')
       .selectAll()
       )
       .unionAll(
@@ -26,6 +39,7 @@ export const load = async ({ locals, url }) => {
         .where('transfers.userId', '=', locals.userId)
         .where('date', '>=', start)
         .where('date', '<=', end)
+        // .orderBy('date', 'desc')
         .selectAll()
       )
       .orderBy('date', 'desc')
