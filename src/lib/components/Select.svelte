@@ -13,7 +13,7 @@
   }
 </script>
 
-<button on:click={touch} on:click class="field">
+<div on:click={touch} on:keydown on:click class="field">
 
   <label for={attr}>{label}</label>
 
@@ -28,11 +28,12 @@
   <span class="error">{error}</span>
   {/if}
 
-</button>
+</div>
 
 <style>
   .field {
-    z-index: 2;
+    border: 1px dashed red;
+    z-index: 99999999992;
     display: grid;
     grid-column: span var(--cols, 1);
   }
