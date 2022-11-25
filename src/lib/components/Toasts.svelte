@@ -1,6 +1,5 @@
 <script>
-  // import { removeToast, toasts } from "$lib/others/toasts";
-  import { toasts } from "$lib/others/toasts";
+  import { removeToast, toasts } from "$lib/others/toasts";
   import Icon from "@iconify/svelte";
   import { fly } from "svelte/transition";
 
@@ -23,11 +22,11 @@
 
     <div class="message">{toast.message}</div>
 
-    <!-- {#if toast.dismissible}
+    {#if toast.dismissible}
     <button on:click={() => removeToast(toast.id)}>
       <Icon icon="ri:close-line" width="20"  />
     </button>
-    {/if} -->
+    {/if}
 
     <div style:animation-duration="{toast.timeout}ms" class="border"></div>
 
@@ -44,9 +43,11 @@
   .border {
     position: absolute;
     width: 0%;
-    border-top: 4px solid var(--border);
+    border-top: 6px solid var(--border);
     top: 0; left: 0;
     animation: hero ease-in-out;
+    filter: invert(1);
+    mix-blend-mode: difference;
   }
   @keyframes hero {
     from { width: 0%; }
@@ -66,31 +67,26 @@
     position: relative;
     gap: 12px;
     box-shadow: var(--shadow);
-    /* background-color: rgb(255, 255, 255); */
     padding: 13px 16px 13px 12px;
     display: flex;
     align-items: center;
-    /* border: 1px solid var(--border); */
-    border-radius: 5px;
+    border-radius: var(--radius);
     overflow: hidden;
-    background-color: white;
-    /* box-shadow: var(--shadow); */
-    /* color: white; */
-  }
-  /* button {
-    padding: 2px;
     color: white;
+  }
+  button {
+    padding: 2px;
     background-color: rgb(26, 26, 26);
     display: flex;
     border-radius: 50%;
-  } */
+  }
   .success {
-    color: var(--primary);
+    background-color: var(--primary);
   }
   .info {
-    color: var(--secondary);
+    background-color: var(--secondary);
   }
   .error {
-    color: var(--red);
+    background-color: var(--red);
   }
 </style>

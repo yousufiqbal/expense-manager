@@ -1,10 +1,12 @@
 <script>
-  import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation";
   import Breadcrumbs from "$lib/components/Breadcrumbs.svelte";
   import Equal from "$lib/components/Equal.svelte";
   import Option from "$lib/components/Option.svelte";
   import Options from "$lib/components/Options.svelte";
   import Title from "$lib/components/Title.svelte";
+  import { addToast } from "$lib/others/toasts";
+  import { post } from "$lib/others/utils";
   import Tabs from "./Tabs.svelte";
 
   const crumbs = [
@@ -12,7 +14,10 @@
     { name: 'Profile', href: '/settings/profile' },
   ]
 
-  const logout = () => {
+  const logout = async () => {
+    const response = await post('/settings/profile/logout')
+    const body = await response.json()
+    if (response.ok) addToast({ message: body.message })
     goto('/login')
   }
 </script>

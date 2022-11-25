@@ -56,3 +56,28 @@ export const generateExpenseSchema = (accountIds, expenseCategoryIds) => {
     description: yup.string().min(1).max(100).optional().ne(),
   }).noUnknown(true)
 }
+
+export const generateIncomeSchema = (accountIds, incomeCategoryIds) => {
+  return yup.object({
+    date: yup.string().length(10).required().ne(),
+    time: yup.string().length(5).required().ne(),
+    accountId: yup.string().oneOf(accountIds).required().ne(),
+    incomeCategoryId: yup.string().oneOf(incomeCategoryIds).required().ne(),
+    amount: yup.number().min(0).required().ne(),
+    title: yup.string().min(3).max(100).required().ne(),
+    description: yup.string().min(1).max(100).optional().ne(),
+  }).noUnknown(true)
+}
+
+export const generateTransferSchema = (accountIds) => {
+  return yup.object({
+    date: yup.string().length(10).required().ne(),
+    time: yup.string().length(5).required().ne(),
+    fromAccountId: yup.string().oneOf(accountIds).notOneOf([yup.ref('toAccountId')], 'Use different accounts').required().ne(),
+    // toAccountId: yup.string().oneOf(accountIds).notOneOf([yup.ref('fromAccountId')], 'Use different accounts').required().ne(),
+    toAccountId: yup.string().oneOf(accountIds).required().ne(),
+    amount: yup.number().min(0).required().ne(),
+    title: yup.string().min(3).max(100).required().ne(),
+    description: yup.string().min(1).max(100).optional().ne(),
+  }).noUnknown(true)
+}
