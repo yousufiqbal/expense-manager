@@ -81,3 +81,4 @@ export function capitalize(str) {
 
   return capitalized;
 }
+

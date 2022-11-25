@@ -1,4 +1,4 @@
-import { Kysely, MysqlDialect } from 'kysely';
+import { Kysely, MysqlDialect, RawBuilder, sql } from 'kysely';
 import type { DB } from 'kysely-codegen';
 import { createPool } from 'mysql2';
 import { DATABASE_URL } from '$env/static/private'
@@ -20,3 +20,9 @@ export const db = new Kysely<DB>({
   // },
 
 })
+
+// From discord kosmikas
+// select(coalesce(db.fn.sum<bigint>('price'), 0).as('sum'))
+export function coalesce<T>(expr: RawBuilder<T>, value: T): RawBuilder<T> {
+  return sql`coalesce(${expr}, ${value})`
+}

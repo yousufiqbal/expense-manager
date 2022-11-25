@@ -1,16 +1,17 @@
+<script>
+  /** @type {{ title: string, amount: number, color: string }[]}*/
+  export let summary = []
+</script>
+
 <div class="summary">
+
+  {#each summary as item}
   <div class="part income">
-    <div class="title">Income</div>
-    <div class="amount">279,950</div>
+    <div class="title">{item.title}</div>
+    <div class="amount {item.color}">Rs. {item.amount}</div>
   </div>
-  <div class="part expense">
-    <div class="title">Expense</div>
-    <div class="amount">279,950</div>
-  </div>
-  <div class="part total">
-    <div class="title">Total</div>
-    <div class="amount">279,950</div>
-  </div>
+  {/each}
+
 </div>
 
 <style>
@@ -35,10 +36,13 @@
   .title {
     font-size: 14px;
   }
-  .income .amount {
+  .red {
     color: var(--primary);
   }
-  .expense .amount {
+  .blue {
     color: var(--red);
+  }
+  .black {
+    color: black;
   }
 </style>

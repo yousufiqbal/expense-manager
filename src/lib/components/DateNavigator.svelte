@@ -1,11 +1,33 @@
 <script>
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import Icon from '@iconify/svelte'
+  import dayjs from 'dayjs';
+
+  let start = $page.url.searchParams.get('start') || dayjs().startOf('month').format('YYYY-MM-DD')
+  let end = $page.url.searchParams.get('end') || dayjs().endOf('month').format('YYYY-MM-DD')
+
+  const decrease = () => {
+    start = dayjs(start, 'YYYY-MM-DD').subtract(1, 'month').format('YYYY-MM-DD')
+    end = dayjs(end, 'YYYY-MM-DD').subtract(1, 'month').format('YYYY-MM-DD')
+    navigate()
+  }
+  
+  const increase = () => {
+    start = dayjs(start, 'YYYY-MM-DD').add(1, 'month').format('YYYY-MM-DD')
+    end = dayjs(end, 'YYYY-MM-DD').add(1, 'month').format('YYYY-MM-DD')
+    navigate()
+  }
+
+  const navigate = async () => {
+    goto(`?start=${start}&end=${end}`)
+  }
 </script>
 
 <div class="date-navigator">
-  <button><Icon icon="ri:arrow-left-s-line" /></button>
-  <span>Sep 2022</span>
-  <button><Icon icon="ri:arrow-right-s-line" /></button>
+  <button on:click={decrease}><Icon icon="ri:arrow-left-s-line" /></button>
+  <span>{dayjs(start, 'YYYY-MM-DD').format('MMM - YYYY')}</span>
+  <button on:click={increase}><Icon icon="ri:arrow-right-s-line" /></button>
 </div>
 
 <style>

@@ -4,5 +4,5 @@
 
 <svelte:head>
   <title>{$title} - Expense Manager</title>
-  <meta name="description" content="{$title}">
+  <meta name="description" content="Expense manager is a multi-account, cloud-based, expense management app.">
 </svelte:head>

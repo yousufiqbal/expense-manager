@@ -127,7 +127,16 @@
   $: current && validate()
 </script>
 
-<Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
+<!-- <div style="display: flex; margin-bottom: 20px; justify-content: space-between;">
+  <Title --mb="0" title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
+  <Button on:click={submit} name="Save" type={colors[current]} icon="ri:save-line" />
+</div> -->
+
+<!-- <div style="display: flex; margin-bottom: 20px; justify-content: space-between;"> -->
+  <Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
+  <!-- <Button on:click={submit} name="Save" type={colors[current]} icon="ri:save-line" /> -->
+<!-- </div> -->
+
 <Tabs />
 
 <Form>

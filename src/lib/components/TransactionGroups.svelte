@@ -19,8 +19,8 @@
         <span>{dayjs(group.date).format('MMM DD, YYYY')}</span>
       </div>
       <!-- <div class="day">Monday</div> -->
-      <div class="total-income">Rs. 0</div>
-      <div class="total-expense">Rs. 1000</div>
+      <div class="total-income">Rs. {group.totalIncome}</div>
+      <div class="total-expense">Rs. {group.totalExpense}</div>
     </a>
     
     {#each group.transactions as transaction}
