@@ -1,6 +1,7 @@
 <script>
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+    import { setQuery } from '$lib/others/utils';
   import Icon from '@iconify/svelte'
   import dayjs from 'dayjs';
 
@@ -20,7 +21,7 @@
   }
 
   const navigate = async () => {
-    goto(`?start=${start}&end=${end}`)
+    goto(setQuery({ start, end }, $page))
   }
 </script>
 

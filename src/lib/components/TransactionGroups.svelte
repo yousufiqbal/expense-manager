@@ -17,6 +17,7 @@
     <a href="/add-transaction?tab=expense&date={dayjs(group.date).format('YYYY-MM-DD')}" class="head">
       <div class="dated">
         <span>{dayjs(group.date).format('MMM DD, YYYY')}</span>
+        <span class="day">{dayjs(group.date).format('dddd')}</span>
       </div>
       <!-- <div class="day">Monday</div> -->
       <div class="total-income">Rs. {group.totalIncome}</div>
@@ -54,25 +55,28 @@
     overflow: hidden;
   }
   .head {
-    margin: 5px;
+    /* margin: 5px; */
     margin-bottom: 0;
     padding: 12px 15px;
     display: flex;
-    gap: 30px;
-    /* border-bottom: 1px solid var(--border); */
-    background-color: var(--light);
-    border-radius: var(--radius);
+    gap: 20px;
+    border-bottom: 1px solid var(--border);
+    background-color: rgb(245, 249, 255);
+    /* border-radius: var(--radius); */
+    /* border: 1px solid var(--border); */
     align-items: center;
   }
   .dated {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    /* gap: 10px; */
     align-items: center;
     flex: 1;
-  }
-  /* .day {
     font-size: 14px;
-  } */
+  }
+  .day {
+    color: gray;
+    font-size: 12px;
+  }
   .transaction {
     padding: 15px;
     display: flex;

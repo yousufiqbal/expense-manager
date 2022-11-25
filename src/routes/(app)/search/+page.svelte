@@ -60,6 +60,12 @@
     data.category = expenseCategories.filter(el => el.urlName == e.detail.result)[0].name
     closeAllModals()
   }
+
+  $: summary = [
+    { title: 'Income', amount: 0, color: 'blue' },
+    { title: 'Expenses', amount: 0, color: 'red' },
+    { title: 'Transfer', amount: 0, color: 'black' },
+  ]
 </script>
 
 <Search />
@@ -75,7 +81,7 @@
 
 <FiltersToggle bind:filters />
 
-<Summary />
+<Summary {summary} />
 <Results />
 
 {#if modal.chooseAccount}

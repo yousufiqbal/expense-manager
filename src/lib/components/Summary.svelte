@@ -21,20 +21,19 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     margin-bottom: var(--mb, 30px);
+    font-size: 14px;
   }
   .part {
     /* padding:  0; */
     flex: 1;
     display: grid;
     justify-items: center;
+    gap: 3px;
     border-right: 1px solid var(--border);
     /* border: 1px dashed red; */
   }
   .part:last-child {
     border-right: none;
-  }
-  .title {
-    font-size: 14px;
   }
   .red {
     color: var(--primary);
