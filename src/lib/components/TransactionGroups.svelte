@@ -24,13 +24,13 @@
     </a>
     
     {#each group.transactions as transaction}
-    <a href="/edit-transaction?expense-id=46&tab=expense" class="transactions">
+    <a href="/edit-transaction?{transaction.type}-id={transaction.incomeId}&tab={transaction.type}" class="transactions">
       <div class="transaction">
         <div class="detail">
           <div class="title">{transaction.title}</div>
           <div class="meta">Account: {transaction.accountId} (in transport)</div>
         </div>
-        <div class="amount">Rs. {transaction.amount}</div>
+        <div class="{transaction.type} amount">Rs. {transaction.amount}</div>
       </div>
     </a>
     {/each}
@@ -90,7 +90,10 @@
   .total-expense {
     color: var(--red);
   }
-  .amount {
+  .expense {
     color: var(--red);
+  }
+  .income {
+    color: var(--primary);
   }
 </style>

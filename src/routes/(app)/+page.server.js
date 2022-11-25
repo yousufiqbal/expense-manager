@@ -1,5 +1,6 @@
 import { db } from '$lib/server/db';
 import dayjs from 'dayjs'
+import { sql } from 'kysely';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals }) => {
@@ -19,6 +20,8 @@ export const load = async ({ locals }) => {
     )
     .orderBy('date', 'desc')
     .execute()
+
+    console.log(transactions)
 
   const uniqueDates = [...new Set(transactions.map(t => +t.date))]
 
