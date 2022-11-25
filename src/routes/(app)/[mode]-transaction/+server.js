@@ -15,28 +15,28 @@ export const POST = async ({ request, locals, url }) => {
     // Validating Expense..
     const body = await request.json()
     const accounts = await db.selectFrom('accounts')
-    .where('accounts.userId', '=', locals.userId)
+      .where('accounts.userId', '=', locals.userId)
       .selectAll().execute()
       
-      const expenseCategories = await db.selectFrom('expense_categories')
+    const expenseCategories = await db.selectFrom('expense_categories')
       .where('expense_categories.userId', '=', locals.userId)
       .selectAll().execute()
       
-      const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
-      const expense = await expenseSchema.validate(body, { abortEarly: false })
-      
-      // Adding Expense..
-      await db.insertInto('expenses')
-      .values({
-        accountId: expense.accountId,
-        expenseCategoryId: expense.expenseCategoryId,
-        date: expense.date, 
-        time: expense.time,
-        title: expense.title,
-        amount: expense.amount,
-        description: expense.description || null,
-        userId: locals.userId
-      }).execute()
+    const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
+    const expense = await expenseSchema.validate(body, { abortEarly: false })
+    
+    // Adding Expense..
+    await db.insertInto('expenses')
+    .values({
+      accountId: expense.accountId,
+      expenseCategoryId: expense.expenseCategoryId,
+      date: expense.date, 
+      time: expense.time,
+      title: expense.title,
+      amount: expense.amount,
+      description: expense.description || null,
+      userId: locals.userId
+    }).execute()
       
       // Responding..
     return json({
@@ -77,7 +77,7 @@ export const POST = async ({ request, locals, url }) => {
         message: 'Income added'
       })
       
-    }
+  }
     
   if (intent == 'transfer') {
       
@@ -113,10 +113,21 @@ export const POST = async ({ request, locals, url }) => {
 };
 
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request, locals }) => {
+export const PUT = async ({ request, locals, url }) => {
 
   const intent = url.searchParams.get('tab')
   if (!intent) throw redirect('/')
+
+  // Current..
+  let current
+  if (url.searchParams.get('expense-id')) current = 'expense'
+  if (url.searchParams.get('income-id')) current = 'income'
+  if (url.searchParams.get('transfer-id')) current = 'transfer'
+
+  // Deleting current if intent and current differs
+  if (current != intent) {
+    
+  }
 
   if (intent == 'expense') {}
   if (intent == 'income') {}

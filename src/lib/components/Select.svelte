@@ -32,8 +32,6 @@
 
 <style>
   .field {
-    border: 1px dashed red;
-    z-index: 99999999992;
     display: grid;
     grid-column: span var(--cols, 1);
   }
