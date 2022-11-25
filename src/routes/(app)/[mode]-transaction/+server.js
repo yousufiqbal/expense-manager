@@ -8,7 +8,7 @@ import { json, redirect } from '@sveltejs/kit';
 export const POST = async ({ request, locals, url }) => {
 
   const intent = url.searchParams.get('tab')
-  if (!intent) throw redirect('/')
+  if (!intent) throw redirect(301, '/')
   
   if (intent == 'expense') {
     
@@ -116,16 +116,16 @@ export const POST = async ({ request, locals, url }) => {
 export const PUT = async ({ request, locals, url }) => {
 
   const intent = url.searchParams.get('tab')
-  if (!intent) throw redirect('/')
-
-  // The ID...
-  const id = url.searchParams.get(current+'-id')
+  if (!intent) throw redirect(301, '/')
 
   // Current State..
   let current
   if (url.searchParams.get('expense-id')) current = 'expense'
   if (url.searchParams.get('income-id')) current = 'income'
   if (url.searchParams.get('transfer-id')) current = 'transfer'
+
+  // The ID...
+  const id = url.searchParams.get(current+'-id')
 
   // Updating if current state and intent equals...
   if (current == intent) {
@@ -361,5 +361,5 @@ export const PUT = async ({ request, locals, url }) => {
     })
 
   }}
-  
+
 };

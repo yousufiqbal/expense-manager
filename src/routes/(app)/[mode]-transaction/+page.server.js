@@ -1,5 +1,9 @@
 import { db } from '$lib/server/db';
+import { redirect } from '@sveltejs/kit';
 import dayjs from 'dayjs';
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat)
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, params, url }) => {
@@ -31,8 +35,11 @@ export const load = async ({ locals, params, url }) => {
       .where(table + '.' + column, '=', +id)
       .selectAll().executeTakeFirst()
 
-    // For date input converting to YYYY-MM-DD
-    if (transaction.date) transaction.date = dayjs(transaction.date).format('YYYY-MM-DD')
+    if (!transaction) throw redirect(301, '/')
+
+    // Converting dates for inputs..
+    transaction.date = dayjs(transaction.date).format('YYYY-MM-DD')
+    transaction.time = dayjs(transaction.time, 'HH:mm').format('HH:mm')
 
   }
 

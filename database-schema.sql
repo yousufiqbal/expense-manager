@@ -54,13 +54,13 @@ CREATE TABLE IF NOT EXISTS `activities` (
 -- Dumping structure for table expense-manager.expenses
 CREATE TABLE IF NOT EXISTS `expenses` (
   `expenseId` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `userId` int NOT NULL DEFAULT '0',
   `date` date NOT NULL,
   `time` time NOT NULL,
   `accountId` int NOT NULL,
   `expenseCategoryId` int NOT NULL,
   `amount` decimal(13,0) NOT NULL DEFAULT '0',
-  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`expenseId`) USING BTREE,
@@ -70,14 +70,15 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   CONSTRAINT `expenses_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_expenses_expense_categories` FOREIGN KEY (`expenseCategoryId`) REFERENCES `expense_categories` (`expenseCategoryId`),
   CONSTRAINT `FK_expenses_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.expenses: ~0 rows (approximately)
-INSERT INTO `expenses` (`expenseId`, `userId`, `date`, `time`, `accountId`, `expenseCategoryId`, `amount`, `title`, `description`, `created`) VALUES
-	(1, 11, '2022-11-24', '21:55:00', 6, 8, 420, 'Eggs 12', NULL, '2022-11-24 16:56:00'),
-	(2, 13, '2022-11-25', '08:30:00', 8, 18, 450, 'Diamicron', NULL, '2022-11-25 03:31:01'),
-	(3, 13, '2022-11-25', '08:52:00', 8, 16, 20000, 'Eggs 240', NULL, '2022-11-25 03:53:53'),
-	(4, 13, '2022-11-25', '09:07:00', 8, 18, 450, 'Diamicron', NULL, '2022-11-25 04:07:49');
+INSERT INTO `expenses` (`expenseId`, `title`, `userId`, `date`, `time`, `accountId`, `expenseCategoryId`, `amount`, `description`, `created`) VALUES
+	(1, 'Eggs 12', 11, '2022-11-24', '21:55:00', 6, 8, 420, NULL, '2022-11-24 16:56:00'),
+	(3, 'Eggs 240', 13, '2022-11-25', '08:52:00', 8, 16, 20000, NULL, '2022-11-25 03:53:53'),
+	(4, 'Diamicron', 13, '2022-11-25', '09:07:00', 8, 18, 450, NULL, '2022-11-25 04:07:49'),
+	(5, 'Diamicron', 13, '2022-11-25', '08:30:00', 8, 18, 4501, NULL, '2022-11-25 04:48:58'),
+	(6, 'Pleetal', 13, '2022-11-25', '09:51:00', 8, 18, 1200, NULL, '2022-11-25 04:51:57');
 
 -- Dumping structure for table expense-manager.expense_categories
 CREATE TABLE IF NOT EXISTS `expense_categories` (
@@ -107,8 +108,8 @@ INSERT INTO `expense_categories` (`expenseCategoryId`, `userId`, `name`, `create
 -- Dumping structure for table expense-manager.incomes
 CREATE TABLE IF NOT EXISTS `incomes` (
   `incomeId` int NOT NULL AUTO_INCREMENT,
-  `userId` int NOT NULL DEFAULT '0',
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userId` int NOT NULL DEFAULT '0',
   `date` date NOT NULL,
   `time` time NOT NULL,
   `accountId` int NOT NULL,
@@ -123,12 +124,13 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   CONSTRAINT `FK_incomes_accounts` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_incomes_categories` FOREIGN KEY (`incomeCategoryId`) REFERENCES `income_categories` (`incomeCategoryId`),
   CONSTRAINT `FK_incomes_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.incomes: ~0 rows (approximately)
-INSERT INTO `incomes` (`incomeId`, `userId`, `title`, `date`, `time`, `accountId`, `incomeCategoryId`, `amount`, `description`, `created`) VALUES
-	(6, 13, 'asdasd', '2022-11-25', '07:43:00', 9, 12, 450, NULL, '2022-11-25 02:44:30'),
-	(7, 13, 'Yousuf Money', '2022-11-25', '08:52:00', 8, 12, 20000, NULL, '2022-11-25 03:53:07');
+INSERT INTO `incomes` (`incomeId`, `title`, `userId`, `date`, `time`, `accountId`, `incomeCategoryId`, `amount`, `description`, `created`) VALUES
+	(6, 'asdasd', 13, '2022-11-25', '07:43:00', 9, 12, 450, NULL, '2022-11-25 02:44:30'),
+	(7, 'Yousuf Money', 13, '2022-11-25', '08:52:00', 8, 12, 20000, NULL, '2022-11-25 03:53:07'),
+	(8, 'Diamicron', 13, '2022-11-25', '08:30:00', 8, 12, 4500, NULL, '2022-11-25 04:50:55');
 
 -- Dumping structure for table expense-manager.income_categories
 CREATE TABLE IF NOT EXISTS `income_categories` (
@@ -165,8 +167,8 @@ INSERT INTO `income_categories` (`incomeCategoryId`, `userId`, `name`, `created`
 -- Dumping structure for table expense-manager.transfers
 CREATE TABLE IF NOT EXISTS `transfers` (
   `transferId` int NOT NULL AUTO_INCREMENT,
-  `userId` int NOT NULL,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userId` int NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `fromAccountId` int NOT NULL,
@@ -184,9 +186,9 @@ CREATE TABLE IF NOT EXISTS `transfers` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.transfers: ~0 rows (approximately)
-INSERT INTO `transfers` (`transferId`, `userId`, `title`, `date`, `time`, `fromAccountId`, `toAccountId`, `amount`, `description`, `created`) VALUES
-	(1, 13, 'ASDFASDf', '2022-11-25', '07:51:00', 8, 9, 450, NULL, '2022-11-25 02:53:59'),
-	(2, 13, 'Needed Transfer', '2022-11-25', '08:52:00', 8, 9, 20000, NULL, '2022-11-25 03:53:34');
+INSERT INTO `transfers` (`transferId`, `title`, `userId`, `date`, `time`, `fromAccountId`, `toAccountId`, `amount`, `description`, `created`) VALUES
+	(1, 'ASDFASDf', 13, '2022-11-25', '07:51:00', 8, 9, 450, NULL, '2022-11-25 02:53:59'),
+	(2, 'Needed Transfer', 13, '2022-11-25', '08:52:00', 8, 9, 20000, NULL, '2022-11-25 03:53:34');
 
 -- Dumping structure for table expense-manager.users
 CREATE TABLE IF NOT EXISTS `users` (

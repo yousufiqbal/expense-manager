@@ -53,7 +53,7 @@ export const generateExpenseSchema = (accountIds, expenseCategoryIds) => {
     expenseCategoryId: yup.string().oneOf(expenseCategoryIds).required().ne(),
     amount: yup.number().min(0).required().ne(),
     title: yup.string().min(3).max(100).required().ne(),
-    description: yup.string().min(1).max(100).optional().ne(),
+    description: yup.string().min(1).max(100).optional().nullable().ne(),
   }).noUnknown(true)
 }
 
@@ -65,7 +65,7 @@ export const generateIncomeSchema = (accountIds, incomeCategoryIds) => {
     incomeCategoryId: yup.string().oneOf(incomeCategoryIds).required().ne(),
     amount: yup.number().min(0).required().ne(),
     title: yup.string().min(3).max(100).required().ne(),
-    description: yup.string().min(1).max(100).optional().ne(),
+    description: yup.string().min(1).max(100).optional().nullable().ne(),
   }).noUnknown(true)
 }
 
@@ -78,6 +78,6 @@ export const generateTransferSchema = (accountIds) => {
     toAccountId: yup.string().oneOf(accountIds).required().ne(),
     amount: yup.number().min(0).required().ne(),
     title: yup.string().min(3).max(100).required().ne(),
-    description: yup.string().min(1).max(100).optional().ne(),
+    description: yup.string().min(1).max(100).optional().nullable().ne(),
   }).noUnknown(true)
 }

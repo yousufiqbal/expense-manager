@@ -11,23 +11,15 @@
   import Title from "$lib/components/Title.svelte";
   import { extractYupErrors, generateExpenseSchema, generateIncomeSchema, generateTransferSchema } from "$lib/others/schema";
   import { addToast } from "$lib/others/toasts";
-  import { capitalize, isEmpty, post } from "$lib/others/utils";
+  import { capitalize, isEmpty, post, put } from "$lib/others/utils";
   import dayjs from "dayjs";
 
   /** @type {import('./$types').PageServerData} */
   export let data
 
-  $: current = $page.url.searchParams.get('tab') || 'expense'
-  
   let modal = {
     accounts: false, expenseCategories: false, incomeCategories: false, fromAccounts: false, toAccounts: false
   }
-
-  // Schema generation..
-  let schema
-  $: if (current == 'expense') schema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.expenseCategoryId)));
-  $: if (current == 'income') schema = generateIncomeSchema(data.accounts.map(a => String(a.accountId)), data.incomeCategories.map(a => String(a.incomeCategoryId)))
-  $: if (current == 'transfer') schema = generateTransferSchema(data.accounts.map(a => String(a.accountId)))
 
   let transaction = data.transaction || {
     date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
@@ -62,7 +54,7 @@
   }
 
   const editTransaction = async () => {
-    const response = await post('/edit-transaction' + $page.url.search, transaction)
+    const response = await put('/edit-transaction' + $page.url.search, transaction)
     addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
   }
 
@@ -118,9 +110,18 @@
     transaction.toAccountId = +e.detail.result
     closeAllModals()
   }
+
+  // Computed..
+
+  $: current = $page.url.searchParams.get('tab') || 'expense'
   
+  let schema
+  $: if (current == 'expense') schema = generateExpenseSchema(data.accounts.map(a => String(a.accountId)), data.expenseCategories.map(a => String(a.expenseCategoryId)));
+  $: if (current == 'income') schema = generateIncomeSchema(data.accounts.map(a => String(a.accountId)), data.incomeCategories.map(a => String(a.incomeCategoryId)))
+  $: if (current == 'transfer') schema = generateTransferSchema(data.accounts.map(a => String(a.accountId)))
+
   $: transaction && validate()
-  $: console.log($page.url.search)
+  $: console.log(transaction)
 </script>
 
 <Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
