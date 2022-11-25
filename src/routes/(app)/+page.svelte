@@ -6,12 +6,15 @@
   import Summary from "$lib/components/Summary.svelte";
 
   $title = 'Home'
+
+  /** @type {import('./$types').PageServerData} */
+  export let data
 </script>
 
 <DateNavigator />
 
 <Summary />
 
-<TransactionGroups />
+<TransactionGroups {data} />
 
 <Plus href="/add-transaction?tab=expense" />

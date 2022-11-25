@@ -1,40 +1,45 @@
 <script>
-  import Icon from "@iconify/svelte";
+    import dayjs from 'dayjs';
+
+
+  // import Icon from "@iconify/svelte";
+
+  /** @type {import('./$types').PageServerData} */
+  export let data
 </script>
 
+{#if data.transactionGroups?.length != 0}
 <div class="transaction-groups">
-
-  <!-- {#each groups as group} -->
-  {#each Array(3) as group}
+  
+  {#each data.transactionGroups as group}
   <div class="group">
-
-    <div class="head">
+    
+    <a href="/add-transaction?tab=expense&date={dayjs(group.date).format('YYYY-MM-DD')}" class="head">
       <div class="dated">
-        <!-- <i><Icon icon="ri:calendar-line" /></i> -->
-        <span>Nov 22, 2022</span>
+        <span>{dayjs(group.date).format('MMM DD, YYYY')}</span>
       </div>
       <!-- <div class="day">Monday</div> -->
       <div class="total-income">Rs. 0</div>
       <div class="total-expense">Rs. 1000</div>
-    </div>
-
-    <!-- {#each group.transactions as transaction} -->
-    {#each Array(3) as transaction}
-    <div class="transactions">
+    </a>
+    
+    {#each group.transactions as transaction}
+    <a href="/edit-transaction?expense-id=46&tab=expense" class="transactions">
       <div class="transaction">
         <div class="detail">
-          <div class="title">Bykea Office</div>
-          <div class="meta">Papa (in transport)</div>
+          <div class="title">{transaction.title}</div>
+          <div class="meta">Account: {transaction.accountId} (in transport)</div>
         </div>
-        <div class="amount">Rs. 600</div>
+        <div class="amount">Rs. {transaction.amount}</div>
       </div>
-    </div>
+    </a>
     {/each}
-
+    
   </div>
   {/each}
-
+  
 </div>
+{/if}
 
 <style>
   .transaction-groups {
