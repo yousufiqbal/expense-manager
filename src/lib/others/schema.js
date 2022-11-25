@@ -21,6 +21,11 @@ export const extractYupErrors = err => {
 }
 
 // Example..
+export const changePasswordSchema = yup.object({
+  currentPassword: yup.string().required().min(6).max(20).ne(),
+  newPassword: yup.string().required().notOneOf([yup.ref('currentPassword')], 'Do not user previous password').min(6).max(20).ne(),
+}).noUnknown(true)
+
 export const loginSchema = yup.object({
   email: yup.string().email().required().ne(),
   password: yup.string().required().min(6).max(20).ne(),
