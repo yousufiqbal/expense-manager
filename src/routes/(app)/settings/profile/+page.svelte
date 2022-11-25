@@ -8,7 +8,7 @@
 
 <Profile {data} />
 
-{#if !data.profile.isVerified}
+{#if !data.profile?.isVerified}
 <Message>
   <p>
     Your account is not verified. Please click on the link sent to your <em>email inbox</em> to complete verification.
@@ -16,7 +16,7 @@
 </Message>
 {/if}
 
-{#if data.profile.isVerified}
+{#if data.profile?.isVerified}
 <Message type="success">
   <p>
     Your account is verified.

@@ -9,11 +9,11 @@
 
   <div class="part">
     <div class="property">Name</div>
-    <div class="value">{data.profile.name}</div> 
+    <div class="value">{data.profile?.name}</div> 
   </div>
   <div class="part">
     <div class="property">Email</div>
-    <div class="value">{data.profile.email}</div> 
+    <div class="value">{data.profile?.email}</div> 
   </div>
   <div class="part">
     <div class="property">Joined</div>
