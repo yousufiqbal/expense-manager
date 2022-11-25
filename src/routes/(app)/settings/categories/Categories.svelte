@@ -1,5 +1,6 @@
 <script>
     import { page } from "$app/stores";
+    import Nothing from "$lib/components/Nothing.svelte";
   import Icon from "@iconify/svelte";
 
   /** @type {(import('./$types').PageServerData} */
@@ -21,6 +22,11 @@
   {/each}
   
 </div>
+{:else}
+
+<Nothing>
+  No Categories
+</Nothing>
 {/if}
 
 <style>

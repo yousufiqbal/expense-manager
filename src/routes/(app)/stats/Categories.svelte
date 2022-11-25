@@ -12,7 +12,7 @@
   
   {#each data?.categories as category}
   <div class="category">
-    <div class="{current} percentage">15%</div>
+    <div class="{current} percentage">{((category.total / data.allTotal) * 100).toFixed(0)}%</div>
     <div class="name">{category.name}</div>
     <div class="amount">Rs. {category.total}</div>
   </div>
