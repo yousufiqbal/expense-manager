@@ -1,4 +1,5 @@
 <script>
+    import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import Button from "$lib/components/Button.svelte";
   import Buttons from "$lib/components/Buttons.svelte";
@@ -51,11 +52,13 @@
   const addTransaction = async () => {
     const response = await post('/add-transaction' + $page.url.search, transaction)
     addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+    goto('/')
   }
 
   const editTransaction = async () => {
     const response = await put('/edit-transaction' + $page.url.search, transaction)
     addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+    goto('/')
   }
 
   const submit = async () => {
@@ -121,7 +124,7 @@
   $: if (current == 'transfer') schema = generateTransferSchema(data.accounts.map(a => String(a.accountId)))
 
   $: transaction && validate()
-  $: console.log(transaction)
+  $: current && validate()
 </script>
 
 <Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
