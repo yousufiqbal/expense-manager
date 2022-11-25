@@ -29,9 +29,12 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   UNIQUE KEY `name` (`name`),
   KEY `FK_accounts_users` (`userId`),
   CONSTRAINT `FK_accounts_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.accounts: ~0 rows (approximately)
+-- Dumping data for table expense-manager.accounts: ~4 rows (approximately)
+INSERT INTO `accounts` (`accountId`, `userId`, `name`, `created`) VALUES
+	(10, 15, 'Personal', '2022-11-25 18:59:44'),
+	(11, 15, 'Savings', '2022-11-25 18:59:44');
 
 -- Dumping structure for table expense-manager.activities
 CREATE TABLE IF NOT EXISTS `activities` (
@@ -68,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   CONSTRAINT `FK_expenses_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table expense-manager.expenses: ~0 rows (approximately)
+-- Dumping data for table expense-manager.expenses: ~6 rows (approximately)
 
 -- Dumping structure for table expense-manager.expense_categories
 CREATE TABLE IF NOT EXISTS `expense_categories` (
@@ -80,12 +83,18 @@ CREATE TABLE IF NOT EXISTS `expense_categories` (
   UNIQUE KEY `userId_name` (`userId`,`name`),
   KEY `FK_categories_users` (`userId`) USING BTREE,
   CONSTRAINT `expense_categories_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table expense-manager.expense_categories: ~0 rows (approximately)
+-- Dumping data for table expense-manager.expense_categories: ~9 rows (approximately)
 INSERT INTO `expense_categories` (`expenseCategoryId`, `userId`, `name`, `created`) VALUES
 	(20, 14, 'Grocery', '2022-11-25 18:24:51'),
-	(21, 14, 'Restaurant', '2022-11-25 18:25:27');
+	(21, 14, 'Restaurant', '2022-11-25 18:25:27'),
+	(22, 15, 'Grocery', '2022-11-25 18:59:44'),
+	(23, 15, 'Health', '2022-11-25 18:59:44'),
+	(24, 15, 'Transport', '2022-11-25 18:59:44'),
+	(25, 15, 'Clothing', '2022-11-25 18:59:44'),
+	(26, 15, 'Bills', '2022-11-25 18:59:44'),
+	(27, 15, 'Others', '2022-11-25 18:59:44');
 
 -- Dumping structure for table expense-manager.incomes
 CREATE TABLE IF NOT EXISTS `incomes` (
@@ -109,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   CONSTRAINT `FK_incomes_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.incomes: ~0 rows (approximately)
+-- Dumping data for table expense-manager.incomes: ~3 rows (approximately)
 
 -- Dumping structure for table expense-manager.income_categories
 CREATE TABLE IF NOT EXISTS `income_categories` (
@@ -121,12 +130,16 @@ CREATE TABLE IF NOT EXISTS `income_categories` (
   UNIQUE KEY `userId_name` (`userId`,`name`),
   KEY `FK_categories_users` (`userId`),
   CONSTRAINT `FK_categories_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.income_categories: ~0 rows (approximately)
+-- Dumping data for table expense-manager.income_categories: ~15 rows (approximately)
 INSERT INTO `income_categories` (`incomeCategoryId`, `userId`, `name`, `created`) VALUES
 	(29, 14, 'Salary', '2022-11-25 18:24:57'),
-	(30, 14, 'Bonus', '2022-11-25 18:25:20');
+	(30, 14, 'Bonus', '2022-11-25 18:25:20'),
+	(31, 15, 'Salary', '2022-11-25 18:59:44'),
+	(32, 15, 'Bonus', '2022-11-25 18:59:44'),
+	(33, 15, 'Allowance', '2022-11-25 18:59:44'),
+	(34, 15, 'Others', '2022-11-25 18:59:44');
 
 -- Dumping structure for table expense-manager.transfers
 CREATE TABLE IF NOT EXISTS `transfers` (
@@ -150,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `transfers` (
   CONSTRAINT `FK_transfers_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table expense-manager.transfers: ~0 rows (approximately)
+-- Dumping data for table expense-manager.transfers: ~3 rows (approximately)
 
 -- Dumping structure for table expense-manager.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -165,11 +178,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.users: ~0 rows (approximately)
+-- Dumping data for table expense-manager.users: ~3 rows (approximately)
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
-	(14, 'Yousuf Iqbal', 'yousufiqbal@gmail.com', '$2a$10$mir/B2148h9liWwbAj3wmemB/ul1J.4.Z.5BnN6.YuDMyWyNuwb36', 0, NULL, '76206d68380a151dcbe27c8e2a62cd82ac1f238d334900aeb136e629a1e8', 'Rs', '2022-11-25 18:22:52');
+	(14, 'Danish Saleem', 'yousufiqbal@gmail.com', '$2a$10$mir/B2148h9liWwbAj3wmemB/ul1J.4.Z.5BnN6.YuDMyWyNuwb36', 0, NULL, '76206d68380a151dcbe27c8e2a62cd82ac1f238d334900aeb136e629a1e8', 'Rs', '2022-11-25 18:22:52'),
+	(15, 'Nabeel', 'nabeel@gmail.com', '$2a$10$ztXEfzI9IDSyssFzSvYwn.IyJFiRP1pCNVqjwWjFwCRGIRsZ6Hn4u', 0, NULL, '38f47addfa7902c7448b1b2a72b3f91775185bf33db635bb0bc4df26e2d1', 'Rs.', '2022-11-25 18:59:44');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
