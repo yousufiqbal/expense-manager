@@ -1,5 +1,5 @@
 <script>
-    import { goto } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import Breadcrumbs from "$lib/components/Breadcrumbs.svelte";
   import Equal from "$lib/components/Equal.svelte";
   import Option from "$lib/components/Option.svelte";
@@ -16,8 +16,7 @@
 
   const logout = async () => {
     const response = await post('/settings/profile/logout')
-    const body = await response.json()
-    if (response.ok) addToast({ message: body.message })
+    addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
     goto('/login')
   }
 </script>
