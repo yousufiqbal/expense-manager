@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   CONSTRAINT `FK_accounts_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.accounts: ~4 rows (approximately)
+-- Dumping data for table expense-manager.accounts: ~2 rows (approximately)
 INSERT INTO `accounts` (`accountId`, `userId`, `name`, `created`) VALUES
 	(10, 15, 'Personal', '2022-11-25 18:59:44'),
 	(11, 15, 'Savings', '2022-11-25 18:59:44');
@@ -69,9 +69,17 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   CONSTRAINT `expenses_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_expenses_expense_categories` FOREIGN KEY (`expenseCategoryId`) REFERENCES `expense_categories` (`expenseCategoryId`),
   CONSTRAINT `FK_expenses_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table expense-manager.expenses: ~6 rows (approximately)
+-- Dumping data for table expense-manager.expenses: ~0 rows (approximately)
+INSERT INTO `expenses` (`expenseId`, `title`, `userId`, `date`, `time`, `accountId`, `expenseCategoryId`, `amount`, `description`, `type`, `created`) VALUES
+	(10, 'Khaadis Suits x 4', 15, '2022-11-27', '16:38:00', 10, 25, 4500, NULL, 'expense', '2022-11-27 11:38:18'),
+	(11, 'Eggs x 24', 15, '2022-11-27', '16:38:00', 10, 22, 450, NULL, 'expense', '2022-11-27 11:38:34'),
+	(12, 'Gas Bill', 15, '2022-11-27', '16:38:00', 10, 26, 240, NULL, 'expense', '2022-11-27 11:38:52'),
+	(13, 'Panadol x 6 Leafs', 15, '2022-11-27', '16:38:00', 10, 23, 60, NULL, 'expense', '2022-11-27 11:39:12'),
+	(14, 'Bykea Ayesha Home', 15, '2022-11-27', '18:07:49', 10, 24, 320, NULL, 'expense', '2022-11-27 13:08:11'),
+	(15, 'Bread x 1', 15, '2022-11-26', '18:56:13', 10, 22, 120, NULL, 'expense', '2022-11-27 13:56:29'),
+	(16, 'Diamicron', 15, '2022-11-27', '18:56:42', 10, 23, 220, NULL, 'expense', '2022-11-27 13:57:02');
 
 -- Dumping structure for table expense-manager.expense_categories
 CREATE TABLE IF NOT EXISTS `expense_categories` (
@@ -85,10 +93,8 @@ CREATE TABLE IF NOT EXISTS `expense_categories` (
   CONSTRAINT `expense_categories_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table expense-manager.expense_categories: ~9 rows (approximately)
+-- Dumping data for table expense-manager.expense_categories: ~8 rows (approximately)
 INSERT INTO `expense_categories` (`expenseCategoryId`, `userId`, `name`, `created`) VALUES
-	(20, 14, 'Grocery', '2022-11-25 18:24:51'),
-	(21, 14, 'Restaurant', '2022-11-25 18:25:27'),
 	(22, 15, 'Grocery', '2022-11-25 18:59:44'),
 	(23, 15, 'Health', '2022-11-25 18:59:44'),
 	(24, 15, 'Transport', '2022-11-25 18:59:44'),
@@ -116,9 +122,11 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   CONSTRAINT `FK_incomes_accounts` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_incomes_categories` FOREIGN KEY (`incomeCategoryId`) REFERENCES `income_categories` (`incomeCategoryId`),
   CONSTRAINT `FK_incomes_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.incomes: ~3 rows (approximately)
+-- Dumping data for table expense-manager.incomes: ~0 rows (approximately)
+INSERT INTO `incomes` (`incomeId`, `title`, `userId`, `date`, `time`, `accountId`, `incomeCategoryId`, `amount`, `description`, `type`, `created`) VALUES
+	(10, 'November Salary', 15, '2022-11-27', '16:41:00', 10, 31, 50000, NULL, 'income', '2022-11-27 11:41:21');
 
 -- Dumping structure for table expense-manager.income_categories
 CREATE TABLE IF NOT EXISTS `income_categories` (
@@ -132,10 +140,8 @@ CREATE TABLE IF NOT EXISTS `income_categories` (
   CONSTRAINT `FK_categories_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.income_categories: ~15 rows (approximately)
+-- Dumping data for table expense-manager.income_categories: ~4 rows (approximately)
 INSERT INTO `income_categories` (`incomeCategoryId`, `userId`, `name`, `created`) VALUES
-	(29, 14, 'Salary', '2022-11-25 18:24:57'),
-	(30, 14, 'Bonus', '2022-11-25 18:25:20'),
 	(31, 15, 'Salary', '2022-11-25 18:59:44'),
 	(32, 15, 'Bonus', '2022-11-25 18:59:44'),
 	(33, 15, 'Allowance', '2022-11-25 18:59:44'),
@@ -161,9 +167,11 @@ CREATE TABLE IF NOT EXISTS `transfers` (
   CONSTRAINT `FK_transfers_accounts` FOREIGN KEY (`fromAccountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_transfers_accounts_2` FOREIGN KEY (`toAccountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_transfers_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table expense-manager.transfers: ~3 rows (approximately)
+-- Dumping data for table expense-manager.transfers: ~0 rows (approximately)
+INSERT INTO `transfers` (`transferId`, `title`, `userId`, `date`, `time`, `fromAccountId`, `toAccountId`, `amount`, `description`, `type`, `created`) VALUES
+	(4, 'Savings for Kid', 15, '2022-11-27', '16:41:00', 10, 11, 5000, NULL, 'transfer', '2022-11-27 11:42:18');
 
 -- Dumping structure for table expense-manager.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -180,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.users: ~3 rows (approximately)
+-- Dumping data for table expense-manager.users: ~2 rows (approximately)
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
 	(14, 'Danish Saleem', 'yousufiqbal@gmail.com', '$2a$10$mir/B2148h9liWwbAj3wmemB/ul1J.4.Z.5BnN6.YuDMyWyNuwb36', 0, NULL, '76206d68380a151dcbe27c8e2a62cd82ac1f238d334900aeb136e629a1e8', 'Rs', '2022-11-25 18:22:52'),
 	(15, 'Nabeel', 'nabeel@gmail.com', '$2a$10$ztXEfzI9IDSyssFzSvYwn.IyJFiRP1pCNVqjwWjFwCRGIRsZ6Hn4u', 0, NULL, '38f47addfa7902c7448b1b2a72b3f91775185bf33db635bb0bc4df26e2d1', 'Rs.', '2022-11-25 18:59:44');
