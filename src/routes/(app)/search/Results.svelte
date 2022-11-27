@@ -1,19 +1,28 @@
 <script>
-  export let transactions = [1, 2, 3]
+    import dayjs from 'dayjs';
+
+
+  /** @type {import('./$types').PageServerData} */
+  export let data
+
 </script>
 
-{#if transactions.length != 0}
+{#if data.results?.length != 0}
 <div class="transactions">
 
-  {#each transactions as transaction}
-  <div class="transaction">
-    <div class="dated">Nov 11<br>2022</div>
+  {#each data.results as result}
+  <a href="/edit-transaction?{result.type}-id={result.id}&tab={result.type}&next=search" class="transaction">
+    <div class="dated">{dayjs(result.date).format('MMM DD')}<br>{dayjs(result.date).format('YYYY')}</div>
     <div class="detail">
-      <div class="title">Bykea Office</div>
-      <div class="meta">Papa (in transport)</div>
+      <div class="title">{result.title}</div>
+      {#if result.type != 'transfer'}
+      <div class="meta">{result.accountName} - {result.categoryName}</div>
+      {:else}
+      <div class="meta">{result.fromAccountName} - {result.toAccountName}</div>
+      {/if}
     </div>
-    <div class="amount">Rs. 600</div>
-  </div>
+    <div class="amount">Rs. {result.amount}</div>
+  </a>
   {/each}
 
 </div>

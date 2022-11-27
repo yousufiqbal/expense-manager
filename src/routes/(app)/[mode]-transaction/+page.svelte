@@ -52,13 +52,21 @@
   const addTransaction = async () => {
     const response = await post('/add-transaction' + $page.url.search, transaction)
     addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
-    goto('/')
+    back()
   }
 
   const editTransaction = async () => {
     const response = await put('/edit-transaction' + $page.url.search, transaction)
     addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
-    goto('/')
+    back()
+  }
+
+  const back = () => {
+    if ($page.url.searchParams.get(next) == 'search') {
+      history.back()
+    } else {
+      goto('/')
+    }
   }
 
   const submit = async () => {
@@ -127,15 +135,7 @@
   $: current && validate()
 </script>
 
-<!-- <div style="display: flex; margin-bottom: 20px; justify-content: space-between;">
-  <Title --mb="0" title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
-  <Button on:click={submit} name="Save" type={colors[current]} icon="ri:save-line" />
-</div> -->
-
-<!-- <div style="display: flex; margin-bottom: 20px; justify-content: space-between;"> -->
-  <Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
-  <!-- <Button on:click={submit} name="Save" type={colors[current]} icon="ri:save-line" /> -->
-<!-- </div> -->
+<Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
 
 <Tabs />
 
@@ -167,7 +167,7 @@
 
 <Buttons>
   <Button on:click={submit} name="Save {maps[current]}" type={colors[current]} icon="ri:save-line" />
-  <Button name="Discard" type="transparent" icon="ri:close-line" href="/" />
+  <Button name="Discard" type="transparent" icon="ri:close-line" on:click={back} />
 </Buttons>
 
 

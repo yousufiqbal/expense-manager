@@ -88,7 +88,7 @@
 
 <Summary {summary} />
 
-<Results />
+<Results {data} />
 
 {#if modal.accounts}
 <Modal on:close={closeAllModals} title="Choose Account">
