@@ -38,7 +38,7 @@
   }
   .percentage {
     text-align: center;
-    width: 30px;
+    width: 40px;
     padding: 4px 0;
     font-size: 12px;
     border-radius: var(--radius);
