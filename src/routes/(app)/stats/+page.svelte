@@ -24,7 +24,7 @@
 </script>
 
 <!-- <Title title="Stats" icon="ri:line-chart-line" /> -->
-<DateNavigator />
+<DateNavigator type="secondary" />
 <Tabs transfer={false} />
 <!-- <Subtitle subtitle="Accounts" icon="ri:folders-line" /> -->
 <Checkboxes on:change={fire} items={data.accounts} n="name" v="accountId" bind:result={choosenAccounts}  />

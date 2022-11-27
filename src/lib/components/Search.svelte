@@ -4,7 +4,7 @@
 
 <div class="search">
   <input placeholder="Type here" type="text">
-  <button>
+  <button on:click>
     <Icon icon="ri:search-line" />
   </button>
 </div>
@@ -14,7 +14,7 @@
     display: flex;
     gap: 8px;
     /* border: 1px dashed red; */
-    margin-bottom: var(--mb, 30px);
+    margin-bottom: var(--mb, 20px);
   }
   input {
     flex: 1;

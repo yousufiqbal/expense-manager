@@ -1,9 +1,11 @@
 <script>
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-    import { setQuery } from '$lib/others/utils';
+  import { setQuery } from '$lib/others/utils';
   import Icon from '@iconify/svelte'
   import dayjs from 'dayjs';
+
+  export let type = 'primary'
 
   let start = $page.url.searchParams.get('start') || dayjs().startOf('month').format('YYYY-MM-DD')
   let end = $page.url.searchParams.get('end') || dayjs().endOf('month').format('YYYY-MM-DD')
@@ -26,9 +28,9 @@
 </script>
 
 <div class="date-navigator">
-  <button on:click={decrease}><Icon icon="ri:arrow-left-s-line" /></button>
+  <button class="{type}" on:click={decrease}><Icon icon="ri:arrow-left-s-line" /></button>
   <span>{dayjs(start, 'YYYY-MM-DD').format('MMM - YYYY')}</span>
-  <button on:click={increase}><Icon icon="ri:arrow-right-s-line" /></button>
+  <button class="{type}" on:click={increase}><Icon icon="ri:arrow-right-s-line" /></button>
 </div>
 
 <style>
@@ -51,12 +53,20 @@
     /* box-shadow: var(--shadow); */
   }
   button {
-    background-color: var(--primary);
     color: white;
     font-size: 26px;
     padding: 5px;
     display: flex;
     border-radius: var(--radius);
     /* border: 1px solid var(--border); */
+  }
+  .secondary {
+    background-color: var(--secondary);
+  }
+  .primary {
+    background-color: var(--primary);
+  }
+  .red {
+    background-color: var(--red);
   }
 </style>

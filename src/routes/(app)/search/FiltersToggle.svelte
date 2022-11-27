@@ -4,20 +4,27 @@
   export let filters
 </script>
 
-<button on:click={()=>filters=!filters}>
-  <span>
-    {filters ? 'Hide' : 'Show'} Filters
-  </span>
-  <i><Icon icon="{filters ? 'ri:arrow-up-s-line' : 'ri:arrow-down-s-line'}" /></i>
-</button>
+<div class="wrapper">
+  <button on:click={()=>filters=!filters}>
+    <span>
+      {filters ? 'Hide' : 'Show'} Filters
+    </span>
+    <i><Icon icon="{filters ? 'ri:arrow-up-s-line' : 'ri:arrow-down-s-line'}" /></i>
+  </button>
+</div>
 
 <style>
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    /* border: 1px dashed red; */
+    margin-bottom: 25px;
+  }
   button {
     display: flex;
     gap: 10px;
     align-items: center;
     color: var(--primary);
-    margin-bottom: 20px;
   }
   i {
     font-size: 20px;

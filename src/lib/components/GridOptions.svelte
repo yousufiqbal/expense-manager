@@ -16,15 +16,17 @@
   export let options = []
 </script>
 
+{#if options.length != 0}
 <div class="grid-options">
-
+  
   {#each options as option}
   <button data-result="{option[v]}" on:click={dispatchSelect} class="option">
     {option[n]}
   </button>
   {/each}
-
+  
 </div>
+{/if}
 
 <style>
   .grid-options {
