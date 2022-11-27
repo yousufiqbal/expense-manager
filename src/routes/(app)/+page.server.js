@@ -78,10 +78,8 @@ export const load = async ({ locals, url }) => {
     .orderBy('tr.time', 'desc')
     .selectAll().execute()
 
-  console.log(transactions)
-
+    
   const uniqueDates = [...new Set(transactions.map(t => +t.date))]
-
   let transactionGroups = []
 
   for (const date of uniqueDates) {

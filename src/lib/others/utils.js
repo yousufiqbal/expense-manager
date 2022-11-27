@@ -42,7 +42,13 @@ export function outclickHandler(node) {
  */
  export const setQuery = (params, $page) => {
   let q = new URLSearchParams($page.url.search)
-  for (const name in params) q.set(name, params[name])
+  for (const name in params) {
+    if (params[name]) {
+      q.set(name, params[name])
+    } else {
+      q.delete(name)
+    }
+  }
   return '?' + q.toString()
 }
 

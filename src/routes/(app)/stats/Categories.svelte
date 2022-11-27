@@ -7,10 +7,10 @@
   $: current = $page.url.searchParams.get('tab')
 </script>
 
-{#if data.categories?.length != 0}
-<div class="categories">
+{#if data?.stats?.length != 0}
+<div class="stats">
   
-  {#each data?.categories as category}
+  {#each data?.stats as category}
   <div class="category">
     <div class="{current} percentage">{((category.total / data.allTotal) * 100).toFixed(0)}%</div>
     <div class="name">{category.name}</div>
@@ -22,7 +22,7 @@
 {/if}
 
 <style>
-  .categories {
+  .stats {
     display: grid;
     border: 1px solid var(--border);
     border-radius: var(--radius);
