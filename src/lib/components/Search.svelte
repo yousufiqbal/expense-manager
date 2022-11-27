@@ -1,9 +1,11 @@
 <script>
   import Icon from '@iconify/svelte'
+
+  export let keyword
 </script>
 
 <div class="search">
-  <input placeholder="Type here" type="text">
+  <input bind:value={keyword} placeholder="Type here" type="text">
   <button on:click>
     <Icon icon="ri:search-line" />
   </button>

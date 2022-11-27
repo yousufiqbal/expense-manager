@@ -6,6 +6,7 @@
   import GridOptions from "$lib/components/GridOptions.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import Search from "$lib/components/Search.svelte";
+  import Select from "$lib/components/Select.svelte";
   import Summary from "$lib/components/Summary.svelte";
   import { title } from "$lib/others/stores";
   import { setQuery } from "$lib/others/utils";
@@ -13,23 +14,15 @@
   import Results from "./Results.svelte";
 
   $title = 'Search'
+
   export let data
 
-  let filters = false
+  let filters = true
   let form = {}
+  let values = {}
+  let keyword = ''
 
-  let modal = {
-    accounts: false, categories: false
-  }
-
-  
-  const expenseCategories = [
-    { name: 'Grocery', urlName: 'grocery' },
-    { name: 'Transport', urlName: 'transport' },
-    { name: 'Bills', urlName: 'bills' },
-    { name: 'Health', urlName: 'health' },
-    { name: 'Others', urlName: 'others' },
-  ]
+  let modal = { accounts: false, categories: false }
 
   const closeAllModals = () => {
     modal.accounts = false
@@ -37,7 +30,6 @@
   }
 
   const openAccountModal = e => {
-    e.target.blur()
     modal.accounts = true
   }
 
@@ -47,22 +39,26 @@
   }
 
   const setAccount = e => {
-    // data.filter.accountId = accounts.filter(el => el.urlName == e.detail.result)[0].name
+    form['account-id'] = +e.detail.result
     closeAllModals()
   }
 
   const setExpenseCategory = e => {
-    data.filter.expenseCategoryId = expenseCategories.filter(el => el.urlName == e.detail.result)[0].name
+    form['income-category-id'] = ''
+    form['expense-category-id'] = e.detail.result
+    values.categoryName = data.expenseCategories.filter(el => el.expenseCategoryId == e.detail.result)[0].name
     closeAllModals()
   }
-
+  
   const setIncomeCategory = e => {
-    data.filter.incomeCategoryId = expenseCategories.filter(el => el.urlName == e.detail.result)[0].name
+    form['expense-category-id'] = ''
+    form['income-category-id'] = e.detail.result
+    values.categoryName = data.incomeCategories.filter(el => el.incomeCategoryId == e.detail.result)[0].name
     closeAllModals()
   }
 
-  const fire = () => {
-    goto($page.url.pathname + setQuery(form, $page))
+  const search = () => {
+    goto($page.url.pathname + setQuery({ keyword, ...form }, $page))
   }
 
   $: summary = [
@@ -70,20 +66,25 @@
     { title: 'Expenses', amount: 0, color: 'red' },
     { title: 'Transfer', amount: 0, color: 'black' },
   ]
+
+  const clearFilters = () => {
+    values = {}
+    form = { 'account-id': '' }
+  }
 </script>
 
-<Search on:click={fire} />
+<Search bind:keyword on:click={search} />
 
 {#if filters}
 <Form --mb="30px">
-  <Field label="Account" on:focus={openAccountModal} />
-  <Field label="Category" on:focus={openCategoryModal} />
+  <Select label="Account" on:click={openAccountModal} bind:value={form['account-id']} options={data.accounts} n="name" v="accountId" />
+  <Field placeholder="Choose" value={values?.categoryName} label="Category" on:focus={openCategoryModal} />
   <Field bind:value={form.min} label="Amount Min" inputmode="numeric" />
   <Field bind:value={form.max} label="Amount Max" inputmode="numeric" />
 </Form>
 {/if}
 
-<FiltersToggle bind:filters />
+<FiltersToggle {filters} on:clear={clearFilters} on:toggle={()=>filters=!filters} {form} />
 
 <Summary {summary} />
 
@@ -91,13 +92,25 @@
 
 {#if modal.accounts}
 <Modal on:close={closeAllModals} title="Choose Account">
-  <GridOptions on:select={setAccount} options={data.accounts} name="name" value="accountId" />
+  <GridOptions on:select={setAccount} options={data.accounts} n="name" v="accountId" />
 </Modal>
 {/if}
 
 {#if modal.categories}
 <Modal on:close={closeAllModals} title="Choose Category">
-  <GridOptions on:select={setExpenseCategory}  options={data.expenseCategories} name="name" value="expenseCategoryId" />
-  <GridOptions on:select={setIncomeCategory}  options={data.incomeCategories} name="name" value="incomeCategoryId" />
+  <h2 style="color: var(--red)">Expense</h2>
+  <GridOptions on:select={setExpenseCategory}  options={data.expenseCategories} n="name" v="expenseCategoryId" />
+  <h2 style="color: var(--primary)">Income</h2>
+  <GridOptions on:select={setIncomeCategory}  options={data.incomeCategories} n="name" v="incomeCategoryId" />
 </Modal>
 {/if}
+
+<style>
+  h2 {
+    margin: 30px 0;
+    font-weight: bold;
+  }
+  h2:first-child {
+    margin-top: 0;
+  }
+</style>
