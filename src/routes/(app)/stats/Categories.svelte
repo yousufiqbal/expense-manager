@@ -12,7 +12,7 @@
   
   {#each data?.stats as category}
   <div class="category">
-    <div class="{current} percentage">{((category.total / data.allTotal) * 100).toFixed(0)}%</div>
+    <div class="{current} percentage">{category.percentage}%</div>
     <div class="name">{category.name}</div>
     <div class="amount">Rs. {category.total}</div>
   </div>
@@ -37,8 +37,10 @@
     align-items: center;
   }
   .percentage {
-    padding: 2px 4px;
-    font-size: 14px;
+    text-align: center;
+    width: 30px;
+    padding: 4px 0;
+    font-size: 12px;
     border-radius: var(--radius);
     color: white;
   }
