@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `income_categories` (
   CONSTRAINT `FK_categories_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table expense-manager.income_categories: ~4 rows (approximately)
+-- Dumping data for table expense-manager.income_categories: ~6 rows (approximately)
 INSERT INTO `income_categories` (`incomeCategoryId`, `userId`, `name`, `created`) VALUES
 	(31, 15, 'Salary', '2022-11-25 18:59:44'),
 	(32, 15, 'Bonus', '2022-11-25 18:59:44'),
