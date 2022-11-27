@@ -21,8 +21,6 @@
     { name: 'Change Password', href: $page.url.pathname },
   ]
 
-  console.log(2222)
-
   const validate = async () => {
     try {
       await changePasswordSchema.validate(form, { abortEarly: false})

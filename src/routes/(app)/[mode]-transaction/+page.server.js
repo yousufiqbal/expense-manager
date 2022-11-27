@@ -39,7 +39,7 @@ export const load = async ({ locals, params, url }) => {
 
     // Converting dates for inputs..
     transaction.date = dayjs(transaction.date).format('YYYY-MM-DD')
-    transaction.time = dayjs(transaction.time, 'HH:mm').format('HH:mm')
+    transaction.time = dayjs(transaction.time, 'HH:mm:ss').format('HH:mm:ss')
 
   }
 

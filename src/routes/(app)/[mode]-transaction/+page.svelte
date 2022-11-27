@@ -23,7 +23,7 @@
   }
 
   let transaction = data.transaction || {
-    date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
+    date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm:ss'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
   }
 
   let touched = false, errors = {}

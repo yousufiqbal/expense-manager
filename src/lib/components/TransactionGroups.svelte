@@ -1,8 +1,5 @@
 <script>
-    import dayjs from 'dayjs';
-
-
-  // import Icon from "@iconify/svelte";
+  import dayjs from 'dayjs';
 
   /** @type {import('./$types').PageServerData} */
   export let data
@@ -25,11 +22,15 @@
     </a>
     
     {#each group.transactions as transaction}
-    <a href="/edit-transaction?{transaction.type}-id={transaction.incomeId}&tab={transaction.type}" class="transactions">
+    <a href="/edit-transaction?{transaction.type}-id={transaction.id}&tab={transaction.type}" class="transactions">
       <div class="transaction">
         <div class="detail">
           <div class="title">{transaction.title}</div>
-          <div class="meta">Account: {transaction.accountId} (in transport)</div>
+          {#if transaction.type != 'transfer'}
+          <div class="meta">{transaction.accountName} - {transaction.categoryName}</div>
+          {:else}
+          <div class="meta">{transaction.fromAccountName} - {transaction.toAccountName}</div>
+          {/if}
         </div>
         <div class="{transaction.type} amount">Rs. {transaction.amount}</div>
       </div>
