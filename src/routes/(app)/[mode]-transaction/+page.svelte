@@ -28,7 +28,6 @@
 
   let touched = false, errors = {}
 
-
   // Mapping..
   const maps = { 'expense': 'Expense', 'income': 'Income', 'transfer': 'Transfer', }
   const colors = { 'expense': 'warning', 'income': 'primary', 'transfer': 'secondary', }
