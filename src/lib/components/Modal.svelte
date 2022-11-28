@@ -59,7 +59,7 @@
   .modal {
     background-color: #fff;
     box-shadow: 0 -4px 5px 0 rgb(0, 0, 0, 0.3);
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
   .head {
     display: flex;
@@ -68,6 +68,7 @@
     background-color: var(--primary);
     color: white;
     padding: 0 10px 0 20px;
+    margin-bottom: 10px;
   }
   h2 {
     padding: 13px 0;

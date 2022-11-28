@@ -39,7 +39,7 @@
     border-radius: var(--radius);
     padding: 10px;
     text-align: center;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
+    border: 1px solid var(--secondary);
+    /* box-shadow: var(--shadow); */
   }
 </style>
