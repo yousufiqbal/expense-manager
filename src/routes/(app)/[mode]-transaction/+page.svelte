@@ -3,16 +3,18 @@
   import { page } from "$app/stores";
   import Button from "$lib/components/Button.svelte";
   import Buttons from "$lib/components/Buttons.svelte";
+  import Equal from "$lib/components/Equal.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
   import GridOptions from "$lib/components/GridOptions.svelte";
+  import IconButton from "$lib/components/IconButton.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import Select from "$lib/components/Select.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import Title from "$lib/components/Title.svelte";
   import { extractYupErrors, generateExpenseSchema, generateIncomeSchema, generateTransferSchema } from "$lib/others/schema";
   import { addToast } from "$lib/others/toasts";
-  import { capitalize, isEmpty, post, put } from "$lib/others/utils";
+  import { capitalize, del, isEmpty, post, put } from "$lib/others/utils";
   import dayjs from "dayjs";
 
   /** @type {import('./$types').PageServerData} */
@@ -23,7 +25,12 @@
   }
 
   let transaction = data.transaction || {
-    date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm:ss'), accountId: '', expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
+    // default from params if given..
+    date: dayjs($page.url.searchParams.get('date') || '').format('YYYY-MM-DD'),
+    time: dayjs().format('HH:mm:ss'),
+    // default from params if given..
+    accountId: +$page.url.searchParams.get('account-id') || '',
+    expenseCategoryId: '', incomeCategoryId: '', fromAccountId: '', toAccountId: '', amount: '', title: '', description: ''
   }
 
   let touched = false, errors = {}
@@ -31,7 +38,6 @@
   // Mapping..
   const maps = { 'expense': 'Expense', 'income': 'Income', 'transfer': 'Transfer', }
   const colors = { 'expense': 'warning', 'income': 'primary', 'transfer': 'secondary', }
-
 
   const validate = async () => {
     try {
@@ -49,13 +55,20 @@
   }
 
   const addTransaction = async () => {
-    const response = await post('/add-transaction' + $page.url.search, transaction)
+    const response = await post($page.url.pathname + $page.url.search, transaction)
     addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
     back()
   }
 
   const editTransaction = async () => {
-    const response = await put('/edit-transaction' + $page.url.search, transaction)
+    const response = await put($page.url.pathname + $page.url.search, transaction)
+    addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
+    back()
+  }
+
+  const deleteTransaction = async () => {
+    if (!confirm('Are you sure to delete this?')) return
+    const response = await del($page.url.pathname + $page.url.search, transaction)
     addToast({ message: (await response.json()).message, type: response.ok ? 'success' : 'error' })
     back()
   }
@@ -134,7 +147,12 @@
   $: current && validate()
 </script>
 
-<Title title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
+<Equal>
+  <Title --mb="0" title="{capitalize($page.params.mode)} {maps[current]}" back href="/" />
+  {#if $page.params.mode == 'edit'}
+  <IconButton on:click={deleteTransaction} icon="ri:delete-bin-line" />
+  {/if}
+</Equal>
 
 <Tabs />
 

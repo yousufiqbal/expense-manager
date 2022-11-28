@@ -30,4 +30,4 @@
 <DateNavigator />
 <Summary {summary} />
 <TransactionGroups {data} />
-<Plus href="/add-transaction?tab=expense" />
+<Plus href="/add-transaction?tab=expense&account-id={$page.params.id}" />

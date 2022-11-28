@@ -363,3 +363,45 @@ export const PUT = async ({ request, locals, url }) => {
   }}
 
 };
+
+/** @type {import('./$types').RequestHandler} */
+export const DELETE = async ({ request, locals, url }) => {
+
+  const tab = url.searchParams.get('tab')
+  if (!tab) throw redirect(301, '/')
+
+  if (tab == 'expense') {
+    const expenseId = url.searchParams.get('expense-id')
+    await db.deleteFrom('expenses')
+      .where('expenses.userId', '=', locals.userId)
+      .where('expenses.expenseId', '=', expenseId)
+      .execute()
+    
+      return json({ message: 'Removed ' + tab})
+  }
+
+  if (tab == 'income') {
+    const incomeId = url.searchParams.get('income-id')
+    await db.deleteFrom('incomes')
+      .where('incomes.userId', '=', locals.userId)
+      .where('incomes.incomeId', '=', incomeId)
+      .execute()
+    
+      return json({ message: 'Removed ' + tab})
+  }
+
+  if (tab == 'transfer') {
+    const transferId = url.searchParams.get('transfer-id')
+    await db.deleteFrom('transfers')
+      .where('transfers.userId', '=', locals.userId)
+      .where('transfers.transferId', '=', transferId)
+      .execute()
+    
+      return json({ message: 'Removed ' + tab})
+  }
+
+  // If cursor came here.. for some reason
+  throw redirect(301, '/')
+
+
+}

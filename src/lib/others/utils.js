@@ -79,6 +79,10 @@ export const put = async (url, body) => {
   });
 }
 
+export const del = async url => {
+  return await fetch(url, { method: 'DELETE' });
+}
+
 // program to convert first letter of a string to uppercase
 export function capitalize(str) {
 
