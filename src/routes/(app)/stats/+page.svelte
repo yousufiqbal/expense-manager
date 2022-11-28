@@ -12,8 +12,7 @@
   /** @type {import('./$types').PageServerData} */
   export let data
 
-  // $page.
-  let choosenAccounts = []
+  let choosenAccounts = [+$page.url.searchParams.get('account-id') || '']
 
   const fire = () => {
     setTimeout(() => {
