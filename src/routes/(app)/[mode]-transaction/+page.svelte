@@ -16,6 +16,18 @@
   import { addToast } from "$lib/others/toasts";
   import { capitalize, del, isEmpty, post, put } from "$lib/others/utils";
   import dayjs from "dayjs";
+    import { settings } from "nprogress";
+  import { onMount } from "svelte";
+  
+  onMount(() => {
+    autoFlow()
+  })
+
+  const autoFlow = () => {
+    if ($page.url.pathname == '/add-transaction?tab=expense')
+    console.log('came')
+    openAccountModal()
+  }
 
   /** @type {import('./$types').PageServerData} */
   export let data
@@ -112,6 +124,14 @@
   const setAccount = e => {
     transaction.accountId = +e.detail.result
     closeAllModals()
+    setTimeout(() => {
+      if (current == 'expense' & !transaction.expenseCategoryId) {
+        openCategoryModal()
+      }
+      if (current == 'income' & !transaction.incomeCategoryId) {
+        openCategoryModal()
+      }
+    }, 0);
   }
   
   const setExpenseCategory = e => {
@@ -191,31 +211,31 @@
 <!-- Modals... -->
 
 {#if modal.accounts}
-<Modal on:close={closeAllModals} title="Accounts">
+<Modal on:close={closeAllModals} title="Choose Account">
   <GridOptions on:select={setAccount} options={data.accounts} n="name" v="accountId" />
 </Modal>
 {/if}
 
 {#if modal.expenseCategories}
-<Modal on:close={closeAllModals} title="Expense Categories">
+<Modal on:close={closeAllModals} title="Choose Expense Category">
   <GridOptions on:select={setExpenseCategory} options={data.expenseCategories} n="name" v="expenseCategoryId" />
 </Modal>
 {/if}
 
 {#if modal.incomeCategories}
-<Modal on:close={closeAllModals} title="Income Categories">
+<Modal on:close={closeAllModals} title="Choose Income Category">
   <GridOptions on:select={setIncomeCategory} options={data.incomeCategories} n="name" v="incomeCategoryId" />
 </Modal>
 {/if}
 
 {#if modal.fromAccounts}
-<Modal on:close={closeAllModals} title="From Account">
+<Modal on:close={closeAllModals} title="Choose From Account">
   <GridOptions on:select={setFromAccount} options={data.accounts} n="name" v="accountId" />
 </Modal>
 {/if}
 
 {#if modal.toAccounts}
-<Modal on:close={closeAllModals} title="To Account">
+<Modal on:close={closeAllModals} title="Choose To Account">
   <GridOptions on:select={setToAccount} options={data.accounts} n="name" v="accountId" />
 </Modal>
 {/if}
