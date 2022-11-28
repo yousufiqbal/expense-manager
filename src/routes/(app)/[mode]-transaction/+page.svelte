@@ -61,7 +61,7 @@
   }
 
   const back = () => {
-    if ($page.url.searchParams.get(next) == 'search') {
+    if ($page.url.searchParams.get('next') == 'search') {
       history.back()
     } else {
       goto('/')

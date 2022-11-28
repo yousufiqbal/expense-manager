@@ -9,10 +9,14 @@
   export let data
 
   $: summary = [
-    { title: 'Assets', amount: 0, color: 'red' },
-    { title: 'Liabilities', amount: 0, color: 'blue' },
-    { title: 'Total', amount: 0, color: 'black' },
+    { title: 'Assets', amount: assets, color: 'red' },
+    { title: 'Liabilities', amount: liabilities, color: 'blue' },
+    { title: 'Total', amount: total, color: 'black' },
   ]
+
+  $: assets = data.accounts.filter(a => a.balance > 0).map(a => a.balance).reduce((a, b) => +a + +b, 0)
+  $: liabilities = data.accounts.filter(a => a.balance < 0).map(a => a.balance).reduce((a, b) => +a + +b, 0)
+  $: total = assets - liabilities
 </script>
 
 <Equal>
