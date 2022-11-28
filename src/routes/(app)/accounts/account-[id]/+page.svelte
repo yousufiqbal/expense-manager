@@ -10,6 +10,16 @@
 
   /** @type {import('./$types').PageServerData} */
   export let data
+
+  $: summary = [
+    { title: 'Income', amount: totalIncome, color: 'red' },
+    { title: 'Expense', amount: totalExpense, color: 'blue' },
+    { title: 'Total', amount: totalIncome - totalExpense, color: 'black' },
+    { title: 'Balance', amount: '?', color: 'black' },
+  ]
+
+  $: totalIncome = data.transactionGroups.map(t => t.totalIncome).reduce((a, b) => a + b, 0)
+  $: totalExpense = data.transactionGroups.map(t => t.totalExpense).reduce((a, b) => a + b, 0)
 </script>
 
 <Equal>
@@ -18,6 +28,6 @@
 </Equal>
 
 <DateNavigator />
-<Summary />
-<TransactionGroups />
+<Summary {summary} />
+<TransactionGroups {data} />
 <Plus href="/add-transaction?tab=expense" />

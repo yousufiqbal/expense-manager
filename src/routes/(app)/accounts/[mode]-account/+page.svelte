@@ -61,7 +61,7 @@
   $: account && validate()
 </script>
 
-<Title title="{capitalize($page.params.mode)} Account" back href="/accounts" />
+<Title title="{capitalize($page.params.mode)} Account" back />
 
 <Form>
   <Field {touched} error={errors.name} bind:value={account.name} --cols={2} label="Account Name" />

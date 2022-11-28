@@ -7,7 +7,7 @@
   import Modal from "$lib/components/Modal.svelte";
   import Search from "$lib/components/Search.svelte";
   import Select from "$lib/components/Select.svelte";
-  import Summary from "$lib/components/Summary.svelte";
+  // import Summary from "$lib/components/Summary.svelte";
   import { title } from "$lib/others/stores";
   import { setQuery } from "$lib/others/utils";
   import FiltersToggle from "./FiltersToggle.svelte";
@@ -17,7 +17,7 @@
 
   export let data
 
-  let filters = true
+  let filters = false
   let form = {}
   let values = {}
   let keyword = ''
@@ -61,11 +61,11 @@
     goto($page.url.pathname + setQuery({ keyword, ...form }, $page))
   }
 
-  $: summary = [
-    { title: 'Income', amount: 0, color: 'blue' },
-    { title: 'Expenses', amount: 0, color: 'red' },
-    { title: 'Transfer', amount: 0, color: 'black' },
-  ]
+  // $: summary = [
+  //   { title: 'Income', amount: 0, color: 'blue' },
+  //   { title: 'Expenses', amount: 0, color: 'red' },
+  //   { title: 'Transfer', amount: 0, color: 'black' },
+  // ]
 
   const clearFilters = () => {
     values = {}
@@ -86,7 +86,7 @@
 
 <FiltersToggle {filters} on:clear={clearFilters} on:toggle={()=>filters=!filters} {form} />
 
-<Summary {summary} />
+<!-- <Summary {summary} /> -->
 
 <Results {data} />
 
