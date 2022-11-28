@@ -13,7 +13,7 @@ export const load = async ({ locals, url }) => {
   let start = url.searchParams.get('start') || dayjs().startOf('month').format('YYYY-MM-DD')
   let end = url.searchParams.get('end') || dayjs().endOf('month').format('YYYY-MM-DD');
 
-  let transfers, expenses, incomes, result
+  let transfers, expenses, incomes, results
   
   if (tab == 'expense') {
     transfers = db.selectFrom('transfers as t')
@@ -31,7 +31,7 @@ export const load = async ({ locals, url }) => {
       .if(accountIds.length != 0, qb => qb.where('e.accountId', 'in', accountIds))
       .groupBy('e.expenseCategoryId')
   
-    result = await db.selectFrom('expense_categories as ec')
+    results = await db.selectFrom('expense_categories as ec')
       .leftJoin(expenses.as('r'), 'r.expenseCategoryId', 'ec.expenseCategoryId')
       .select(['ec.name', sql`COALESCE(r.total, 0) as total`])
       .unionAll(transfers)
@@ -54,28 +54,26 @@ export const load = async ({ locals, url }) => {
       .if(accountIds.length != 0, qb => qb.where('e.accountId', 'in', accountIds))
       .groupBy('e.incomeCategoryId')
   
-    result = await db.selectFrom('income_categories as ec')
+    results = await db.selectFrom('income_categories as ec')
       .leftJoin(incomes.as('r'), 'r.incomeCategoryId', 'ec.incomeCategoryId')
       .select(['ec.name', sql`COALESCE(r.total, 0) as total`])
       .unionAll(transfers)
       .execute()
   }
 
-
-  
-  const allTotal = result.map(s => s.total).reduce((a, b) => +a + +b, 0)
-  const stats = result.map(s => {
+  const allTotal = results.map(s => s.total).reduce((a, b) => +a + +b, 0)
+  const stats = results.map(s => {
     return {
       name: s.name,
       total: s.total,
-      percentage: ((s.total / allTotal) * 100).toFixed(0)
+      percentage: s.total != 0 ? ((s.total / allTotal) * 100).toFixed(0) : 0
     }
-  })
+  }).sort((a, b) => b.percentage - a.percentage)
 
   const accounts = await db.selectFrom('accounts')
     .where('accounts.userId', '=', locals.userId)
     .selectAll().execute()
 
-  return { accounts, stats: stats.sort((a, b) => b.percentage - a.percentage) }
+  return { accounts, stats }
 
 }

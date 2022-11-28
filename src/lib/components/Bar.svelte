@@ -11,6 +11,7 @@
   ]
 </script>
 
+{#if items.length != 0}
 <div class="bar">
   {#each items as item}
   <a class:active={$page.url.pathname == item.href} href="{item.href}">
@@ -19,6 +20,7 @@
   </a>
   {/each}
 </div>
+{/if}
 
 <style>
   .bar {

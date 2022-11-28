@@ -4,8 +4,9 @@
   export let items = []
 </script>
 
+{#if items.length != 0}
 <div class="menu">
-
+  
   {#each items as item}
   <a href={item.href}>
     <i class="first">
@@ -17,8 +18,9 @@
     </i>
   </a>
   {/each}
-
+  
 </div>
+{/if}
 
 <style>
   .menu {
