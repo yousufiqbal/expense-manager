@@ -66,7 +66,7 @@
 <Form>
   <Field {touched} error={errors.name} bind:value={account.name} --cols={2} label="Account Name" />
   {#if $page.params.mode == 'add'}
-  <Field {touched} error={errors.balance} bind:value={account.balance} --cols={2} label="Starting Balance (Rs.)" inputmode="numeric" />
+  <Field {touched} error={errors.balance} bind:value={account.balance} --cols={2} label="Starting Balance ({$page.data.locals.currency})" inputmode="numeric" />
   {/if}
 </Form>
 

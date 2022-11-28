@@ -158,7 +158,7 @@
   <Select on:click={openToAccountModal} n="name" v="accountId" options={data.accounts} {touched} error={errors.toAccountId} value={transaction.toAccountId} label="To Account" />
   {/if}
 
-  <Field {touched} error={errors.amount} bind:value={transaction.amount} label="Amount (Rs.)" --cols={2} inputmode="numeric" />
+  <Field {touched} error={errors.amount} bind:value={transaction.amount} label="Amount ({$page.data.locals.currency})" --cols={2} inputmode="numeric" />
   <Field {touched} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
   <Field {touched} error={errors.description} bind:value={transaction.description} label="Description" --cols={2} textarea />
 

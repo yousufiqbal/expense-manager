@@ -1,4 +1,7 @@
 <script>
+    import { page } from "$app/stores";
+
+
   /** @type {{ title: string, amount: number, color: string }[]}*/
   export let summary = []
 </script>
@@ -8,7 +11,7 @@
   {#each summary as item}
   <div class="part income">
     <div class="title">{item.title}</div>
-    <div class="amount {item.color}">Rs. {item.amount}</div>
+    <div class="amount {item.color}">{$page.data.locals.currency} {item.amount}</div>
   </div>
   {/each}
 

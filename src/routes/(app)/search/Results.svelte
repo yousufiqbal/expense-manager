@@ -1,4 +1,5 @@
 <script>
+    import { page } from '$app/stores';
     import dayjs from 'dayjs';
 
 
@@ -21,7 +22,7 @@
       <div class="meta">{result.fromAccountName} - {result.toAccountName}</div>
       {/if}
     </div>
-    <div class="amount">Rs. {result.amount}</div>
+    <div class="amount">{$page.data.locals.currency} {result.amount}</div>
   </a>
   {/each}
 

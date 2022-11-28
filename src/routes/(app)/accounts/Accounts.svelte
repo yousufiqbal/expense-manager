@@ -1,4 +1,7 @@
 <script>
+    import { page } from '$app/stores';
+
+
   /** @type {import('./$types').PageServerData} */
   export let data
 </script>
@@ -9,7 +12,7 @@
   {#each data.accounts as account}
   <a href="/accounts/account-{account.accountId}" class="account">
     <div class="name">{account.name}</div>
-    <div class:expense={account.balance < 0} class:income={account.balance > 0} class="balance">Rs. {account.balance}</div>
+    <div class:expense={account.balance < 0} class:income={account.balance > 0} class="balance">{$page.data.locals.currency} {account.balance}</div>
   </a>
   {/each}
   

@@ -1,4 +1,5 @@
 <script>
+    import { page } from '$app/stores';
   import dayjs from 'dayjs';
 
   /** @type {import('./$types').PageServerData} */
@@ -17,8 +18,8 @@
         <span class="day">{dayjs(group.date).format('dddd')}</span>
       </div>
       <!-- <div class="day">Monday</div> -->
-      <div class="total-income">Rs. {group.totalIncome}</div>
-      <div class="total-expense">Rs. {group.totalExpense}</div>
+      <div class="total-income">{$page.data.locals.currency} {group.totalIncome}</div>
+      <div class="total-expense">{$page.data.locals.currency} {group.totalExpense}</div>
     </a>
     
     {#each group.transactions as transaction}
@@ -32,7 +33,7 @@
           <div class="meta">{transaction.fromAccountName} - {transaction.toAccountName}</div>
           {/if}
         </div>
-        <div class="{transaction.type} amount">Rs. {transaction.amount}</div>
+        <div class="{transaction.type} amount">{$page.data.locals.currency} {transaction.amount}</div>
       </div>
     </a>
     {/each}

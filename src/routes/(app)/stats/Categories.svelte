@@ -14,7 +14,7 @@
   <div class="category">
     <div class="{current} percentage">{category.percentage}%</div>
     <div class="name">{category.name}</div>
-    <div class="amount">Rs. {category.total}</div>
+    <div class="amount">{$page.data.locals.currency} {category.total}</div>
   </div>
   {/each}
   
