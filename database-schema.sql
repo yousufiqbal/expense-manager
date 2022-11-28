@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table expense-manager.users: ~2 rows (approximately)
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
 	(14, 'Danish Saleem', 'yousufiqbal@gmail.com', '$2a$10$mir/B2148h9liWwbAj3wmemB/ul1J.4.Z.5BnN6.YuDMyWyNuwb36', 0, NULL, '76206d68380a151dcbe27c8e2a62cd82ac1f238d334900aeb136e629a1e8', 'Rs', '2022-11-25 18:22:52'),
-	(15, 'Nabeel', 'nabeel@gmail.com', '$2a$10$ztXEfzI9IDSyssFzSvYwn.IyJFiRP1pCNVqjwWjFwCRGIRsZ6Hn4u', 0, NULL, '38f47addfa7902c7448b1b2a72b3f91775185bf33db635bb0bc4df26e2d1', 'Rs.', '2022-11-25 18:59:44');
+	(15, 'Nabeel', 'nabeel@gmail.com', '$2a$10$ztXEfzI9IDSyssFzSvYwn.IyJFiRP1pCNVqjwWjFwCRGIRsZ6Hn4u', 0, NULL, '38f47addfa7902c7448b1b2a72b3f91775185bf33db635bb0bc4df26e2d1', 'Rs', '2022-11-25 18:59:44');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
