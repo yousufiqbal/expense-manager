@@ -24,7 +24,10 @@
 
 <Equal>
   <Title title="{data.account.name}" back --mb="0" />
-  <IconButton icon="ri:edit-line" href="/accounts/edit-account?account-id={$page.params.id}" />
+  <div style="display: flex; gap: 20px">
+    <IconButton icon="ri:line-chart-line" href="/stats?tab=expense&account-id={$page.params.id}" />
+    <IconButton icon="ri:edit-line" href="/accounts/edit-account?account-id={$page.params.id}" />
+  </div>
 </Equal>
 
 <DateNavigator />

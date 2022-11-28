@@ -7,7 +7,7 @@
   import Modal from "$lib/components/Modal.svelte";
   import Search from "$lib/components/Search.svelte";
   import Select from "$lib/components/Select.svelte";
-  // import Summary from "$lib/components/Summary.svelte";
+  import Summary from "$lib/components/Summary.svelte";
   import { title } from "$lib/others/stores";
   import { setQuery } from "$lib/others/utils";
   import FiltersToggle from "./FiltersToggle.svelte";
@@ -15,6 +15,7 @@
 
   $title = 'Search'
 
+  /** @type {import('./$types').PageServerData} */
   export let data
 
   let filters = false
@@ -61,16 +62,20 @@
     goto($page.url.pathname + setQuery({ keyword, ...form }, $page))
   }
 
-  // $: summary = [
-  //   { title: 'Income', amount: 0, color: 'blue' },
-  //   { title: 'Expenses', amount: 0, color: 'red' },
-  //   { title: 'Transfer', amount: 0, color: 'black' },
-  // ]
+  $: summary = [
+    { title: 'Income', amount: totalIncome, color: 'blue' },
+    { title: 'Expenses', amount: totalExpense, color: 'red' },
+    { title: 'Transfer', amount: totalTransfer, color: 'black' },
+  ]
 
   const clearFilters = () => {
     values = {}
     form = { 'account-id': '' }
   }
+
+  $: totalIncome = data.results.filter(r => r.type == 'income').map(r => r.amount).reduce((a, b) => +a + +b, 0)
+  $: totalExpense = data.results.filter(r => r.type == 'expense').map(r => r.amount).reduce((a, b) => +a + +b, 0)
+  $: totalTransfer = data.results.filter(r => r.type == 'transfer').map(r => r.amount).reduce((a, b) => +a + +b, 0)
 </script>
 
 <Search bind:keyword on:click={search} />
@@ -86,7 +91,9 @@
 
 <FiltersToggle {filters} on:clear={clearFilters} on:toggle={()=>filters=!filters} {form} />
 
-<!-- <Summary {summary} /> -->
+{#if data.results?.length != 0}
+<Summary {summary} />
+{/if}
 
 <Results {data} />
 

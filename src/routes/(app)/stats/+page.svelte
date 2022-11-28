@@ -12,6 +12,7 @@
   /** @type {import('./$types').PageServerData} */
   export let data
 
+  // $page.
   let choosenAccounts = []
 
   const fire = () => {
