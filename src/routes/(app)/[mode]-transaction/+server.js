@@ -172,25 +172,40 @@ export const PUT = async ({ request, locals, url }) => {
     const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
     const expense = await expenseSchema.validate(body, { abortEarly: false })
     
-    // Adding Expense..
+    const previousExpense = await db.selectFrom('expenses')
+      .where('expenses.userId', '=', locals.userId)
+      .where('expenses.expenseId', '=', id)
+      .selectAll().executeTakeFirst()
+
+    let data = {
+      accountId: expense.accountId,
+      expenseCategoryId: expense.expenseCategoryId,
+      date: expense.date, 
+      time: expense.time,
+      title: expense.title,
+      amount: expense.amount,
+      description: expense.description || null,
+      userId: locals.userId
+    }
+
+    // Updating Expense..
     await db.updateTable('expenses')
       .where('expenses.userId', '=', locals.userId)
       .where('expenses.expenseId', '=', id)
-      .set({
-        accountId: expense.accountId,
-        expenseCategoryId: expense.expenseCategoryId,
-        date: expense.date, 
-        time: expense.time,
-        title: expense.title,
-        amount: expense.amount,
-        description: expense.description || null,
-        userId: locals.userId
-      }).execute()
-      
+      .set(data).execute()
+
+    // Logging
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      summary: 'Updated Expense',
+      detail: `From ${previousExpense}, To ${data}`,
+      operation: 'update',
+    }).execute()
+    
       // Responding..
-    return json({
-      message: 'Expense updated'
-    })
+      return json({
+        message: 'Expense updated'
+      })
     }
 
     if (current == 'income') {
@@ -202,31 +217,47 @@ export const PUT = async ({ request, locals, url }) => {
         .selectAll().execute()
 
       const incomeCategories = await db.selectFrom('income_categories')
-      .where('income_categories.userId', '=', locals.userId)
+        .where('income_categories.userId', '=', locals.userId)
         .selectAll().execute()
 
       const incomeSchema = generateIncomeSchema(accounts.map(a => String(a.accountId)), incomeCategories.map(a => String(a.incomeCategoryId)))
       const income = await incomeSchema.validate(body, { abortEarly: false })
 
-      // Adding income..
+      // Getting preivous icome..
+      const previousIncome = await db.selectFrom('incomes')
+        .where('incomes.userId', '=', locals.userId)
+        .where('incomes.incomeId', '=', id)
+        .selectAll().executeTakeFirst()
+
+      let data = {
+        accountId: income.accountId,
+        incomeCategoryId: income.incomeCategoryId,
+        date: income.date, 
+        time: income.time,
+        title: income.title,
+        amount: income.amount,
+        description: income.description || null,
+        userId: locals.userId
+      }
+
+      // Updating income..
       await db.updateTable('incomes')
         .where('incomes.userId', '=', locals.userId)
         .where('incomes.incomeId', '=', id)
-        .set({
-          accountId: income.accountId,
-          incomeCategoryId: income.incomeCategoryId,
-          date: income.date, 
-          time: income.time,
-          title: income.title,
-          amount: income.amount,
-          description: income.description || null,
-          userId: locals.userId
-        }).execute()
+        .set(data).execute()
+
+      // Logging
+      await db.insertInto('activities').values({
+        userId: locals.userId,
+        summary: 'Updated Income',
+        detail: `From ${previousIncome}, To ${data}`,
+        operation: 'update',
+      }).execute()
         
-        // Responding..
-        return json({
-          message: 'Income Updated'
-        })
+      // Responding..
+      return json({
+        message: 'Income Updated'
+      })
   
     }
 
@@ -241,20 +272,36 @@ export const PUT = async ({ request, locals, url }) => {
       const transferSchema = generateTransferSchema(accounts.map(a => String(a.accountId)))
       const transfer = await transferSchema.validate(body, { abortEarly: false })
 
-      // Adding transfer..
+      // Getting preivous transfer..
+      const previousTransfer = await db.selectFrom('incomes')
+        .where('incomes.userId', '=', locals.userId)
+        .where('incomes.incomeId', '=', id)
+        .selectAll().executeTakeFirst()
+
+      let data = {
+        date: transfer.date, 
+        time: transfer.time,
+        fromAccountId: transfer.fromAccountId,
+        toAccountId: transfer.toAccountId,
+        title: transfer.title,
+        amount: transfer.amount,
+        description: transfer.description || null,
+        userId: locals.userId
+      }
+
+      // Updating transfer..
       await db.updateTable('transfers')
         .where('transfers.userId', '=', locals.userId)
         .where('transfers.transferId', '=', id)
-        .set({
-          date: transfer.date, 
-          time: transfer.time,
-          fromAccountId: transfer.fromAccountId,
-          toAccountId: transfer.toAccountId,
-          title: transfer.title,
-          amount: transfer.amount,
-          description: transfer.description || null,
-          userId: locals.userId
-        }).execute()
+        .set().execute()
+
+      // Logging..
+      await db.insertInto('activities').values({
+        userId: locals.userId,
+        summary: 'Updated transfer',
+        detail: `From ${previousTransfer}, To ${data}`,
+        operation: 'update',
+      }).execute()
 
       // Responding..
       return json({
@@ -267,25 +314,26 @@ export const PUT = async ({ request, locals, url }) => {
   // Deleting current if intent and current differs
   if (current != intent) {
 
-    // Deleting...
-    if (current == 'expense') {
-      await db.deleteFrom('expenses')
-        .where('expenses.userId', '=', locals.userId)
-        .where('expenses.expenseId', '=', id)
-        .executeTakeFirst()
-    }
-    if (current == 'income') {
-      await db.deleteFrom('incomes')
-        .where('incomes.userId', '=', locals.userId)
-        .where('incomes.incomeId', '=', id)
-        .executeTakeFirst()
-    }
-    if (current == 'transfer') {
-      await db.deleteFrom('transfers')
-        .where('transfers.userId', '=', locals.userId)
-        .where('transfers.transferId', '=', id)
-        .executeTakeFirst()
-    }
+    // Getting previous for logging..
+    const previous = await db.selectFrom(`${current}s`)
+      .where(`${current}s.userId`, `=`, locals.userId)
+      .where(`${current}s.${current}Id`, `=`, id)
+      .executeTakeFirst()
+
+    // Deleting..
+    await db.deleteFrom(`${current}s`)
+      .where(`${current}s.userId`, `=`, locals.userId)
+      .where(`${current}s.${current}Id`, `=`, id)
+      .execute()
+
+    // Logging..
+    await db.insertInto(`activities`).values({
+      userId: locals.userId,
+      summary: `Deleted ${current} for conversion to ${intent}`,
+      detail: JSON.stringify(previous),
+      operation: 'create',
+    }).execute()
+
 
   // AFTER DELETING ADDING NEW...
   // ----------------
@@ -304,20 +352,30 @@ export const PUT = async ({ request, locals, url }) => {
     const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
     const expense = await expenseSchema.validate(body, { abortEarly: false })
     
+    let data = {
+      accountId: expense.accountId,
+      expenseCategoryId: expense.expenseCategoryId,
+      date: expense.date, 
+      time: expense.time,
+      title: expense.title,
+      amount: expense.amount,
+      description: expense.description || null,
+      userId: locals.userId
+    }
+
     // Adding Expense..
     await db.insertInto('expenses')
-      .values({
-        accountId: expense.accountId,
-        expenseCategoryId: expense.expenseCategoryId,
-        date: expense.date, 
-        time: expense.time,
-        title: expense.title,
-        amount: expense.amount,
-        description: expense.description || null,
-        userId: locals.userId
-      }).execute()
+      .values(data).execute()
+
+    // Logging
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      summary: `Added expense after removing ${current} with id=${id}`,
+      detail: JSON.stringify(data),
+      operation: 'create',
+    }).execute()
       
-      // Responding..
+    // Responding..
     return json({
       message: 'Converted To Expense'
     })
@@ -338,18 +396,28 @@ export const PUT = async ({ request, locals, url }) => {
     const incomeSchema = generateIncomeSchema(accounts.map(a => String(a.accountId)), incomeCategories.map(a => String(a.incomeCategoryId)))
     const income = await incomeSchema.validate(body, { abortEarly: false })
 
+    let data = {
+      accountId: income.accountId,
+      incomeCategoryId: income.incomeCategoryId,
+      date: income.date, 
+      time: income.time,
+      title: income.title,
+      amount: income.amount,
+      description: income.description || null,
+      userId: locals.userId
+    }
+
     // Adding income..
     await db.insertInto('incomes')
-      .values({
-        accountId: income.accountId,
-        incomeCategoryId: income.incomeCategoryId,
-        date: income.date, 
-        time: income.time,
-        title: income.title,
-        amount: income.amount,
-        description: income.description || null,
-        userId: locals.userId
-      }).execute()
+      .values(data).execute()
+
+    // Logging
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      summary: `Added income after removing ${current} with id=${id}`,
+      detail: JSON.stringify(data),
+      operation: 'create',
+    }).execute()
       
       // Responding..
       return json({
@@ -369,18 +437,28 @@ export const PUT = async ({ request, locals, url }) => {
     const transferSchema = generateTransferSchema(accounts.map(a => String(a.accountId)))
     const transfer = await transferSchema.validate(body, { abortEarly: false })
 
+    let data = {
+      date: transfer.date, 
+      time: transfer.time,
+      fromAccountId: transfer.fromAccountId,
+      toAccountId: transfer.toAccountId,
+      title: transfer.title,
+      amount: transfer.amount,
+      description: transfer.description || null,
+      userId: locals.userId
+    }
+
     // Adding transfer..
     await db.insertInto('transfers')
-      .values({
-        date: transfer.date, 
-        time: transfer.time,
-        fromAccountId: transfer.fromAccountId,
-        toAccountId: transfer.toAccountId,
-        title: transfer.title,
-        amount: transfer.amount,
-        description: transfer.description || null,
-        userId: locals.userId
-      }).execute()
+      .values(data).execute()
+
+    // Logging
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      summary: `Added transfer after removing ${current} with id=${id}`,
+      detail: JSON.stringify(data),
+      operation: 'create',
+    }).execute()
 
     // Responding..
     return json({
