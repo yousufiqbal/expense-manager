@@ -4,10 +4,11 @@
   export let name, href = null
   export let icon
   export let type = 'primary'
+  export let reverse = false
 </script>
 
 {#if !href}
-<button on:click class="button {type}">
+<button on:click class:reverse class="button {type}">
   {#if icon}
   <i><Icon {icon} /></i>
   {/if}
@@ -15,7 +16,7 @@
 </button>
 
 {:else}
-<a {href} class="button {type}">
+<a {href} class:reverse class="button {type}">
   {#if icon}
   <i><Icon {icon} /></i>
   {/if}
@@ -31,6 +32,9 @@
     align-items: center;
     gap: 15px;
     box-shadow: var(--shadow);
+  }
+  .reverse {
+    flex-flow: row-reverse;
   }
   .primary {
     background-color: var(--primary);

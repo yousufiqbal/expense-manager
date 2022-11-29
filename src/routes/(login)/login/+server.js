@@ -27,6 +27,7 @@ export const POST = async ({ request, cookies }) => {
 
   // Generating payload
   const payload = {
+    name: user.name,
     userId: user.userId,
     email: user.email,
     currency: user.currency,

@@ -16,17 +16,20 @@
   import { addToast } from "$lib/others/toasts";
   import { capitalize, del, isEmpty, post, put } from "$lib/others/utils";
   import dayjs from "dayjs";
-    import { settings } from "nprogress";
   import { onMount } from "svelte";
   
   onMount(() => {
     autoFlow()
   })
 
+  let els = {
+    amount: '', title: ''
+  }
+
   const autoFlow = () => {
-    if ($page.url.pathname == '/add-transaction?tab=expense')
-    console.log('came')
-    openAccountModal()
+    if ($page.params.mode == 'add' && current == 'expense') openAccountModal()
+    if ($page.params.mode == 'add' && current == 'income') openAccountModal()
+    if ($page.params.mode == 'add' && current == 'transfer') openFromAccountModal()
   }
 
   /** @type {import('./$types').PageServerData} */
@@ -38,7 +41,7 @@
 
   let transaction = data.transaction || {
     // default from params if given..
-    date: dayjs($page.url.searchParams.get('date') || '').format('YYYY-MM-DD'),
+    date: $page.url.searchParams.get('date') || dayjs().format('YYYY-MM-DD'),
     time: dayjs().format('HH:mm:ss'),
     // default from params if given..
     accountId: +$page.url.searchParams.get('account-id') || '',
@@ -125,6 +128,7 @@
     transaction.accountId = +e.detail.result
     closeAllModals()
     setTimeout(() => {
+      if ($page.params.mode != 'add') return
       if (current == 'expense' & !transaction.expenseCategoryId) {
         openCategoryModal()
       }
@@ -137,21 +141,27 @@
   const setExpenseCategory = e => {
     transaction.expenseCategoryId = +e.detail.result
     closeAllModals()
+    if ($page.params.mode == 'add' && !transaction.amount) els.amount.focus() 
   }
 
   const setIncomeCategory = e => {
     transaction.incomeCategoryId = +e.detail.result
     closeAllModals()
+    if ($page.params.mode == 'add' && !transaction.amount) els.amount.focus() 
   }
-
+  
   const setFromAccount = e => {
     transaction.fromAccountId = +e.detail.result
     closeAllModals()
+    if ($page.params.mode == 'add' && !transaction.toAccountId) {
+      openToAccountModal()
+    }
   }
 
   const setToAccount = e => {
     transaction.toAccountId = +e.detail.result
     closeAllModals()
+    if ($page.params.mode == 'add' && !transaction.amount) els.amount.focus() 
   }
 
   // Computed..
@@ -196,8 +206,8 @@
   <Select on:click={openToAccountModal} n="name" v="accountId" options={data.accounts} {touched} error={errors.toAccountId} value={transaction.toAccountId} label="To Account" />
   {/if}
 
-  <Field {touched} error={errors.amount} bind:value={transaction.amount} label="Amount ({$page.data.locals.currency})" --cols={2} inputmode="numeric" />
-  <Field {touched} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
+  <Field {touched} bind:el={els.amount} error={errors.amount} bind:value={transaction.amount} label="Amount ({$page.data.locals.currency})" --cols={2} inputmode="numeric" />
+  <Field {touched} bind:el={els.title} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
   <Field {touched} error={errors.description} bind:value={transaction.description} label="Description" --cols={2} textarea />
 
 </Form>

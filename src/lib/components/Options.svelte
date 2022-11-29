@@ -13,7 +13,7 @@
   }
 </script>
 
-<button use:outclickHandler on:keydown on:outclick={hide} on:click={show} class="options">
+<div use:outclickHandler on:keydown on:outclick={hide} on:click={show} class="options">
 
   <i><Icon icon="ri:more-2-fill" /></i>
 
@@ -21,14 +21,14 @@
     <slot></slot>
   </div>
 
-</button>
+</div>
 
 <style>
   .options {
     display: flex;
     position: relative;
     background-color: #fff;
-    /* z-index: 1; */
+    z-index: 1;
   }
   .options > i {
     align-items: center;

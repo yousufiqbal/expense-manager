@@ -28,31 +28,29 @@
 </script>
 
 <div class="date-navigator">
-  <button class="{type}" on:click={decrease}><Icon icon="ri:arrow-left-s-line" /></button>
-  <span>{dayjs(start, 'YYYY-MM-DD').format('MMM - YYYY')}</span>
-  <button class="{type}" on:click={increase}><Icon icon="ri:arrow-right-s-line" /></button>
+  <button class="arrow {type}" on:click={decrease}><Icon icon="ri:arrow-left-s-line" /></button>
+  <button class="status">{dayjs(start, 'YYYY-MM-DD').format('MMM - YYYY')}</button>
+  <button class="arrow {type}" on:click={increase}><Icon icon="ri:arrow-right-s-line" /></button>
 </div>
 
 <style>
   .date-navigator {
     flex: 1;
     display: flex;
+    gap: 5px;
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid var(--border);
     padding: 5px;
     margin-bottom: var(--mb, 30px);
   }
-  span {
+  .status {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border); */
-    /* box-shadow: var(--shadow); */
   }
-  button {
+  .arrow {
     color: white;
     font-size: 26px;
     padding: 5px;

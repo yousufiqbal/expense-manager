@@ -30,9 +30,10 @@ export const load = async ({ locals, url }) => {
       .where('e.date', '<=', end)
       .if(accountIds.length != 0, qb => qb.where('e.accountId', 'in', accountIds))
       .groupBy('e.expenseCategoryId')
-  
-    results = await db.selectFrom('expense_categories as ec')
+      
+      results = await db.selectFrom('expense_categories as ec')
       .leftJoin(expenses.as('r'), 'r.expenseCategoryId', 'ec.expenseCategoryId')
+      .where('ec.userId', '=', locals.userId)
       .select(['ec.name', sql`COALESCE(r.total, 0) as total`])
       .unionAll(transfers)
       .execute()

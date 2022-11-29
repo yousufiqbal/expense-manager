@@ -1,10 +1,11 @@
 <script>
     import { goto } from "$app/navigation";
+    import { page } from "$app/stores";
   import Button from "$lib/components/Button.svelte";
   import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
-    import ServerError from "$lib/components/ServerError.svelte";
+  import ServerError from "$lib/components/ServerError.svelte";
   import { extractYupErrors, registerSchema } from "$lib/others/schema";
   import { title } from "$lib/others/stores";
   import { addToast } from "$lib/others/toasts";
@@ -32,15 +33,9 @@
   }
 
   const register = async () => {
-    const response = await post('/login/register', user)
-    const body = await response.json()
-    if (response.ok) {
-      addToast({ message: body.message })
-      goto('/')
-    }
-    if (response.status == 400) {
-      errors.server = body.message
-    }
+    const response = await post($page.url.pathname, user)
+    if (response.ok) goto('/welcome')
+    if (response.status == 400) errors.server = (await response.json()).message
   }
 
   $: if (user) validate()
