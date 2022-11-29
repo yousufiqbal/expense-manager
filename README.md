@@ -37,7 +37,8 @@ Following technologies were used to build this app:
 6. Test Completely
 7. Comment code
 8. Improve readme.md
-9. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
+9. Verification email SMTP timeout issue
+10. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
 
 ## Roadmap
 
