@@ -34,7 +34,7 @@
   .expense.active {
     background-color: var(--red);
   }
-  .transfer.active {
+  /* .transfer.active {
     background-color: var(--secondary);
-  }
+  } */
 </style>

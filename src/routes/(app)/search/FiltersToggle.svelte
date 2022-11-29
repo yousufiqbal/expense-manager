@@ -30,7 +30,7 @@
     /* border: 1px dashed red; */
     margin-bottom: 25px;
   }
-  button, a {
+  button {
     display: flex;
     gap: 10px;
     align-items: center;
