@@ -20,6 +20,10 @@ export const extractYupErrors = err => {
   }, {});
 }
 
+// Helpers
+
+let emptyToZero = value => isNaN(value) ? undefined : value
+
 // Example..
 export const changePasswordSchema = yup.object({
   currentPassword: yup.string().required().min(6).max(20).ne(),
@@ -39,7 +43,7 @@ export const registerSchema = yup.object({
 
 export const accountSchema = yup.object({
   name: yup.string().min(3).max(100).required().ne(),
-  balance: yup.number('Only numbers allowed').min(0).optional().ne(),
+  balance: yup.number().transform(emptyToZero).min(0).optional().ne(),
 }).noUnknown(true)
 
 export const categorySchema = yup.object({
@@ -56,7 +60,7 @@ export const generateExpenseSchema = (accountIds, expenseCategoryIds) => {
     time: yup.string().length(8).required().ne(),
     accountId: yup.string().oneOf(accountIds).required().ne(),
     expenseCategoryId: yup.string().oneOf(expenseCategoryIds).required().ne(),
-    amount: yup.number().min(0).required().ne(),
+    amount: yup.number().transform(emptyToZero).min(0).required().ne(),
     title: yup.string().min(3).max(100).required().ne(),
     description: yup.string().min(1).max(100).optional().nullable().ne(),
   }).noUnknown(true)
@@ -68,7 +72,7 @@ export const generateIncomeSchema = (accountIds, incomeCategoryIds) => {
     time: yup.string().length(8).required().ne(),
     accountId: yup.string().oneOf(accountIds).required().ne(),
     incomeCategoryId: yup.string().oneOf(incomeCategoryIds).required().ne(),
-    amount: yup.number().min(0).required().ne(),
+    amount: yup.number().transform(emptyToZero).min(0).required().ne(),
     title: yup.string().min(3).max(100).required().ne(),
     description: yup.string().min(1).max(100).optional().nullable().ne(),
   }).noUnknown(true)
@@ -81,7 +85,7 @@ export const generateTransferSchema = (accountIds) => {
     fromAccountId: yup.string().oneOf(accountIds).notOneOf([yup.ref('toAccountId')], 'Use different accounts').required().ne(),
     // toAccountId: yup.string().oneOf(accountIds).notOneOf([yup.ref('fromAccountId')], 'Use different accounts').required().ne(),
     toAccountId: yup.string().oneOf(accountIds).required().ne(),
-    amount: yup.number().min(0).required().ne(),
+    amount: yup.number().transform(emptyToZero).min(0).required().ne(),
     title: yup.string().min(3).max(100).required().ne(),
     description: yup.string().min(1).max(100).optional().nullable().ne(),
   }).noUnknown(true)

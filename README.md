@@ -32,7 +32,7 @@ Following technologies were used to build this app:
 1. Account balance in account view
 <!-- 3. Logging all creates, updates and deletes -->
 <!-- 4. Activity page -->
-5. Sending confirmation email with token & verify-email link
+<!-- 5. Sending confirmation email with token & verify-email link -->
 6. Sending password reset OTP
 7. Password reset page
 8. Modal close on outclick
