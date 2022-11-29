@@ -2,7 +2,7 @@ import { db } from '$lib/server/db';
 import { error, json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ url }) => {
+export const PUT = async ({ url, locals }) => {
 
   const token = url.searchParams.get('token')
   const email = url.searchParams.get('email')
@@ -22,6 +22,14 @@ export const PUT = async ({ url }) => {
   await db.updateTable('users')
     .where('users.userId', '=', user.userId)
     .set({ isVerified: true }).execute()
+
+  // Logging
+  await db.insertInto('activities').values({
+    userId: locals.userId,
+    summary: 'Verified email',
+    detail: JSON.stringify({}),
+    operation: 'other',
+  }).execute()
 
   return json({
     message: 'Email Verified!'
