@@ -61,36 +61,36 @@ export const POST = async ({ request, cookies }) => {
       { name: 'Others',  userId: user.userId },
     ]).execute()
 
-  // Sending verification email
-  let transporter = nodemailer.createTransport({
-    service: 'Outlook365',
-    auth: {
-      user: 'yousufiqbalhashim@outlook.com',
-      pass: PWD,
-    },
-  });
+  // // Sending verification email
+  // let transporter = nodemailer.createTransport({
+  //   service: 'Outlook365',
+  //   auth: {
+  //     user: 'yousufiqbalhashim@outlook.com',
+  //     pass: PWD,
+  //   },
+  // });
 
-  try {
-    let info = await transporter.sendMail({
-      from: { name: 'Expense Manager', address: 'yousufiqbalhashim@outlook.com' },
-      to: form.email,
-      // replyTo: client.email,
-      subject: `Complete Your Verification`,
-      // text: client.message,
-      html: `
-        <h1>Complete Your Verification</h1>
-        <h2>Expense Manager</h2>
-        <p>Click on the following link to verify your email</p>
-        <br>
-        <a href="https://em.yousufiqbal.dev/verify-email?email=${form.email}&token=${token}">Verify Email</a>
-      `,
-    });
+  // try {
+  //   let info = await transporter.sendMail({
+  //     from: { name: 'Expense Manager', address: 'yousufiqbalhashim@outlook.com' },
+  //     to: form.email,
+  //     // replyTo: client.email,
+  //     subject: `Complete Your Verification`,
+  //     // text: client.message,
+  //     html: `
+  //       <h1>Complete Your Verification</h1>
+  //       <h2>Expense Manager</h2>
+  //       <p>Click on the following link to verify your email</p>
+  //       <br>
+  //       <a href="https://em.yousufiqbal.dev/verify-email?email=${form.email}&token=${token}">Verify Email</a>
+  //     `,
+  //   });
   
-    if (dev) console.log("Message sent: %s", info.messageId);
+  //   if (dev) console.log("Message sent: %s", info.messageId);
     
-  } catch (error) {
-    console.log(error)
-  }
+  // } catch (error) {
+  //   console.log(error)
+  // }
 
   
   // Preparing Payload..
