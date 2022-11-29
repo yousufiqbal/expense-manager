@@ -42,7 +42,8 @@ Following technologies were used to build this app:
 12. Improve form error messages with dates and numbers
 13. Safari Search fix
 14. Test Completely
-15. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
+15. Comments..
+16. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
 
 ## Roadmap
 
