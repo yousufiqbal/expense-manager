@@ -56,6 +56,9 @@ export const load = async ({ url, locals, params }) => {
     .selectFrom('transfers as t')
     .leftJoin('accounts as af', 'af.accountId', 't.fromAccountId')
     .leftJoin('accounts as at', 'at.accountId', 't.toAccountId')
+    .where('t.userId', '=', locals.userId)
+    .where('t.date', '>=', start)
+    .where('t.date', '<=', end)
     .where('t.fromAccountId', '=', params.id)
     .orWhere('t.toAccountId', '=', params.id)
     .select([
@@ -71,12 +74,10 @@ export const load = async ({ url, locals, params }) => {
       'af.name as fromAccountName',
       'at.name as toAccountName',
     ])
-    .where('t.userId', '=', locals.userId)
-    .where('t.date', '>=', start)
-    .where('t.date', '<=', end)
-
+    
 
   const transactions = await db.selectFrom(expenses.unionAll(incomes).unionAll(transfers).as('tr'))
+    // .where('i.userId', '=', locals.userId)
     .orderBy('tr.date', 'desc')
     .orderBy('tr.time', 'desc')
     .selectAll().execute()
@@ -98,7 +99,7 @@ export const load = async ({ url, locals, params }) => {
     })
   }
 
-  console.log(transactionGroups)
+  console.log(transactions)
 
   const account = await db.selectFrom('accounts')
     .where('accounts.userId', '=', locals.userId)
