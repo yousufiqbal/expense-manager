@@ -43,7 +43,8 @@ Following technologies were used to build this app:
 13. Safari Search fix
 14. Test Completely
 15. Comments..
-16. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
+16. Individualize activites and profile
+17. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
 
 ## Roadmap
 
