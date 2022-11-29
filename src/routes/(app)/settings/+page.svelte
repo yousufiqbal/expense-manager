@@ -4,12 +4,10 @@
   import Title from "$lib/components/Title.svelte";
 
   $: items = [
+    { name: 'Activities', href: '/settings/activities', icon: 'ri:fingerprint-line' },
     { name: 'Categories', href: '/settings/categories/expense', icon: 'bx:category' },
-    // { name: 'Account Groups', href: '/settings/account-groups', icon: 'clarity:blocks-group-line' },
-    // { name: 'Backups', href: '/settings/backups', icon: 'ri:database-2-line' },
     { name: `Currency (${$page.data.locals.currency})`, href: '/settings/currency', icon: 'ri:currency-line' },
     { name: 'Profile', href: '/settings/profile', icon: 'ri:profile-line' },
-    // { name: 'Theme', href: '/settings/theme', icon: 'ri:sun-foggy-line' },
     { name: 'About', href: '/settings/about', icon: 'ri:information-line' }
   ]
 </script>
