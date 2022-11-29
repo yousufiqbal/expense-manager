@@ -31,7 +31,7 @@ export const load = async ({ locals, url }) => {
       .if(accountIds.length != 0, qb => qb.where('e.accountId', 'in', accountIds))
       .groupBy('e.expenseCategoryId')
       
-      results = await db.selectFrom('expense_categories as ec')
+    results = await db.selectFrom('expense_categories as ec')
       .leftJoin(expenses.as('r'), 'r.expenseCategoryId', 'ec.expenseCategoryId')
       .where('ec.userId', '=', locals.userId)
       .select(['ec.name', sql`COALESCE(r.total, 0) as total`])
@@ -55,9 +55,10 @@ export const load = async ({ locals, url }) => {
       .if(accountIds.length != 0, qb => qb.where('e.accountId', 'in', accountIds))
       .groupBy('e.incomeCategoryId')
   
-    results = await db.selectFrom('income_categories as ec')
-      .leftJoin(incomes.as('r'), 'r.incomeCategoryId', 'ec.incomeCategoryId')
-      .select(['ec.name', sql`COALESCE(r.total, 0) as total`])
+    results = await db.selectFrom('income_categories as ic')
+      .leftJoin(incomes.as('r'), 'r.incomeCategoryId', 'ic.incomeCategoryId')
+      .where('ic.userId', '=', locals.userId)
+      .select(['ic.name', sql`COALESCE(r.total, 0) as total`])
       .unionAll(transfers)
       .execute()
   }
