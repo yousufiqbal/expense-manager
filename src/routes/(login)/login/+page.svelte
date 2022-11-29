@@ -4,6 +4,7 @@
   import Buttons from "$lib/components/Buttons.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
+    import Message from "$lib/components/Message.svelte";
   import ServerError from "$lib/components/ServerError.svelte";
   import { extractYupErrors, loginSchema } from "$lib/others/schema";
   import { title } from "$lib/others/stores";
@@ -50,12 +51,16 @@
   $: credentials && validate()
 </script>
 
+
 <Form --gap="30px">
   <Field error={errors.email} {touched} label="Email" --cols={2} type="email" bind:value={credentials.email} />
   <Field error={errors.password} {touched} label="Password" --cols={2} type="password" bind:value={credentials.password} />
 </Form>
 
 <ServerError {errors} />
+<Message>
+  <p>CAUTION! Work in progress. Don't rely until stable release.</p>
+</Message>
 
 <Buttons --gap="25px">
   <Button name="Login" icon="ri:login-box-line" type="secondary" on:click={submit} />

@@ -20,6 +20,7 @@
     line-height: 1.5;
   }
   .content a {
+    text-decoration: underline;
     color: var(--primary);
   }
   .content em {

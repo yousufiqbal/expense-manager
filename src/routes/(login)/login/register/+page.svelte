@@ -3,6 +3,7 @@
     import { page } from "$app/stores";
   import Button from "$lib/components/Button.svelte";
   import Buttons from "$lib/components/Buttons.svelte";
+    import Content from "$lib/components/Content.svelte";
   import Field from "$lib/components/Field.svelte";
   import Form from "$lib/components/Form.svelte";
   import ServerError from "$lib/components/ServerError.svelte";
@@ -48,6 +49,12 @@
 </Form>
 
 <ServerError {errors} />
+
+<Content>
+  <p>
+    By registering, you agree to our <a href="/terms">terms</a>.
+  </p>
+</Content>
 
 <Buttons --gap="25px">
   <Button on:click={submit} name="Register" icon="ri:check-double-line" type="secondary" />
