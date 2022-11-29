@@ -28,7 +28,7 @@
   .button {
     padding: 10px 20px 10px 15px;
     border-radius: var(--radius);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 15px;
     box-shadow: var(--shadow);

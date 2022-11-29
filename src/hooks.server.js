@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import { JWT_KEY } from '$env/static/private';
 import { redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken'
@@ -5,7 +6,7 @@ import jwt from 'jsonwebtoken'
 /** @type {import('@sveltejs/kit').Handle} */
 export const handle = async ({ event, resolve }) => { 
 
-  console.log(event.request.method, event.url.pathname)
+  if (dev) console.log(event.request.method, event.url.pathname)
 
   const allowedUrls = ['/login', '/verify-email', '/login/register', '/forgot-password', '/forgot-password/reset-password']
 
@@ -23,3 +24,17 @@ export const handle = async ({ event, resolve }) => {
   throw redirect(301, '/login')
 
 }
+
+// /** @type {import('@sveltejs/kit').HandleServerError} */
+// export const handleError = async ({ error, event }) => {
+
+//   console.log('aha', 'error')
+//   console.log(error)
+//   // example integration with https://sentry.io/
+//   // Sentry.captureException(error, { event });
+ 
+//   return {
+//     message: 'Whoops!',
+//     code: error?.code ?? 'UNKNOWN'
+//   };
+// }

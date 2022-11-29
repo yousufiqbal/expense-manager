@@ -5,7 +5,7 @@ import { sql } from 'kysely';
 export const load = async ({ locals, url }) => {
 
   const keyword = url.searchParams.get('keyword')
-
+  
   const accounts = await db.selectFrom('accounts')
     .where('accounts.userId', '=', locals.userId)
     .selectAll().execute()

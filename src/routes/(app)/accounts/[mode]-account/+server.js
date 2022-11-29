@@ -4,13 +4,13 @@ import { error, json } from '@sveltejs/kit'
 import dayjs from 'dayjs'
 
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, cookies, locals }) => {
+export const POST = async ({ request, locals }) => {
 
   const body = await request.json()
   const account = await accountSchema.validate(body, { abortEarly: false })
 
   // Adding..
-  const result = await db.insertInto('accounts')
+  const result = await db.insertInto('accounts1')
     .values({
       userId: locals.userId,
       name: account.name

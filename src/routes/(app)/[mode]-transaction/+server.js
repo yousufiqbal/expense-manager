@@ -24,10 +24,8 @@ export const POST = async ({ request, locals, url }) => {
       
     const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
     const expense = await expenseSchema.validate(body, { abortEarly: false })
-    
-    // Adding Expense..
-    await db.insertInto('expenses')
-    .values({
+
+    let data = {
       accountId: expense.accountId,
       expenseCategoryId: expense.expenseCategoryId,
       date: expense.date, 
@@ -36,9 +34,19 @@ export const POST = async ({ request, locals, url }) => {
       amount: expense.amount,
       description: expense.description || null,
       userId: locals.userId
+    }
+    
+    // Adding Expense..
+    await db.insertInto('expenses').values(data).execute()
+    
+    // Logging
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      detail: 'Added expense',
+      data: JSON.stringify(data)
     }).execute()
       
-      // Responding..
+    // Responding..
     return json({
       message: 'Expense added'
     })

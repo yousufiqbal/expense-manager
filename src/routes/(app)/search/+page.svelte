@@ -1,16 +1,16 @@
 <script>
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import Field from "$lib/components/Field.svelte";
-  import Form from "$lib/components/Form.svelte";
-  import GridOptions from "$lib/components/GridOptions.svelte";
-  import Modal from "$lib/components/Modal.svelte";
+  // import Field from "$lib/components/Field.svelte";
+  // import Form from "$lib/components/Form.svelte";
+  // import GridOptions from "$lib/components/GridOptions.svelte";
+  // import Modal from "$lib/components/Modal.svelte";
   import Search from "$lib/components/Search.svelte";
-  import Select from "$lib/components/Select.svelte";
+  // import Select from "$lib/components/Select.svelte";
   import Summary from "$lib/components/Summary.svelte";
   import { title } from "$lib/others/stores";
   import { setQuery } from "$lib/others/utils";
-  import FiltersToggle from "./FiltersToggle.svelte";
+  // import FiltersToggle from "./FiltersToggle.svelte";
   import Results from "./Results.svelte";
 
   $title = 'Search'
@@ -18,45 +18,45 @@
   /** @type {import('./$types').PageServerData} */
   export let data
 
-  let filters = false
+  // let filters = false
   let form = {}
-  let values = {}
+  // let values = {}
   let keyword = ''
 
   let modal = { accounts: false, categories: false }
 
-  const closeAllModals = () => {
-    modal.accounts = false
-    modal.categories = false
-  }
+  // const closeAllModals = () => {
+  //   modal.accounts = false
+  //   modal.categories = false
+  // }
 
-  const openAccountModal = e => {
-    modal.accounts = true
-  }
+  // const openAccountModal = e => {
+  //   modal.accounts = true
+  // }
 
-  const openCategoryModal = e => {
-    e.target.blur()
-    modal.categories = true
-  }
+  // const openCategoryModal = e => {
+  //   e.target.blur()
+  //   modal.categories = true
+  // }
 
-  const setAccount = e => {
-    form['account-id'] = +e.detail.result
-    closeAllModals()
-  }
+  // const setAccount = e => {
+  //   form['account-id'] = +e.detail.result
+  //   closeAllModals()
+  // }
 
-  const setExpenseCategory = e => {
-    form['income-category-id'] = ''
-    form['expense-category-id'] = e.detail.result
-    values.categoryName = data.expenseCategories.filter(el => el.expenseCategoryId == e.detail.result)[0].name
-    closeAllModals()
-  }
+  // const setExpenseCategory = e => {
+  //   form['income-category-id'] = ''
+  //   form['expense-category-id'] = e.detail.result
+  //   values.categoryName = data.expenseCategories.filter(el => el.expenseCategoryId == e.detail.result)[0].name
+  //   closeAllModals()
+  // }
   
-  const setIncomeCategory = e => {
-    form['expense-category-id'] = ''
-    form['income-category-id'] = e.detail.result
-    values.categoryName = data.incomeCategories.filter(el => el.incomeCategoryId == e.detail.result)[0].name
-    closeAllModals()
-  }
+  // const setIncomeCategory = e => {
+  //   form['expense-category-id'] = ''
+  //   form['income-category-id'] = e.detail.result
+  //   values.categoryName = data.incomeCategories.filter(el => el.incomeCategoryId == e.detail.result)[0].name
+  //   closeAllModals()
+  // }
 
   const search = () => {
     goto($page.url.pathname + setQuery({ keyword, ...form }, $page))
@@ -68,10 +68,10 @@
     { title: 'Transfer', amount: totalTransfer, color: 'black' },
   ]
 
-  const clearFilters = () => {
-    values = {}
-    form = { 'account-id': '' }
-  }
+  // const clearFilters = () => {
+  //   values = {}
+  //   form = { 'account-id': '' }
+  // }
 
   $: totalIncome = data.results.filter(r => r.type == 'income').map(r => r.amount).reduce((a, b) => +a + +b, 0)
   $: totalExpense = data.results.filter(r => r.type == 'expense').map(r => r.amount).reduce((a, b) => +a + +b, 0)
@@ -80,16 +80,16 @@
 
 <Search bind:keyword on:click={search} />
 
-{#if filters}
+<!-- {#if filters}
 <Form --mb="30px">
   <Select label="Account" on:click={openAccountModal} bind:value={form['account-id']} options={data.accounts} n="name" v="accountId" />
   <Field placeholder="Choose" value={values?.categoryName} label="Category" on:focus={openCategoryModal} />
   <Field bind:value={form.min} label="Amount Min" inputmode="numeric" />
   <Field bind:value={form.max} label="Amount Max" inputmode="numeric" />
 </Form>
-{/if}
+{/if} -->
 
-<FiltersToggle {filters} on:clear={clearFilters} on:toggle={()=>filters=!filters} {form} />
+<!-- <FiltersToggle {filters} on:clear={clearFilters} on:toggle={()=>filters=!filters} {form} /> -->
 
 {#if data.results?.length != 0}
 <Summary {summary} />
@@ -97,7 +97,7 @@
 
 <Results {data} />
 
-{#if modal.accounts}
+<!-- {#if modal.accounts}
 <Modal on:close={closeAllModals} title="Choose Account">
   <GridOptions on:select={setAccount} options={data.accounts} n="name" v="accountId" />
 </Modal>
@@ -110,9 +110,9 @@
   <h2 style="color: var(--primary)">Income</h2>
   <GridOptions on:select={setIncomeCategory}  options={data.incomeCategories} n="name" v="incomeCategoryId" />
 </Modal>
-{/if}
+{/if} -->
 
-<style>
+<!-- <style>
   h2 {
     margin: 30px 0;
     font-weight: bold;
@@ -120,4 +120,4 @@
   h2:first-child {
     margin-top: 0;
   }
-</style>
+</style> -->

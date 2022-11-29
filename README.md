@@ -29,8 +29,7 @@ Following technologies were used to build this app:
 
 ## TODO
 
-1. Search filter interpolcation in SQL query
-2. Account balance in account view
+1. Account balance in account view
 3. Logging all creates, updates and deletes
 4. Activity page
 5. Sending confirmation email with token & verify-email link
@@ -47,6 +46,8 @@ Following technologies were used to build this app:
 ## Roadmap
 
 1. Add chart in stats
-2. Make responsive ui
-3. Dark mode
-4. PWA
+3. Make responsive ui
+4. Dark mode
+5. PWA
+6. Add filters to search
+7. Throw on 4xx and 5xx status codes. So handleError can catch and log.
