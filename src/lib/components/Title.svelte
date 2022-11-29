@@ -40,8 +40,6 @@
 <style>
   .title {
     background-color: #fff;
-    position: sticky;
-    top: 0;
     display: flex;
     align-items: center;
     gap: 15px;
