@@ -99,8 +99,6 @@ export const load = async ({ url, locals, params }) => {
     })
   }
 
-  console.log(transactions)
-
   const account = await db.selectFrom('accounts')
     .where('accounts.userId', '=', locals.userId)
     .where('accounts.accountId', '=', params.id)

@@ -28,8 +28,6 @@ export const handle = async ({ event, resolve }) => {
 // /** @type {import('@sveltejs/kit').HandleServerError} */
 // export const handleError = async ({ error, event }) => {
 
-//   console.log('aha', 'error')
-//   console.log(error)
 //   // example integration with https://sentry.io/
 //   // Sentry.captureException(error, { event });
  

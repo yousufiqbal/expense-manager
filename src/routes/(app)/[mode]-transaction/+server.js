@@ -172,7 +172,6 @@ export const PUT = async ({ request, locals, url }) => {
     const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
     const expense = await expenseSchema.validate(body, { abortEarly: false })
     
-    console.log(111111111111111111)
     const previousExpense = await db.selectFrom('expenses')
       .where('expenses.userId', '=', locals.userId)
       .where('expenses.expenseId', '=', id)
