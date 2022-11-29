@@ -18,6 +18,14 @@ export const POST = async ({ request, locals, cookies }) => {
     .set({
       currency: user.currency
     }).execute()
+    
+  // Logging..
+  await db.insertInto('activities').values({
+    userId: locals.userId,
+    summary: `Changed currency from ${locals.currency} to ${user.currency}`,
+    detail: JSON.stringify({}),
+    operation: 'create',
+  }).execute()
 
   // Mutating payload..
   const payload = {
@@ -25,7 +33,7 @@ export const POST = async ({ request, locals, cookies }) => {
     currency: user.currency,
   }
   const fact = jwt.sign(payload, JWT_KEY)
-  
+
   // Setting cookie
   cookies.set('fact', fact, { maxAge: 7 * 86400, path: '/', secure: false })
 
