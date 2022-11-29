@@ -5,12 +5,13 @@
   export let icon
   export let type = 'primary'
   export let reverse = false
+  export let loading = false
 </script>
 
 {#if !href}
 <button on:click class:reverse class="button {type}">
   {#if icon}
-  <i><Icon {icon} /></i>
+  <i><Icon class="{loading ? 'loading' : ''}" icon="{loading ? 'ri:loader-5-fill' : icon}" /></i>
   {/if}
   <span>{name}</span>
 </button>

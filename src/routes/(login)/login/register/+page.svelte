@@ -14,6 +14,7 @@
   $title = 'Register'
   let user = { name: '', email: '', password: '' }
   let touched = false, errors = {}
+  let loading = false
 
   const validate = async () => {
     try {
@@ -33,9 +34,16 @@
   }
 
   const register = async () => {
+    loading = true
     const response = await post($page.url.pathname, user)
-    if (response.ok) goto('/welcome')
-    if (response.status == 400) errors.server = (await response.json()).message
+    if (response.ok) {
+      goto('/welcome')
+      return
+    }
+    if (response.status == 400) {
+      errors.server = (await response.json()).message
+    }
+    loading = false
   }
 
   $: if (user) validate()
@@ -56,6 +64,6 @@
 </Content>
 
 <Buttons --gap="25px">
-  <Button on:click={submit} name="Register" icon="ri:check-double-line" type="secondary" />
+  <Button on:click={submit} name="Register" icon="ri:check-double-line" {loading} type="secondary" />
   <Button name="Already a user?" type="ghost" href="/login" />
 </Buttons>
