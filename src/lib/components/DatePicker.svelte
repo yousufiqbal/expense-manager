@@ -29,6 +29,7 @@
 
   const navigate = async () => {
     goto(setQuery({ start, end }, $page))
+    dispatch('close')
   }
 
   const selectPickerDate = month => {
