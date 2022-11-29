@@ -27,6 +27,26 @@ Following technologies were used to build this app:
 2. MySQL
 3. Many other libraries (See package.json for more details)
 
-# TODO
+## TODO
 
-1. Differ categories b/w expense and income categories table wise (but one crud interface)
+1. Search filter interpolcation in SQL query
+2. Account balance in account view
+3. Logging all creates, updates and deletes
+4. Activity page
+5. Sending confirmation email with token & verify-email link
+6. Sending password reset OTP
+7. Password reset page
+8. Modal close on outclick
+9. Account View (Transfer format), if fromAccount show as expense, if toAccount show as income.. meta: from -> to
+10. Improve about-page or readme.me
+11. Breadcrumbs last link (in Tabs.svelte + +layout.svelte pages)
+12. Improve form error messages with dates and numbers
+13. Safari Search fix
+14. Test Completely
+
+## Roadmap
+
+1. Add chart in stats
+2. Make responsive ui
+3. Dark mode
+4. PWA
