@@ -172,6 +172,7 @@ export const PUT = async ({ request, locals, url }) => {
     const expenseSchema = generateExpenseSchema(accounts.map(a => String(a.accountId)), expenseCategories.map(a => String(a.expenseCategoryId)))
     const expense = await expenseSchema.validate(body, { abortEarly: false })
     
+    console.log(111111111111111111)
     const previousExpense = await db.selectFrom('expenses')
       .where('expenses.userId', '=', locals.userId)
       .where('expenses.expenseId', '=', id)
@@ -198,7 +199,7 @@ export const PUT = async ({ request, locals, url }) => {
     await db.insertInto('activities').values({
       userId: locals.userId,
       summary: 'Updated Expense',
-      detail: `From ${previousExpense}, To ${data}`,
+      detail: `From ${JSON.stringify(previousExpense)}, To ${JSON.stringify()}`,
       operation: 'update',
     }).execute()
     
@@ -250,7 +251,7 @@ export const PUT = async ({ request, locals, url }) => {
       await db.insertInto('activities').values({
         userId: locals.userId,
         summary: 'Updated Income',
-        detail: `From ${previousIncome}, To ${data}`,
+        detail: `From ${JSON.stringify(previousIncome)}, To ${JSON.stringify(data)}`,
         operation: 'update',
       }).execute()
         
@@ -273,9 +274,9 @@ export const PUT = async ({ request, locals, url }) => {
       const transfer = await transferSchema.validate(body, { abortEarly: false })
 
       // Getting preivous transfer..
-      const previousTransfer = await db.selectFrom('incomes')
-        .where('incomes.userId', '=', locals.userId)
-        .where('incomes.incomeId', '=', id)
+      const previousTransfer = await db.selectFrom('transfers')
+        .where('transfers.userId', '=', locals.userId)
+        .where('transfers.transferId', '=', id)
         .selectAll().executeTakeFirst()
 
       let data = {
@@ -293,13 +294,13 @@ export const PUT = async ({ request, locals, url }) => {
       await db.updateTable('transfers')
         .where('transfers.userId', '=', locals.userId)
         .where('transfers.transferId', '=', id)
-        .set().execute()
+        .set(data).execute()
 
       // Logging..
       await db.insertInto('activities').values({
         userId: locals.userId,
         summary: 'Updated transfer',
-        detail: `From ${previousTransfer}, To ${data}`,
+        detail: `From ${JSON.stringify(previousTransfer)}, To ${JSON.stringify(data)}`,
         operation: 'update',
       }).execute()
 
@@ -318,6 +319,7 @@ export const PUT = async ({ request, locals, url }) => {
     const previous = await db.selectFrom(`${current}s`)
       .where(`${current}s.userId`, `=`, locals.userId)
       .where(`${current}s.${current}Id`, `=`, id)
+      .selectAll()
       .executeTakeFirst()
 
     // Deleting..

@@ -30,8 +30,8 @@ Following technologies were used to build this app:
 ## TODO
 
 1. Account balance in account view
-3. Logging all creates, updates and deletes
-4. Activity page
+<!-- 3. Logging all creates, updates and deletes -->
+<!-- 4. Activity page -->
 5. Sending confirmation email with token & verify-email link
 6. Sending password reset OTP
 7. Password reset page
@@ -43,7 +43,7 @@ Following technologies were used to build this app:
 13. Safari Search fix
 14. Test Completely
 15. Comments..
-16. Individualize activites and profile
+<!-- 16. Individualize activites and profile -->
 17. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
 
 ## Roadmap
