@@ -30,27 +30,20 @@ Following technologies were used to build this app:
 ## TODO
 
 1. Account balance in account view
-<!-- 3. Logging all creates, updates and deletes -->
-<!-- 4. Activity page -->
-<!-- 5. Sending confirmation email with token & verify-email link -->
-6. Sending password reset OTP
-7. Password reset page
-8. Modal close on outclick
-9. Account View (Transfer format), if fromAccount show as expense, if toAccount show as income.. meta: from -> to
-10. Improve about-page or readme.me
-11. Breadcrumbs last link (in Tabs.svelte + +layout.svelte pages)
-12. Improve form error messages with dates and numbers
-13. Safari Search fix
-14. Test Completely
-15. Comments..
-<!-- 16. Individualize activites and profile -->
-17. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
+2. Sending password reset OTP & Password reset page
+3. Account View (Transfer format), if fromAccount show as expense, if toAccount show as income..
+4. Breadcrumbs last link (in Tabs.svelte + +layout.svelte pages)
+5. Safari Search fix
+6. Test Completely
+7. Comment code
+8. Improve readme.md
+9. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
 
 ## Roadmap
 
 1. Add chart in stats
-3. Make responsive ui
-4. Dark mode
-5. PWA
-6. Add filters to search
-7. Throw on 4xx and 5xx status codes. So handleError can catch and log.
+2. Make responsive ui
+3. Dark mode
+4. PWA
+5. Add filters to search
+6. Throw on 4xx and 5xx status codes. So handleError can catch and log.

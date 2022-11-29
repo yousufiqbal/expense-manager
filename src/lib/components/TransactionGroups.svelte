@@ -29,9 +29,9 @@
         <div class="detail">
           <div class="title">{transaction.title}</div>
           {#if transaction.type != 'transfer'}
-          <div class="meta">{transaction.accountName} - {transaction.categoryName}</div>
+          <div class="meta">{transaction.accountName} ({transaction.categoryName})</div>
           {:else}
-          <div class="meta">{transaction.fromAccountName} - {transaction.toAccountName}</div>
+          <div class="meta">{transaction.fromAccountName} &rarr; {transaction.toAccountName}</div>
           {/if}
         </div>
         <div class="{transaction.type} amount">{$page.data.locals.currency} {transaction.amount}</div>
@@ -80,6 +80,9 @@
     align-items: center;
     flex: 1;
     font-size: 14px;
+  }
+  .title {
+    margin-bottom: 2px;
   }
   .day {
     color: gray;
