@@ -11,6 +11,6 @@
   <p>Expense manager is a multi-account, cloud-based, expense management app.</p>
 </Content>
 
-<Tabs />
+<Tabs  />
 
 <slot></slot>

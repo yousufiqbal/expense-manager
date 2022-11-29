@@ -16,8 +16,8 @@
 		"@sveltejs/kit": "next",
 		"eslint": "^8.16.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"kysely-codegen": "^0.8.0",
 		"svelte": "^3.44.0",
-    "kysely-codegen": "^0.8.0",
 		"svelte-check": "^2.7.1",
 		"svelte-preprocess": "^4.10.7",
 		"typescript": "^4.7.4",
@@ -30,6 +30,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"kysely": "^0.22.0",
 		"mysql2": "^2.3.3",
+		"nodemailer": "^6.8.0",
 		"nprogress": "^0.2.0",
 		"yup": "^0.32.11"
 	}

@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import Button from "$lib/components/Button.svelte";
   import Equal from "$lib/components/Equal.svelte";
+    import Message from "$lib/components/Message.svelte";
   import { title } from "$lib/others/stores";
   import { slide } from "svelte/transition";
 
@@ -13,6 +14,7 @@
 <div transition:slide|local={{ duration: 250 }} class="wrapper">
 
 {#if !current}
+
 <div>
   <h2>Assalam-u-Alaekum,</h2>
   <h1>{$page.data.locals.name}</h1>
@@ -24,6 +26,10 @@
 <Equal>
   <Button href="?step=how-it-works" reverse icon="ri:arrow-right-line" name="How It Works?" />
 </Equal>
+
+<Message>
+  A verification email has been sent to your email. Please verify your account.
+</Message>
 {/if}
 
 {#if current == 'how-it-works'}

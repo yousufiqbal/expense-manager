@@ -32,7 +32,7 @@ export const PUT = async ({ url, locals }) => {
   }).execute()
 
   return json({
-    message: 'Email Verified!'
+    message: 'Congrats! Email Verified'
   })
 
 };
