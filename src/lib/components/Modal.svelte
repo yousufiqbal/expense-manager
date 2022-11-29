@@ -1,4 +1,6 @@
 <script>
+    import { outclickHandler } from "$lib/others/utils";
+
   // import { outclickHandler } from "$lib/others/utils";
   import Icon from "@iconify/svelte";
   import { createEventDispatcher } from "svelte";
@@ -23,21 +25,17 @@
 </script>
 
 {#if title}
-<div class="wrapper">
+<div transition:fly={{y: 30, duration: 150}} use:outclickHandler on:outclick={dispatchClose} class="modal">
+  
+  <div class="head {type}">
+    <h2>{title}</h2>
+    <button on:click={dispatchClose}  class="close">
+      <Icon icon="ri:close-line" />
+    </button>
+  </div>
 
-  <div transition:fly={{y: 30, duration: 150}} class="modal">
-    
-    <div class="head {type}">
-      <h2>{title}</h2>
-      <button on:click={dispatchClose}  class="close">
-        <Icon icon="ri:close-line" />
-      </button>
-    </div>
-
-    <div class="body">
-      <slot></slot>
-    </div>
-
+  <div class="body">
+    <slot></slot>
   </div>
 
 </div>
@@ -46,17 +44,10 @@
 <svelte:body on:keydown={handleEscapeKey} />
 
 <style>
-  .wrapper {
-    display: grid;
-    align-content: end;
-    /* border: 2px dashed red; */
-    position: fixed;
-    top: 0; bottom: 0;
-    left: 0; right: 0;
-    /* background-color: rgb(255, 255, 255, 0.3); */
-    z-index: 2;
-  }
   .modal {
+    z-index: 2;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
     background-color: #fff;
     box-shadow: 0 -4px 5px 0 rgb(0, 0, 0, 0.3);
     padding-bottom: 10px;
