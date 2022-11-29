@@ -1,6 +1,6 @@
 <script>
-    import { page } from "$app/stores";
-    import Nothing from "$lib/components/Nothing.svelte";
+  import { page } from "$app/stores";
+  import Nothing from "$lib/components/Nothing.svelte";
   import Icon from "@iconify/svelte";
 
   /** @type {(import('./$types').PageServerData} */

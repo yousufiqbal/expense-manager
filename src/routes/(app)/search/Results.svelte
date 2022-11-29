@@ -1,5 +1,6 @@
 <script>
     import { page } from '$app/stores';
+    import Nothing from '$lib/components/Nothing.svelte';
     import dayjs from 'dayjs';
 
 
@@ -27,6 +28,11 @@
   {/each}
 
 </div>
+{:else}
+
+<Nothing>
+  No results
+</Nothing>
 {/if}
 
 <style>

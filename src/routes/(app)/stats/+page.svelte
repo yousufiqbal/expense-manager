@@ -3,7 +3,6 @@
   import DateNavigator from "$lib/components/DateNavigator.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
   import { title } from "$lib/others/stores";
-  import PieChart from "./PieChart.svelte";
   import Categories from "./Categories.svelte";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
@@ -28,5 +27,4 @@
 <Tabs transfer={false} />
 <!-- <Subtitle subtitle="Accounts" icon="ri:folders-line" /> -->
 <Checkboxes on:change={fire} items={data.accounts} n="name" v="accountId" bind:result={choosenAccounts}  />
-<PieChart />
 <Categories {data} />

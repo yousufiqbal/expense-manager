@@ -2,6 +2,7 @@
   import { removeToast, toasts } from "$lib/others/toasts";
   import Icon from "@iconify/svelte";
   import { fly } from "svelte/transition";
+    import Nothing from "./Nothing.svelte";
 
   const iconsMap = {
     success: 'ri:check-double-line',
@@ -34,6 +35,11 @@
   {/each}
   
 </div>
+{:else}
+
+<Nothing>
+  No transactions
+</Nothing>
 {/if}
 
 <style>

@@ -18,7 +18,7 @@
   <label for={attr}>{label}</label>
 
   <select disabled {value} bind:this={el} name="{attr}" id="{attr}">
-    <option value="" selected disabled hidden>Choose</option>
+    <option value="" selected disabled hidden>{options.length != 0 ? 'Choose' : 'No Records'}</option>
     {#each options as option}
     <option value="{option[v]}">{option[n]}</option>
     {/each}

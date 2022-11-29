@@ -6,6 +6,7 @@
   export let summary = []
 </script>
 
+{#if summary.length != 0}
 <div class="summary">
 
   {#each summary as item}
@@ -14,8 +15,9 @@
     <div class="amount {item.color}">{$page.data.locals.currency} {item.amount}</div>
   </div>
   {/each}
-
+  
 </div>
+{/if}
 
 <style>
   .summary {

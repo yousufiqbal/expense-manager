@@ -1,5 +1,6 @@
 <script>
     import { page } from '$app/stores';
+    import Nothing from '$lib/components/Nothing.svelte';
 
 
   /** @type {import('./$types').PageServerData} */
@@ -17,6 +18,11 @@
   {/each}
   
 </div>
+{:else}
+
+<Nothing>
+  No accounts
+</Nothing>
 {/if}
 
 <style>

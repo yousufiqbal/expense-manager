@@ -1,5 +1,6 @@
 <script>
   import { page } from "$app/stores";
+    import Nothing from "$lib/components/Nothing.svelte";
 
   /** @type {import('./$types').PageServerData} */
   export let data
@@ -19,6 +20,11 @@
   {/each}
   
 </div>
+{:else}
+
+<Nothing>
+  No stats
+</Nothing>
 {/if}
 
 <style>

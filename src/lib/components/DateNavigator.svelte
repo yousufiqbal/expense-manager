@@ -4,12 +4,12 @@
   import { outclickHandler, setQuery } from '$lib/others/utils';
   import Icon from '@iconify/svelte'
   import dayjs from 'dayjs';
-    import { fly } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
 
-  let picker = true
-  let pickerYear = dayjs($page.url.searchParams.get('start'), 'YYYY-MM-DD' || dayjs()).format('YYYY')
-  $: console.log(pickerYear)
   export let type = 'primary'
+
+  let picker = false
+  let pickerYear = dayjs($page.url.searchParams.get('start'), 'YYYY-MM-DD' || dayjs()).format('YYYY')
 
   let start = $page.url.searchParams.get('start') || dayjs().startOf('month').format('YYYY-MM-DD')
   let end = $page.url.searchParams.get('end') || dayjs().endOf('month').format('YYYY-MM-DD')

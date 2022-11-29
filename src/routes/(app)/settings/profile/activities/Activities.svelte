@@ -1,4 +1,5 @@
 <script>
+    import Nothing from '$lib/components/Nothing.svelte';
   import dayjs from 'dayjs';
 
   /** @type {import('./$types').PageServerData} */
@@ -16,6 +17,11 @@
   {/each}
 
 </div>
+{:else}
+
+<Nothing>
+  No activities
+</Nothing>
 {/if}
 
 <style>

@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+    import Nothing from "./Nothing.svelte";
 
   export let n, v
 
@@ -26,6 +27,11 @@
   {/each}
   
 </div>
+{:else}
+
+<Nothing>
+  No records
+</Nothing>
 {/if}
 
 <style>
