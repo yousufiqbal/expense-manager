@@ -1,5 +1,3 @@
-import redaxios from 'redaxios'
-
 /**
  * 
  * @param {string} str 
@@ -51,10 +49,6 @@ export function outclickHandler(node) {
   }
   return '?' + q.toString()
 }
-
-export const axios = redaxios.create({
-  withCredentials: true
-})
 
 export function isEmpty(object) {
   for (const property in object) {

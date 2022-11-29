@@ -9,7 +9,7 @@
   import { extractYupErrors, registerSchema } from "$lib/others/schema";
   import { title } from "$lib/others/stores";
   import { addToast } from "$lib/others/toasts";
-  import { axios, isEmpty, post } from "$lib/others/utils";
+  import { isEmpty, post } from "$lib/others/utils";
 
   $title = 'Register'
   let user = { name: '', email: '', password: '' }
