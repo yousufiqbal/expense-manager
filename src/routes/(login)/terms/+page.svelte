@@ -1,5 +1,8 @@
 <script>
   import Content from "$lib/components/Content.svelte";
+  import { title } from "$lib/others/stores";
+
+  $title = 'Terms'
 </script>
 
 <Content>
