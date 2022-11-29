@@ -26,6 +26,14 @@ export const POST = async ({ request, locals }) => {
       password: await bcryptjs.hash(form.newPassword, 10)
     }).execute()
 
+  // Logging..
+  await db.insertInto('activities').values({
+    userId: locals.userId,
+    summary: 'Changed password',
+    detail: JSON.stringify({}),
+    operation: 'create',
+  }).execute()
+
   // ..
   return json({
     message: 'Password changed'

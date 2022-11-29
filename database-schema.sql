@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   UNIQUE KEY `userId_name` (`userId`,`name`),
   KEY `FK_accounts_users` (`userId`),
   CONSTRAINT `FK_accounts_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.accounts: ~8 rows (approximately)
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -49,28 +49,57 @@ INSERT INTO `accounts` (`accountId`, `userId`, `name`, `created`) VALUES
 	(34, 27, 'Personal', '2022-11-29 08:10:24'),
 	(35, 27, 'Savings', '2022-11-29 08:10:24'),
 	(36, 28, 'Personal', '2022-11-29 08:11:18'),
-	(37, 28, 'Savings', '2022-11-29 08:11:18');
+	(37, 28, 'Savings', '2022-11-29 08:11:18'),
+	(38, 15, 'Mamania', '2022-11-29 14:49:14'),
+	(39, 15, 'Kakakia', '2022-11-29 14:49:28'),
+	(40, 15, 'Farhan Khan', '2022-11-29 15:10:01'),
+	(41, 15, 'Tilli ', '2022-11-29 15:11:41'),
+	(42, 15, 'MamaPapa', '2022-11-29 15:15:25'),
+	(43, 15, 'Nanajani', '2022-11-29 15:16:47');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.activities
 CREATE TABLE IF NOT EXISTS `activities` (
   `activityId` int NOT NULL AUTO_INCREMENT,
   `userId` int NOT NULL,
-  `detail` varchar(500) NOT NULL,
-  `data` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `type` enum('create','update','delete') NOT NULL,
-  `related_table` varchar(50) DEFAULT NULL,
-  `related_id` int DEFAULT NULL,
+  `summary` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `detail` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `operation` enum('create','update','delete','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`activityId`),
   KEY `FK_activities_users` (`userId`),
   CONSTRAINT `FK_activities_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.activities: ~0 rows (approximately)
 /*!40000 ALTER TABLE `activities` DISABLE KEYS */;
-INSERT INTO `activities` (`activityId`, `userId`, `detail`, `data`, `type`, `related_table`, `related_id`, `created`) VALUES
-	(1, 15, 'Added expense', '{"accountId":"10","expenseCategoryId":"27","date":"2022-11-29","time":"13:05:49","title":"Books","amount":440,"description":null,"userId":15}', 'create', NULL, NULL, '2022-11-29 13:06:07');
+INSERT INTO `activities` (`activityId`, `userId`, `summary`, `detail`, `operation`, `created`) VALUES
+	(2, 15, 'Added expense', '{"accountId":"10","expenseCategoryId":"22","date":"2022-11-29","time":"13:25:54","title":"Real Chips","amount":300,"description":null,"userId":15}', 'create', '2022-11-29 13:26:02'),
+	(3, 15, 'Added expense', '{"accountId":"10","expenseCategoryId":"26","date":"2022-11-29","time":"14:15:18","title":"Gas Bill","amount":250,"description":null,"userId":15}', 'create', '2022-11-29 14:15:29'),
+	(4, 15, 'Added income', '{"accountId":"10","incomeCategoryId":"32","date":"2022-11-29","time":"14:15:40","title":"Got Bonus!","amount":2500,"description":null,"userId":15}', 'create', '2022-11-29 14:16:09'),
+	(5, 15, 'Added transfer', '{"date":"2022-11-29","time":"14:17:54","fromAccountId":"10","toAccountId":"11","title":"Needed","amount":250,"description":null,"userId":15}', 'create', '2022-11-29 14:18:05'),
+	(6, 15, 'Removed Transfer', '{"transferId":6,"title":"Needed","userId":15,"date":"2022-11-28T19:00:00.000Z","time":"14:17:54","fromAccountId":10,"toAccountId":11,"amount":"250","description":null,"type":"transfer","created":"2022-11-29T09:18:05.000Z"}', 'delete', '2022-11-29 14:21:53'),
+	(7, 15, '{"incomeId":11,"title":"Got Bonus!","userId":15,"date":"2022-11-28T19:00:00.000Z","time":"14:15:40","accountId":10,"incomeCategoryId":32,"amount":"2500","description":null,"type":"income","created":"2022-11-29T09:16:09.000Z"}', 'delete', 'create', '2022-11-29 14:22:06'),
+	(8, 15, 'Added income', '{"accountId":"10","incomeCategoryId":"32","date":"2022-11-29","time":"14:22:31","title":"Bonus kya bat hay","amount":250,"description":null,"userId":15}', 'create', '2022-11-29 14:22:48'),
+	(9, 15, 'Removed Income', 'delete', 'create', '2022-11-29 14:22:53'),
+	(10, 15, 'Added income', '{"accountId":"10","incomeCategoryId":"32","date":"2022-11-29","time":"14:23:46","title":"Wheatable","amount":450,"description":null,"userId":15}', 'create', '2022-11-29 14:24:07'),
+	(11, 15, 'Removed Income', '{"incomeId":13,"title":"Wheatable","userId":15,"date":"2022-11-28T19:00:00.000Z","time":"14:23:46","accountId":10,"incomeCategoryId":32,"amount":"450","description":null,"type":"income","created":"2022-11-29T09:24:06.000Z"}', 'delete', '2022-11-29 14:24:12'),
+	(12, 15, 'Removed Expense', '{"expenseId":22,"title":"Gas Bill","userId":15,"date":"2022-11-28T19:00:00.000Z","time":"14:15:18","accountId":10,"expenseCategoryId":26,"amount":"250","description":null,"type":"expense","created":"2022-11-29T09:15:29.000Z"}', 'delete', '2022-11-29 14:24:39'),
+	(13, 15, 'Added account', '{"userId":15,"name":"Mamania"}', 'create', '2022-11-29 14:49:14'),
+	(14, 15, 'Added account', '{"userId":15,"name":"Kakakia"}', 'create', '2022-11-29 14:49:28'),
+	(15, 15, 'Added account', '{"userId":15,"name":"Farhan"}', 'create', '2022-11-29 15:10:01'),
+	(16, 15, 'Added account named Tilli ', '{"userId":15,"name":"Tilli "}', 'create', '2022-11-29 15:11:41'),
+	(17, 15, 'Added starting balance', '{"userId":15,"accountId":41,"amount":1500,"date":"2022-11-29","time":"15:11","title":"Starting Balance","incomeCategoryId":34}', 'create', '2022-11-29 15:11:41'),
+	(18, 15, 'Added account named MamaPapa', '{"userId":15,"name":"MamaPapa"}', 'create', '2022-11-29 15:15:25'),
+	(19, 15, 'Added account named Nanajani', '{"userId":15,"name":"Nanajani"}', 'create', '2022-11-29 15:16:47'),
+	(20, 15, 'AUTO-Added `Others` in income category', '{}', 'create', '2022-11-29 15:16:47'),
+	(21, 15, 'Added starting balance', '{"userId":15,"accountId":43,"amount":545,"date":"2022-11-29","time":"15:16","title":"Starting Balance","incomeCategoryId":68}', 'create', '2022-11-29 15:16:47'),
+	(22, 15, 'Updated account', 'From undefined, To {"name":"Farhan Khan"}', 'create', '2022-11-29 15:17:39'),
+	(23, 15, 'Updated account', 'From undefined, To {"name":"Farhan"}', 'create', '2022-11-29 15:18:44'),
+	(24, 15, 'Updated account', 'From {"accountId":40,"userId":15,"name":"Farhan","created":"2022-11-29T10:10:01.000Z"}, To {"name":"Farhan Khan"}', 'create', '2022-11-29 15:19:35'),
+	(25, 15, 'Change name from Nabeel to Nabeel Khan', '{}', 'create', '2022-11-29 15:24:35'),
+	(26, 15, 'Changed password', '{}', 'create', '2022-11-29 15:26:11'),
+	(27, 15, 'Changed password', '{}', 'create', '2022-11-29 15:26:21');
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.expenses
@@ -93,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   CONSTRAINT `expenses_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_expenses_expense_categories` FOREIGN KEY (`expenseCategoryId`) REFERENCES `expense_categories` (`expenseCategoryId`),
   CONSTRAINT `FK_expenses_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.expenses: ~8 rows (approximately)
 /*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
@@ -108,7 +137,8 @@ INSERT INTO `expenses` (`expenseId`, `title`, `userId`, `date`, `time`, `account
 	(17, 'Huge', 15, '2022-11-28', '09:48:12', 10, 23, 5000, NULL, 'expense', '2022-11-28 09:48:26'),
 	(18, 'J. Clothes', 15, '2022-11-29', '13:03:47', 10, 25, 4200, NULL, 'expense', '2022-11-29 13:03:58'),
 	(19, 'Dawai', 15, '2022-11-29', '13:05:11', 10, 27, 450, NULL, 'expense', '2022-11-29 13:05:19'),
-	(20, 'Books', 15, '2022-11-29', '13:05:49', 10, 27, 440, NULL, 'expense', '2022-11-29 13:06:07');
+	(20, 'Books', 15, '2022-11-29', '13:05:49', 10, 27, 440, NULL, 'expense', '2022-11-29 13:06:07'),
+	(21, 'Real Chips', 15, '2022-11-29', '13:25:54', 10, 22, 300, NULL, 'expense', '2022-11-29 13:26:02');
 /*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.expense_categories
@@ -202,12 +232,14 @@ CREATE TABLE IF NOT EXISTS `incomes` (
   CONSTRAINT `FK_incomes_accounts` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_incomes_categories` FOREIGN KEY (`incomeCategoryId`) REFERENCES `income_categories` (`incomeCategoryId`),
   CONSTRAINT `FK_incomes_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.incomes: ~0 rows (approximately)
 /*!40000 ALTER TABLE `incomes` DISABLE KEYS */;
 INSERT INTO `incomes` (`incomeId`, `title`, `userId`, `date`, `time`, `accountId`, `incomeCategoryId`, `amount`, `description`, `type`, `created`) VALUES
-	(10, 'November Salary', 15, '2022-11-27', '16:41:00', 10, 31, 50000, NULL, 'income', '2022-11-27 16:41:21');
+	(10, 'November Salary', 15, '2022-11-27', '16:41:00', 10, 31, 50000, NULL, 'income', '2022-11-27 16:41:21'),
+	(14, 'Starting Balance', 15, '2022-11-29', '15:11:00', 41, 34, 1500, NULL, 'income', '2022-11-29 15:11:41'),
+	(15, 'Starting Balance', 15, '2022-11-29', '15:16:00', 43, 68, 545, NULL, 'income', '2022-11-29 15:16:47');
 /*!40000 ALTER TABLE `incomes` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.income_categories
@@ -220,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `income_categories` (
   UNIQUE KEY `userId_name` (`userId`,`name`),
   KEY `FK_categories_users` (`userId`),
   CONSTRAINT `FK_categories_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table expense-manager.income_categories: ~0 rows (approximately)
 /*!40000 ALTER TABLE `income_categories` DISABLE KEYS */;
@@ -228,7 +260,7 @@ INSERT INTO `income_categories` (`incomeCategoryId`, `userId`, `name`, `created`
 	(31, 15, 'Salary', '2022-11-25 23:59:44'),
 	(32, 15, 'Bonus', '2022-11-25 23:59:44'),
 	(33, 15, 'Allowance', '2022-11-25 23:59:44'),
-	(34, 15, 'Others', '2022-11-25 23:59:44'),
+	(34, 15, 'Others2', '2022-11-25 23:59:44'),
 	(35, 21, 'Salary', '2022-11-29 08:02:51'),
 	(36, 21, 'Bonus', '2022-11-29 08:02:51'),
 	(37, 21, 'Allowance', '2022-11-29 08:02:51'),
@@ -260,7 +292,9 @@ INSERT INTO `income_categories` (`incomeCategoryId`, `userId`, `name`, `created`
 	(63, 28, 'Salary', '2022-11-29 08:11:18'),
 	(64, 28, 'Bonus', '2022-11-29 08:11:18'),
 	(65, 28, 'Allowance', '2022-11-29 08:11:18'),
-	(66, 28, 'Others', '2022-11-29 08:11:18');
+	(66, 28, 'Others', '2022-11-29 08:11:18'),
+	(67, 15, 'Others3', '2022-11-29 15:15:25'),
+	(68, 15, 'Others', '2022-11-29 15:16:47');
 /*!40000 ALTER TABLE `income_categories` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.transfers
@@ -283,12 +317,13 @@ CREATE TABLE IF NOT EXISTS `transfers` (
   CONSTRAINT `FK_transfers_accounts` FOREIGN KEY (`fromAccountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_transfers_accounts_2` FOREIGN KEY (`toAccountId`) REFERENCES `accounts` (`accountId`),
   CONSTRAINT `FK_transfers_users` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table expense-manager.transfers: ~0 rows (approximately)
 /*!40000 ALTER TABLE `transfers` DISABLE KEYS */;
 INSERT INTO `transfers` (`transferId`, `title`, `userId`, `date`, `time`, `fromAccountId`, `toAccountId`, `amount`, `description`, `type`, `created`) VALUES
-	(4, 'Savings for Kid', 15, '2022-11-27', '16:41:00', 10, 11, 5000, NULL, 'transfer', '2022-11-27 16:42:18');
+	(4, 'Savings for Kid', 15, '2022-11-27', '16:41:00', 10, 11, 5000, NULL, 'transfer', '2022-11-27 16:42:18'),
+	(5, 'Needed', 15, '2022-11-29', '14:16:18', 10, 11, 200, NULL, 'transfer', '2022-11-29 14:17:02');
 /*!40000 ALTER TABLE `transfers` ENABLE KEYS */;
 
 -- Dumping structure for table expense-manager.users
@@ -310,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`userId`, `name`, `email`, `password`, `isVerified`, `otp`, `token`, `currency`, `created`) VALUES
 	(14, 'Danish Saleem', 'yousufiqbal@gmail.com', '$2a$10$mir/B2148h9liWwbAj3wmemB/ul1J.4.Z.5BnN6.YuDMyWyNuwb36', 0, NULL, '76206d68380a151dcbe27c8e2a62cd82ac1f238d334900aeb136e629a1e8', 'Rs', '2022-11-25 23:22:52'),
-	(15, 'Nabeel', 'nabeel@gmail.com', '$2a$10$ztXEfzI9IDSyssFzSvYwn.IyJFiRP1pCNVqjwWjFwCRGIRsZ6Hn4u', 0, NULL, '38f47addfa7902c7448b1b2a72b3f91775185bf33db635bb0bc4df26e2d1', 'Rs', '2022-11-25 23:59:44'),
+	(15, 'Nabeel Khan', 'nabeel@gmail.com', '$2a$10$f4/dYx1LEY5jCHL649n9vOeHYqBO9vgldT0VBX9X07S9yG0RMhCLC', 0, NULL, '38f47addfa7902c7448b1b2a72b3f91775185bf33db635bb0bc4df26e2d1', 'Rs', '2022-11-25 23:59:44'),
 	(19, 'naa', 'naa@a.com', '$2a$10$vrKTSITsI7n7LLuwcb3H0OLUhcTgfB0gbNO.9W3hf37Y.nqD1HSme', 0, NULL, '4e2788b15c533d976ace63a40f9be45d7a733a1246fc9508a192f3af1821', 'Rs.', '2022-11-29 08:00:59'),
 	(20, 'maa', 'maa@m.com', '$2a$10$tl6SaZNfOO3XVkkK7HHmvu5cZmWxSeWJIgfJQL/JySLiuF74O4/.u', 0, NULL, '85162d36fae7dc2dd8492ba14c0c4d292e5a3aeb060b60060f92efbdf5c8', 'Rs.', '2022-11-29 08:01:27'),
 	(21, 'Naseem Alam', 'naseemalam@gmail.com', '$2a$10$u7kBWJOvJ4W4NEhjbbBLjeIW11hX6sXlB3invoST0H52IJulOU07W', 0, NULL, 'a5d12ca45cb34945b399d900e3ee16e759045b597f49d0162fc96af62488', 'Rs.', '2022-11-29 08:02:51'),

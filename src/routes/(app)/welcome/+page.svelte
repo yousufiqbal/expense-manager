@@ -10,7 +10,7 @@
 </script>
 
 {#key current}
-<div transition:slide={{ duration: 500 }} class="wrapper">
+<div transition:slide|local={{ duration: 250 }} class="wrapper">
 
 {#if !current}
 <div>

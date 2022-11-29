@@ -37,6 +37,14 @@ export const POST = async ({ request, cookies }) => {
   
   // Setting cookie
   cookies.set('fact', fact, { maxAge: 7 * 86400, path: '/', secure: false })
+
+  // Logging..
+  await db.insertInto('activities').values({
+    userId: user.userId,
+    summary: 'Logged In',
+    detail: JSON.stringify({}),
+    operation: 'other',
+  }).execute()
   
   return json({
     message: 'Logged In'

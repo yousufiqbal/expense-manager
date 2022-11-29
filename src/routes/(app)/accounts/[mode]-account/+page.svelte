@@ -38,7 +38,7 @@
   }
 
   const editAccount = async () => {
-    const response = await put(`/accounts/${$page.params.mode}-account?account-id=${$page.url.searchParams.get('account-id')}`, account)
+    const response = await put($page.url.pathname + $page.url.search, account)
     const body = await response.json()
     if (response.ok) {
       addToast({ message: body.message })

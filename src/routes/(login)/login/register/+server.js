@@ -28,9 +28,9 @@ export const POST = async ({ request, cookies }) => {
       token: crypto.randomBytes(30).toString('hex')
     }).execute()
 
-  // Get new user id
+  // Geting new user id for default accounts and categories and logging..
   const user = await db.selectFrom('users')
-  .where('users.email', '=', form.email)
+    .where('users.email', '=', form.email)
     .selectAll().executeTakeFirst()
     
     // Preparing accounts and categories for new user..
@@ -70,6 +70,14 @@ export const POST = async ({ request, cookies }) => {
   
   // Setting cookie
   cookies.set('fact', fact, { maxAge: 7 * 86400, path: '/' })
+
+  // Logging..
+  await db.insertInto('activities').values({
+    userId: user.userId,
+    summary: 'Joined Expense Manager',
+    detail: JSON.stringify({}),
+    operation: 'other',
+  }).execute()
   
   return json({
     message: 'Registered'
