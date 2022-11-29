@@ -1,6 +1,7 @@
 <script>
-    import { page } from '$app/stores';
+  import { page } from '$app/stores';
   import dayjs from 'dayjs';
+    import Nothing from './Nothing.svelte';
 
   /** @type {import('./$types').PageServerData} */
   export let data
@@ -42,6 +43,11 @@
   {/each}
   
 </div>
+{:else}
+
+<Nothing>
+  No transactions
+</Nothing>
 {/if}
 
 <style>
