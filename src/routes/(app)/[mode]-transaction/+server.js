@@ -37,13 +37,14 @@ export const POST = async ({ request, locals, url }) => {
     }
     
     // Adding Expense..
-    await db.insertInto('expenses').values(data).execute()
+    await db.insertInto('expenses').values(data).executeTakeFirst()
     
     // Logging
     await db.insertInto('activities').values({
       userId: locals.userId,
       detail: 'Added expense',
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
+      operation: 'create',
     }).execute()
       
     // Responding..
@@ -67,23 +68,32 @@ export const POST = async ({ request, locals, url }) => {
     const incomeSchema = generateIncomeSchema(accounts.map(a => String(a.accountId)), incomeCategories.map(a => String(a.incomeCategoryId)))
     const income = await incomeSchema.validate(body, { abortEarly: false })
 
+    let data = {
+      accountId: income.accountId,
+      incomeCategoryId: income.incomeCategoryId,
+      date: income.date, 
+      time: income.time,
+      title: income.title,
+      amount: income.amount,
+      description: income.description || null,
+      userId: locals.userId
+    }
+
     // Adding income..
-    await db.insertInto('incomes')
-      .values({
-        accountId: income.accountId,
-        incomeCategoryId: income.incomeCategoryId,
-        date: income.date, 
-        time: income.time,
-        title: income.title,
-        amount: income.amount,
-        description: income.description || null,
-        userId: locals.userId
-      }).execute()
+    await db.insertInto('incomes').values(data).execute()
+
+    // Logging
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      detail: 'Added income',
+      data: JSON.stringify(data),
+      operation: 'create',
+    }).execute()
       
-      // Responding..
-      return json({
-        message: 'Income added'
-      })
+    // Responding..
+    return json({
+      message: 'Income added'
+    })
       
   }
     
@@ -110,6 +120,14 @@ export const POST = async ({ request, locals, url }) => {
         description: transfer.description || null,
         userId: locals.userId
       }).execute()
+    
+    // Logging..
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      detail: 'Added transfer',
+      data: JSON.stringify(data),
+      operation: 'create',
+    }).execute()
 
     // Responding..
     return json({
@@ -379,33 +397,78 @@ export const DELETE = async ({ request, locals, url }) => {
   if (!tab) throw redirect(301, '/')
 
   if (tab == 'expense') {
+
     const expenseId = url.searchParams.get('expense-id')
+
+    const expense = await db.selectFrom('expenses')
+      .where('expenses.expenseId', '=', expenseId)
+      .where('expenses.userId', '=', locals.userId)
+      .executeTakeFirst()
+
     await db.deleteFrom('expenses')
       .where('expenses.userId', '=', locals.userId)
       .where('expenses.expenseId', '=', expenseId)
       .execute()
     
-      return json({ message: 'Removed ' + tab})
+    // Logging..
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      detail: 'Removed Expense',
+      data: JSON.stringify(expense),
+      operation: 'delete',
+    }).execute()
+    
+    return json({ message: 'Removed ' + tab})
   }
 
   if (tab == 'income') {
     const incomeId = url.searchParams.get('income-id')
+
+    const income = await db.selectFrom('incomes')
+      .where('incomes.incomeId', '=', incomeId)
+      .where('incomes.userId', '=', locals.userId)
+      .executeTakeFirst()
+
     await db.deleteFrom('incomes')
       .where('incomes.userId', '=', locals.userId)
       .where('incomes.incomeId', '=', incomeId)
       .execute()
+
+    // Logging..
+    await db.insertInto('activities').values({
+      userId: locals.userId,
+      detail: 'Removed Income',
+      data: JSON.stringify(income),
+      operation: 'delete',
+    }).execute()
     
-      return json({ message: 'Removed ' + tab})
+    return json({ message: 'Removed ' + tab})
   }
 
   if (tab == 'transfer') {
+
     const transferId = url.searchParams.get('transfer-id')
+
+    const transfer = await db.selectFrom('transfers')
+      .where('transfers.transferId', '=', transferId)
+      .where('transfers.userId', '=', locals.userId)
+      .executeTakeFirst()    
+
     await db.deleteFrom('transfers')
       .where('transfers.userId', '=', locals.userId)
       .where('transfers.transferId', '=', transferId)
       .execute()
+
+    // Logging..
+     await db.insertInto('activities').values({
+      userId: locals.userId,
+      detail: 'Removed Transfer',
+      data: JSON.stringify(transfer),
+      operation: 'delete',
+    }).execute()
     
-      return json({ message: 'Removed ' + tab})
+    return json({ message: 'Removed ' + tab})
+    
   }
 
   // If cursor came here.. for some reason
