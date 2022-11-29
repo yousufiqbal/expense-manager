@@ -5,8 +5,8 @@ import { error, json } from '@sveltejs/kit'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import { JWT_KEY, PWD } from '$env/static/private'
-import nodemailer from 'nodemailer'
-import { dev } from '$app/environment'
+// import nodemailer from 'nodemailer'
+// import { dev } from '$app/environment'
 
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request, cookies }) => {
