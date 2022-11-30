@@ -1,4 +1,4 @@
-# Expense Manager
+# Expense Manager (WIP)
 
 Expense Manager app can be used to manage day-to-day expenses.
 
