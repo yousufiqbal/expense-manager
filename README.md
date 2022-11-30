@@ -36,8 +36,9 @@ Following technologies were used to build this app:
 5. Safari Search fix
 6. Test Completely
 7. Comment code
-8. Improve readme.md
-9. Verification email SMTP timeout issue
+8. Where needed make create, update and delete statements transactional.
+9. Improve readme.md
+10. Verification email SMTP timeout issue
 10. Add urlName to incomeCategories (for searching others in income-categories, it is needed)
 
 ## Roadmap
