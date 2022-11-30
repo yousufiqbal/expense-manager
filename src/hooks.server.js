@@ -6,15 +6,19 @@ import jwt from 'jsonwebtoken'
 /** @type {import('@sveltejs/kit').Handle} */
 export const handle = async ({ event, resolve }) => { 
 
+  // Logging..
   if (dev) console.log(event.request.method, event.url.pathname)
+  
+  // Getting fact..
+  const fact = event.cookies.get('fact')
 
   const allowedUrls = ['/login', '/verify-email', '/login/register', '/forgot-password', '/forgot-password/reset-password']
-
   if (allowedUrls.includes(event.url.pathname)) {
+    // Redirecting if already logged in..
+    if (fact && jwt.verify(fact, JWT_KEY)) throw redirect(301, '/settings/profile')
     return await resolve(event);
   }
   
-  const fact = event.cookies.get('fact')
   
   if (fact && jwt.verify(fact, JWT_KEY)) {
     event.locals = jwt.decode(fact)
