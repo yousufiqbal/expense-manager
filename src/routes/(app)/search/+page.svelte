@@ -78,7 +78,7 @@
   $: totalTransfer = data.results.filter(r => r.type == 'transfer').map(r => r.amount).reduce((a, b) => +a + +b, 0)
 </script>
 
-<Search bind:keyword on:click={search} />
+<Search bind:keyword on:submit={search} on:click={search} />
 
 <!-- {#if filters}
 <Form --mb="30px">

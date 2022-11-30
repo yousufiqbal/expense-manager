@@ -4,12 +4,12 @@
   export let keyword
 </script>
 
-<div class="search">
+<form on:submit|preventDefault class="search">
   <input bind:value={keyword} placeholder="Type here" type="search">
   <button on:click>
     <Icon icon="ri:search-line" />
   </button>
-</div>
+</form>
 
 <style>
   .search {
