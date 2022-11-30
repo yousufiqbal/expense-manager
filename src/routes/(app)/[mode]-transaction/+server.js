@@ -198,7 +198,7 @@ export const PUT = async ({ request, locals, url }) => {
     await db.insertInto('activities').values({
       userId: locals.userId,
       summary: 'Updated expense',
-      detail: `From ${JSON.stringify(previousExpense)}, To ${JSON.stringify()}`,
+      detail: `From ${JSON.stringify(previousExpense)}, To ${JSON.stringify(data)}`,
       operation: 'update',
     }).execute()
     
