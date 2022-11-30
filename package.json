@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "vite dev --host",
 		"build": "vite build",
+		"linode": "npm install && pm2 stop expense-manager && npm run build && pm2 start expense-manager && echo 'Expense Manager is upto date'",
 		"preview": "vite preview --host --port=80",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
