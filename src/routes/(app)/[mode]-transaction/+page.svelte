@@ -207,7 +207,7 @@
   {/if}
 
   <Field {touched} bind:el={els.amount} error={errors.amount} bind:value={transaction.amount} label="Amount ({$page.data.locals.currency})" --cols={2} inputmode="numeric" />
-  <Field {touched} bind:el={els.title} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
+  <Field {touched} on:keyup={e=>e.key == 'Enter' ? submit() : ''} bind:el={els.title} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
   <Field {touched} error={errors.description} bind:value={transaction.description} label="Description" --cols={2} textarea />
 
 </Form>

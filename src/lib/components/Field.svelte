@@ -22,7 +22,7 @@
 <div class="field">
 
   <label for={attr}>{label}</label>
-  <input class:readonly {readonly} step={type == 'time' ? '1' : ''} bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} bind:value size="1">
+  <input on:keyup class:readonly {readonly} step={type == 'time' ? '1' : ''} bind:this={el} on:focus on:blur={touch} {inputmode} use:typeMe id={attr} name={attr} {placeholder} bind:value size="1">
 
   {#if error && touched}
   <span class="error">{error}</span>
