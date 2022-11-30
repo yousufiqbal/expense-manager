@@ -109,7 +109,7 @@ export const POST = async ({ request, cookies }) => {
   // Logging..
   await db.insertInto('activities').values({
     userId: user.userId,
-    summary: 'Joined Expense Manager',
+    summary: 'Joined',
     detail: JSON.stringify({}),
     operation: 'other',
   }).execute()

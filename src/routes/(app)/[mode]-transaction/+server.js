@@ -197,7 +197,7 @@ export const PUT = async ({ request, locals, url }) => {
     // Logging
     await db.insertInto('activities').values({
       userId: locals.userId,
-      summary: 'Updated Expense',
+      summary: 'Updated expense',
       detail: `From ${JSON.stringify(previousExpense)}, To ${JSON.stringify()}`,
       operation: 'update',
     }).execute()
@@ -249,7 +249,7 @@ export const PUT = async ({ request, locals, url }) => {
       // Logging
       await db.insertInto('activities').values({
         userId: locals.userId,
-        summary: 'Updated Income',
+        summary: 'Updated income',
         detail: `From ${JSON.stringify(previousIncome)}, To ${JSON.stringify(data)}`,
         operation: 'update',
       }).execute()
@@ -494,7 +494,7 @@ export const DELETE = async ({ locals, url }) => {
     // Logging..
     await db.insertInto('activities').values({
       userId: locals.userId,
-      summary: 'Removed Expense',
+      summary: 'Removed expense',
       detail: JSON.stringify(expense),
       operation: 'delete',
     }).execute()
@@ -519,7 +519,7 @@ export const DELETE = async ({ locals, url }) => {
     // Logging..
     await db.insertInto('activities').values({
       userId: locals.userId,
-      summary: 'Removed Income',
+      summary: 'Removed income',
       detail: JSON.stringify(income),
       operation: 'delete'
     }).execute()
@@ -545,7 +545,7 @@ export const DELETE = async ({ locals, url }) => {
     // Logging..
     await db.insertInto('activities').values({
       userId: locals.userId,
-      summary: 'Removed Transfer',
+      summary: 'Removed transfer',
       detail: JSON.stringify(transfer),
       operation: 'delete',
     }).execute()
