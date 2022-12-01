@@ -96,7 +96,8 @@
     }
   }
 
-  const submit = async () => {
+  const submit = async e => {
+    e.preventDefault()
     if (isEmpty(errors)) {
       if ($page.params.mode == 'add') await addTransaction()
       if ($page.params.mode == 'edit') await editTransaction()
@@ -164,6 +165,16 @@
     if ($page.params.mode == 'add' && !transaction.amount) els.amount.focus() 
   }
 
+  /**
+   * 
+   * @param {KeyboardEvent} e 
+   */
+  const handleEnter = async e => {
+    if (e.key == 'Enter') {
+      e.preventDefault()
+      await submit()
+    }
+  }
   // Computed..
 
   $: current = $page.url.searchParams.get('tab') || 'expense'
@@ -207,7 +218,7 @@
   {/if}
 
   <Field {touched} bind:el={els.amount} error={errors.amount} bind:value={transaction.amount} label="Amount ({$page.data.locals.currency})" --cols={2} inputmode="numeric" />
-  <Field {touched} on:keyup={e=>e.key == 'Enter' ? submit() : ''} bind:el={els.title} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
+  <Field {touched} on:keyup={handleEnter} bind:el={els.title} error={errors.title} bind:value={transaction.title} label="Title" --cols={2} />
   <Field {touched} error={errors.description} bind:value={transaction.description} label="Description" --cols={2} textarea />
 
 </Form>
