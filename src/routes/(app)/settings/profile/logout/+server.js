@@ -12,7 +12,7 @@ export const POST = async ({ cookies, locals }) => {
     operation: 'other',
   }).execute()
   
-  cookies.delete('fact', { path: '/' })
+  cookies.delete('fact', { path: '/', secure: false })
   
   return json({
     message: 'Logged out'
