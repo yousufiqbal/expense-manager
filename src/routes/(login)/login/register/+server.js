@@ -104,7 +104,7 @@ export const POST = async ({ request, cookies }) => {
   const fact = jwt.sign(payload, JWT_KEY, { expiresIn: 7 * 86400 })
   
   // Setting cookie
-  cookies.set('fact', fact, { maxAge: 7 * 86400, path: '/' })
+  cookies.set('fact', fact, { maxAge: 7 * 86400, path: '/', secure: false })
 
   // Logging..
   await db.insertInto('activities').values({
